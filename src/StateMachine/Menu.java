@@ -18,11 +18,12 @@ public class Menu implements GameState {
 	public Menu( GameStateManager newGameState ){
 		state = newGameState;
         boton = new XBoton(Color.red, Color.BLUE);
-        boton.setText("Hola guay");
+        boton.setText("Play");
+	boton.setBounce(x,x,x,x);
 
 
-        CurrentData.panel.setBackground(Color.cyan);
-		CurrentData.panel.setLayout( new FlowLayout() );
+        CurrentData.panel.setBackground(Color.BLACK);
+		CurrentData.panel.setLayout(null);
 		CurrentData.panel.add(boton);
 		CurrentData.panel.remove( CurrentData.canvas );
 		CurrentData.panel.revalidate();
