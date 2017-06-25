@@ -12,19 +12,22 @@ public class Menu implements GameState {
 
 	private GameStateManager state;
 	private Graphics g;
-    private XBoton boton;
-    private ButtonListener lbutton = new ButtonListener();
+    	private XBoton botonstart;
+	private XBoton botonscores;
+	private XBoton botonexit;
+    	private ButtonListener lbutton = new ButtonListener();
 	
 	public Menu( GameStateManager newGameState ){
-		state = newGameState;
-        boton = new XBoton(Color.red, Color.BLUE);
-        boton.setText("Play");
-	boton.setBounce(x,x,x,x);
+	state = newGameState
+        botonstart = new XBoton(Color.RED, Color.BLUE);
+		botonstart.setColor(Color.RED);
+        botonstart.setText("Play");
+	botonstart.setBounce(436,317,60,25);
 
 
         CurrentData.panel.setBackground(Color.BLACK);
 		CurrentData.panel.setLayout(null);
-		CurrentData.panel.add(boton);
+		CurrentData.panel.add(botonstart);
 		CurrentData.panel.remove( CurrentData.canvas );
 		CurrentData.panel.revalidate();
         boton.addActionListener(lbutton);
@@ -38,8 +41,8 @@ public class Menu implements GameState {
         
 	}
 	
-	private void cadena (String cadena, int fontsize, int Xcor, int Ycor, Color color ){
-		g.setColor(color);
+	private void cadena (String cadena, int fontsize, int Xcor, int Ycor, Color spectroRGB ){
+		g.setColor(spectroRGB);
 		g.setFont(new Font("/Resources/fonts/fotana/upheavtt.ttf", Font.PLAIN, fontsize));
 		g.drawString(cadena, Xcor, Ycor);
 	}
@@ -50,7 +53,7 @@ public class Menu implements GameState {
 
 	
 	@Override public void world() {
-		System.out.println( " Entering World state"	 );
+	System.out.println( " Entering World state"	 );
         //para cambiar de estado solo usamos el initCanvas
         //y luego transicionamos
         CurrentData.initCanvas();
