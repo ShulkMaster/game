@@ -3,7 +3,7 @@ package StateMachine;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
+import GUI.XBoton;
 import javax.swing.JPanel;
 
 import Data.CurrentData;
@@ -12,12 +12,13 @@ public class Menu implements GameState {
 
 	private GameStateManager state;
 	private Graphics g;
-    private JButton boton;
+    private XBoton boton;
     private ButtonListener lbutton = new ButtonListener();
 	
 	public Menu( GameStateManager newGameState ){
 		state = newGameState;
-        boton = new JButton( "Hola");
+        boton = new XBoton(Color.red, Color.BLUE);
+        boton.setText("Hola guay");
 
 
         CurrentData.panel.setBackground(Color.cyan);
@@ -33,6 +34,7 @@ public class Menu implements GameState {
         //g = state.getGraphics();
 
         //cadena("hola A33", 14, 400, 350, Color.BLACK);
+        
 	}
 	
 	private void cadena (String cadena, int fontsize, int Xcor, int Ycor, Color color ){
