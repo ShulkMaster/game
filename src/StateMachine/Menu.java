@@ -12,6 +12,8 @@ public class Menu implements GameState {
 	private GameStateManager state;
 	private Graphics g;
         private XBoton botonstart;
+        private XBoton botonscore;
+        private XBoton botonsalir;
         private ButtonListener lbutton = new ButtonListener();
 	
 	public Menu( GameStateManager newGameState ){
@@ -27,6 +29,7 @@ public class Menu implements GameState {
         botonstart.addActionListener(lbutton);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
+        
 
     }
 	
