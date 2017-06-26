@@ -128,7 +128,7 @@ public class ListenKeys implements KeyListener {
             	System.out.println("bot to mid");
                 currentPos = Pos.MID;
                 aux.setLocation( aux.x + 32, aux.y - 16 );
-            }
+            }//
         }
         else if( down  && currentPos != Pos.BOT ){
             if( currentPos == Pos.TOP ){
