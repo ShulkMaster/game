@@ -3,6 +3,7 @@ package StateMachine;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 
 import Data.CurrentData;
@@ -10,6 +11,7 @@ import entity.Player;
 import maps.Tile;
 import org.omg.CORBA.Current;
 import systems.Animator;
+import systems.ImageLoader;
 
 @SuppressWarnings("serial")
 public class Battle implements GameState {
@@ -99,6 +101,11 @@ public class Battle implements GameState {
             attack();
     }
 
+    private void drawGui(){
+        BufferedImage vida = ImageLoader.loadImage("src/Resources/Sprites/vida.png");
+
+        //g.drawImage( vida );
+    }
 	@Override
 	public void draw(){
 		if(!inBattle){

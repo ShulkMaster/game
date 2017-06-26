@@ -68,8 +68,7 @@ public class Menu implements GameState {
 	
 	@Override public void world() {
 		System.out.println( " Entering World state"	 );
-        //para cambiar de estado solo usamos el initCanvas
-        //y luego transicionamos
+		//AQUI SE LLAMA AL MUNDO
         state.setGameState( state.getWorld());
 	}
 
