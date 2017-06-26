@@ -25,33 +25,36 @@ public class Menu implements GameState {
         //boton inicio
         botonstart = new XBoton(Color.BLUE, Color.CYAN);
         botonstart.setBackground(Color.CYAN);
-        botonstart.setBounds(264,317,130,30); 
+        botonstart.setBounds(401,350,130,30); 
         botonstart.setFont(fuentex);
         botonstart.setText("LordZerxes");
+        botonstart.addActionListener(lbutton);
         //boton de scorea
         botonscore = new XBoton(Color.BLUE, Color.CYAN);
         botonscore.setBackground(Color.CYAN);
-        botonscore.setBounds(264,370,130,25);
+        botonscore.setBounds(401,420,130,30);
         botonscore.setFont(fuentex);
         botonscore.setText("Escores");
+        botonscore.addActionListener(lbutton);
         //boton salir 
         botonsalir = new XBoton(Color.BLUE, Color.CYAN);
         botonsalir.setBackground(Color.CYAN);
-        botonsalir.setBounds(264,450,130,30);
+        botonsalir.setBounds(401,490,130,30);
         botonsalir.setFont(fuentex);
         botonsalir.setText("Salir");
+        botonsalir.addActionListener(lbutton);
         //icono del menu XD
         menuicon = new JLabel();
         menuicon.setIcon(getIconImage("/Resources/image/calavera.png"));
-        menuicon.setBounds(0, 0,800 , 328);
+        menuicon.setBounds(66, 0,800 , 328);
 	JPanel menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
+        //adding all Jcomponens to the panel
         menuPanel.add(botonstart);
         menuPanel.add(botonscore);
         menuPanel.add(botonsalir);
         menuPanel.add(menuicon);
-        botonstart.addActionListener(lbutton);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
         
@@ -99,6 +102,12 @@ public class Menu implements GameState {
 			if( evt.getSource() == botonstart ){
 				System.out.println( "reach boton");
 				world();
+			}
+                        if( evt.getSource() == botonscore ){
+				System.out.println( "la puta");
+			}
+                        if( evt.getSource() == botonsalir ){
+				System.exit(0);
 			}
 		}
 	}

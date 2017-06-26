@@ -51,6 +51,7 @@ public class GameFrame extends JFrame {
 
         this.setContentPane(panel);
     	this.setSize(width, height);
+        this.setResizable(false);
     	this.pack();
     	this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
