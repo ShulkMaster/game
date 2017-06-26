@@ -12,11 +12,16 @@ public class AudioManager {
 	//private static AudioStream music;
 	private static AudioStream sound;
 	
-	public static void playMusic( final String path){
+    /**
+     *
+     * @param path
+     */
+    public static void playMusic( final String path){
 		Thread thread = new Thread() {
+                        @Override
 			public void run(){
         try{
-	      /*  music = new AudioStream(new FileInputStream(path));
+	        /* music = new AudioStream(new FileInputStream(path));
 	        for(;;){
 		        AudioPlayer.player.start(music);	
 	        }*/

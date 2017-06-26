@@ -7,6 +7,8 @@ import javax.swing.*;
 import GUI.XBoton;
 import Data.CurrentData;
 import maps.Level;
+import systems.AudioManager;
+import systems.AudioMaster;
 
 public class Menu implements GameState {
 
@@ -17,13 +19,23 @@ public class Menu implements GameState {
         private final XBoton botonsalir;
         private final JLabel menuicon;
         private final JLabel fuego;
-        private final JLabel fuego2;
         private final Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", 2, 15);
         private final ButtonListener lbutton = new ButtonListener();
-	
+        //private final AudioManager music; esto es adudio kk ;v
+        //private final AudioMaster music;
+        // inicio del constructor
 	public Menu( GameStateManager newGameState ){
         
 	state = newGameState;
+        /*musica plox 
+        audio manager es una kk no funciona :v
+        music = new AudioManager();
+        ninguno de los audio manager es capaz de encontrar el puto mp3 :v en ruta relativa solo en ruta absoluta
+        por la puta ponagele fix plox
+*/
+        AudioManager.playSound("/Resources/Music/epicmusic.mp3");     
+        
+        //music = new AudioMaster(this.getClass().getResourceAsStream("/Resources/Music/epicmusic.mp3"));
         //boton inicio
         botonstart = new XBoton(Color.BLUE, Color.CYAN);
         botonstart.setBackground(Color.CYAN);
@@ -52,10 +64,8 @@ public class Menu implements GameState {
         // dibuja el fueguito :3
         fuego = new JLabel();
         fuego.setIcon(getIconImage("/Resources/image/fire.gif"));
-        fuego.setBounds(0, 358,400 , 300);
-        fuego2 = new JLabel();
-        fuego2.setIcon(getIconImage("/Resources/image/fire.gif"));
-        fuego2.setBounds(400, 358,400 , 300);
+        fuego.setBounds(0, 0,932 , 658);
+
         
 	JPanel menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
@@ -66,7 +76,6 @@ public class Menu implements GameState {
         menuPanel.add(botonsalir);
         menuPanel.add(menuicon);
         menuPanel.add(fuego);
-        menuPanel.add(fuego2);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
         

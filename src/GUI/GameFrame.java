@@ -50,6 +50,7 @@ public class GameFrame extends JFrame {
         CurrentData.frame = this;
 
         this.setContentPane(panel);
+        this.setTitle("The Cave V1.0");
     	this.setSize(width, height);
         this.setResizable(false);
     	this.pack();
