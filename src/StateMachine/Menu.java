@@ -32,8 +32,7 @@ public class Menu implements GameState {
         music = new AudioManager();
         ninguno de los audio manager es capaz de encontrar el puto mp3 :v en ruta relativa solo en ruta absoluta
         por la puta ponagele fix plox
-*/
-        AudioManager.playSound("/Resources/Music/epicmusic.mp3");     
+*/     
         
         //music = new AudioMaster(this.getClass().getResourceAsStream("/Resources/Music/epicmusic.mp3"));
         //boton inicio
@@ -78,6 +77,7 @@ public class Menu implements GameState {
         menuPanel.add(fuego);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
+        //AudioMaster musica = new AudioMaster("C:\\Users\\David\\Documents\\NetBeansProjects\\Juego\\src\\Resources\\Music\\emo.mp3");
         
     }
 	
