@@ -82,6 +82,10 @@ public class ListenKeys implements KeyListener {
         if( e.getKeyCode() == KeyEvent.VK_E  && state.getCurrentState() != state.getBattle()) {
             jugador.toIso();
             jugador.getPos().setLocation( deco[iso.y][iso.x].getPos() );
+            /*aux = jugador.getPos();
+            int x = (int)deco[iso.y][iso.x].getPos().getX();
+            int y = (int)deco[iso.y][iso.x].getPos().getY();
+            aux.setLocation( x, y ); */
             state.setGameState(state.getBattle());
         }
     }//func
@@ -114,9 +118,6 @@ public class ListenKeys implements KeyListener {
 
     private void inBattle(){
         aux = jugador.getPos();
-        int x = (int)deco[iso.y][iso.x].getPos().getX();
-        int y = (int)deco[iso.y][iso.x].getPos().getY();
-        aux.setLocation( x, y );
         System.out.println("reach");
         if( up && currentPos != Pos.TOP ){
             if ( currentPos == Pos.MID ){
@@ -127,7 +128,7 @@ public class ListenKeys implements KeyListener {
             	System.out.println("bot to mid");
                 currentPos = Pos.MID;
                 aux.setLocation( aux.x + 32, aux.y - 16 );
-            }
+            }//
         }
         else if( down  && currentPos != Pos.BOT ){
             if( currentPos == Pos.TOP ){
