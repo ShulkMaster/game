@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import GUI.XBoton;
 import Data.CurrentData;
+import maps.Level;
 
 public class Menu implements GameState {
 
@@ -69,6 +70,7 @@ public class Menu implements GameState {
 	@Override public void world() {
 		System.out.println( " Entering World state"	 );
 		//AQUI SE LLAMA AL MUNDO
+        Level.generateLevel( 0 );
         state.setGameState( state.getWorld());
 	}
 

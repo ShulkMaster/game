@@ -8,5 +8,5 @@ public interface GameState{
     void pause();
     void gameOver();
     void draw();
-    
+
 }

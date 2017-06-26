@@ -34,12 +34,12 @@ public class World extends JComponent implements  GameState {
     
 	World(GameStateManager newGameState){
 		state = newGameState;
-		loadPlayer();
-		loadLevel();
+        loadPlayer();
+		/*loadPlayer();
+		//loadLevel();
 		setData();
-		lKey = new ListenKeys();
-        this.setFocusable(true);     
-        this.addKeyListener( lKey );
+        this.setFocusable(true);
+        this.addKeyListener( lKey ); */
 	}
 	
 	private void loadPlayer(){
@@ -53,12 +53,16 @@ public class World extends JComponent implements  GameState {
             jugador.toIso();
 	}
 	
-	private void loadLevel(){
-        Level.generateLevel( 0 );
+	public void loadLevel(){
         lvl = Level.getLevel( 0 );
         tiles = lvl.getTiles();
         deco = lvl.getLayer1();
         deco2 = lvl.getLayer2();
+        setData();
+        lKey = new ListenKeys();
+        CurrentData.canvas.addKeyListener(lKey);
+        this.setFocusable(true);
+        this.addKeyListener( lKey );
 	}
     
     private void idle(){
@@ -146,6 +150,7 @@ public class World extends JComponent implements  GameState {
 	@Override public void draw(){
         if( firstCall ){
             CurrentData.initCanvas();
+            loadLevel();
             firstCall = false;
         }
         System.out.println( "World draw" );

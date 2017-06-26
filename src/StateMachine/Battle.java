@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 
 import Data.CurrentData;
+import Data.SpriteSheet;
 import entity.Player;
 import maps.Tile;
 import org.omg.CORBA.Current;
@@ -26,6 +27,7 @@ public class Battle implements GameState {
     private Tile[][] tiles, deco,deco2;
     private Graphics g;
     private Animator anim;
+    private SpriteSheet vida;
 
     private Point pos;
 
@@ -35,6 +37,8 @@ public class Battle implements GameState {
 		state = newGameState;
         //this.setFocusable(true);
         //this.addKeyListener( lKey );
+        BufferedImage image = ImageLoader.loadImage("/Resources/Sprites/vida.png");
+        vida = new SpriteSheet(image);
 	}
 
     private void idle(){
@@ -102,9 +106,9 @@ public class Battle implements GameState {
     }
 
     private void drawGui(){
-        BufferedImage vida = ImageLoader.loadImage("src/Resources/Sprites/vida.png");
 
-        //g.drawImage( vida );
+        g.drawImage(vida.crop(0,0,64,32), pos.x-20, pos.y-42 , null );
+
     }
 	@Override
 	public void draw(){
@@ -124,8 +128,8 @@ public class Battle implements GameState {
         // JUGADOR ---------------------
         drawPlayer();
 		// ------------------------------
-
         drawDeco();
+        drawGui();
 	}
 	
 	@Override

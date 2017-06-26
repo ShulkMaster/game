@@ -19,18 +19,25 @@ class Game{
 	private GameFrame window;
 	private BufferStrategy bs;
 	private Graphics g;
+	private boolean firstCall = true;
 
     Game(Dimension dimension){
     	window = new GameFrame();
     	window.init( (int) dimension.getWidth(), (int) dimension.getHeight() );
 		gameStateMachine = new GameStateManager( dimension );
-		KeyListener[] l = gameStateMachine.getComponent().getKeyListeners();
-		window.getCanvas().addKeyListener( l[0]);
 		window.getCanvas().requestFocus();
 		window.getCanvas().createBufferStrategy(2);
     }
 
-    private void update(){    	
+    private void addListeners(){
+    	if( gameStateMachine.getCurrentState() == gameStateMachine.getWorld() && firstCall) {
+			KeyListener[] l = gameStateMachine.getComponent().getKeyListeners();
+			window.getCanvas().addKeyListener(l[0]);
+			firstCall = false;
+		}
+	}
+
+    private void update(){
         gameStateMachine.draw();
     }
 
@@ -58,6 +65,7 @@ class Game{
 						bs = window.getCanvas().getBufferStrategy();
 						g = bs.getDrawGraphics();
 						gameStateMachine.setG(g);
+						//addListeners();
 						update();
 						bs.show();
 						g.dispose();
