@@ -14,6 +14,7 @@ public class Menu implements GameState {
         private XBoton botonstart;
         private XBoton botonscore;
         private XBoton botonsalir;
+        Font fuentex = new Font("Resources/fonts/fotana/fuente.ttf", Font.PLAIN, 15);
         private ButtonListener lbutton = new ButtonListener();
 	
 	public Menu( GameStateManager newGameState ){
@@ -21,11 +22,18 @@ public class Menu implements GameState {
         botonstart = new XBoton(Color.BLUE, Color.CYAN);
         botonstart.setBackground(Color.CYAN);
         botonstart.setBounds(436,317,130,25);
-        botonstart.setText("Lord Zerxes");
+        //botonscore.setFont(fuentex);
+        botonstart.setText("LordZerxes");
+        botonscore = new XBoton(Color.BLUE, Color.CYAN);
+        botonscore.setBackground(Color.CYAN);
+        botonscore.setBounds(436,370,130,25);
+        //botonscore.setFont(fuentex);
+        botonscore.setText("Escores");
 	JPanel menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
         menuPanel.add(botonstart);
+        menuPanel.add(botonscore);
         botonstart.addActionListener(lbutton);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
