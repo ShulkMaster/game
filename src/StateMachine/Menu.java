@@ -4,28 +4,27 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
+import GUI.XBoton;
 import Data.CurrentData;
-import org.omg.CORBA.Current;
-import sun.util.resources.cldr.ebu.CurrencyNames_ebu;
 
 public class Menu implements GameState {
 
 	private GameStateManager state;
 	private Graphics g;
-    private JButton boton;
-    private ButtonListener lbutton = new ButtonListener();
+        private XBoton botonstart;
+        private ButtonListener lbutton = new ButtonListener();
 	
 	public Menu( GameStateManager newGameState ){
-		state = newGameState;
-        boton = new JButton( "Start");
-		JPanel menuPanel = CurrentData.menuPanel;
-
-        menuPanel.setBackground(Color.cyan);
-		menuPanel.setLayout( new FlowLayout() );
-		menuPanel.add(boton);
-        boton.addActionListener(lbutton);
-
+	state = newGameState;
+        botonstart = new XBoton(Color.BLUE, Color.CYAN);
+        botonstart.setBackground(Color.CYAN);
+        botonstart.setBounds(436,317,130,25);
+        botonstart.setText("Lord Zerxes");
+	JPanel menuPanel = CurrentData.menuPanel;
+        menuPanel.setBackground(Color.BLACK);
+        menuPanel.setLayout(null);
+        menuPanel.add(botonstart);
+        botonstart.addActionListener(lbutton);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
 
@@ -73,7 +72,7 @@ public class Menu implements GameState {
 	private class ButtonListener implements ActionListener{
 			@Override public void actionPerformed(ActionEvent evt) {
 			System.out.println( "reach0");
-			if( evt.getSource() == boton ){
+			if( evt.getSource() == botonstart ){
 				System.out.println( "reach boton");
 				world();
 			}
