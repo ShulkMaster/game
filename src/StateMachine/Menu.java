@@ -9,14 +9,14 @@ import Data.CurrentData;
 
 public class Menu implements GameState {
 
-	private GameStateManager state;
+	private final GameStateManager state;
 	private Graphics g;
-        private XBoton botonstart;
-        private XBoton botonscore;
-        private XBoton botonsalir;
-        private JLabel menuicon;
-        private Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", 2, 15);
-        private ButtonListener lbutton = new ButtonListener();
+        private final XBoton botonstart;
+        private final XBoton botonscore;
+        private final XBoton botonsalir;
+        private final JLabel menuicon;
+        private final Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", 2, 15);
+        private final ButtonListener lbutton = new ButtonListener();
 	
 	public Menu( GameStateManager newGameState ){
         
@@ -41,7 +41,8 @@ public class Menu implements GameState {
         botonsalir.setText("Salir");
         //icono del menu XD
         menuicon = new JLabel();
-        menuicon.setText("Hola XD");
+        menuicon.setIcon(getIconImage("/Resources/image/calavera.png"));
+        menuicon.setBounds(0, 0,800 , 328);
 	JPanel menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
@@ -85,6 +86,10 @@ public class Menu implements GameState {
 	@Override public void gameOver() {
        System.out.println( "Como pierdes estando en el menu???" );
 	}
+       public ImageIcon getIconImage(String path){
+        ImageIcon retvalue = new javax.swing.ImageIcon(getClass().getResource(path));
+        return retvalue;
+    }
 	
 	private class ButtonListener implements ActionListener{
 			@Override public void actionPerformed(ActionEvent evt) {
