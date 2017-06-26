@@ -3,46 +3,43 @@ package StateMachine;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import GUI.XBoton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import Data.CurrentData;
+import org.omg.CORBA.Current;
+import sun.util.resources.cldr.ebu.CurrencyNames_ebu;
 
 public class Menu implements GameState {
 
 	private GameStateManager state;
 	private Graphics g;
-    	private XBoton botonstart;
-	private XBoton botonscores;
-	private XBoton botonexit;
-    	private ButtonListener lbutton = new ButtonListener();
+    private JButton boton;
+    private ButtonListener lbutton = new ButtonListener();
 	
 	public Menu( GameStateManager newGameState ){
-	state = newGameState
-        botonstart = new XBoton(Color.RED, Color.BLUE);
-		botonstart.setColor(Color.RED);
-        botonstart.setText("Play");
-	botonstart.setBounce(436,317,60,25);
+		state = newGameState;
+        boton = new JButton( "Start");
+		JPanel menuPanel = CurrentData.menuPanel;
 
-
-        CurrentData.panel.setBackground(Color.BLACK);
-		CurrentData.panel.setLayout(null);
-		CurrentData.panel.add(botonstart);
-		CurrentData.panel.remove( CurrentData.canvas );
-		CurrentData.panel.revalidate();
+        menuPanel.setBackground(Color.cyan);
+		menuPanel.setLayout( new FlowLayout() );
+		menuPanel.add(boton);
         boton.addActionListener(lbutton);
+
+        CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
+        CurrentData.frame.revalidate();
+
     }
 	
 	@Override public void draw(){
-        System.out.println("reach menu draw");
+        //System.out.println("reach menu draw");
         //g = state.getGraphics();
 
         //cadena("hola A33", 14, 400, 350, Color.BLACK);
-        
 	}
 	
-	private void cadena (String cadena, int fontsize, int Xcor, int Ycor, Color spectroRGB ){
-		g.setColor(spectroRGB);
+	private void cadena (String cadena, int fontsize, int Xcor, int Ycor, Color color ){
+		g.setColor(color);
 		g.setFont(new Font("/Resources/fonts/fotana/upheavtt.ttf", Font.PLAIN, fontsize));
 		g.drawString(cadena, Xcor, Ycor);
 	}
@@ -53,10 +50,9 @@ public class Menu implements GameState {
 
 	
 	@Override public void world() {
-	System.out.println( " Entering World state"	 );
+		System.out.println( " Entering World state"	 );
         //para cambiar de estado solo usamos el initCanvas
         //y luego transicionamos
-        CurrentData.initCanvas();
         state.setGameState( state.getWorld());
 	}
 
@@ -75,17 +71,13 @@ public class Menu implements GameState {
 	}
 	
 	private class ButtonListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent evt) {
+			@Override public void actionPerformed(ActionEvent evt) {
 			System.out.println( "reach0");
 			if( evt.getSource() == boton ){
-				System.out.println( "reach");
+				System.out.println( "reach boton");
 				world();
 			}
-			
 		}
-		
 	}
 
 }

@@ -24,9 +24,10 @@ public class World extends JComponent implements  GameState {
     //AUXILIAR FIELDS ----------
     private Player jugador;
     private GameMap lvl;
-    private Tile[][] tiles, deco;
+    private Tile[][] tiles, deco,deco2;
     private Graphics g;
     private Animator anim;
+    private boolean firstCall = true;
     
     private Point iso, pos, origin, aux;
     //--------------------------
@@ -42,7 +43,7 @@ public class World extends JComponent implements  GameState {
 	}
 	
 	private void loadPlayer(){
-            jugador = new Player("lol",100, 192,192, 20, 20, 20,20 );
+            jugador = new Player("lol",100, 352,192, 20, 20, 20,20 );
             anim = jugador.getAnimation();
             pos = jugador.getPos();
             jugador.setOrigin( 32, 32 );
@@ -56,7 +57,8 @@ public class World extends JComponent implements  GameState {
         Level.generateLevel( 0 );
         lvl = Level.getLevel( 0 );
         tiles = lvl.getTiles();
-        deco = lvl.getDeco();
+        deco = lvl.getLayer1();
+        deco2 = lvl.getLayer2();
 	}
     
     private void idle(){
@@ -78,6 +80,7 @@ public class World extends JComponent implements  GameState {
     }
 
     private void drawMap(){
+        g = state.getGraphics();
         g.setColor(Color.BLACK);
         g.fillRect( 0,0,CurrentData.frame.getWidth(), CurrentData.frame.getHeight() );
         for( int i = 0; i < tiles.length; i++ ){
@@ -88,6 +91,15 @@ public class World extends JComponent implements  GameState {
         }//for
     }//func
 
+    private void drawDeco(){
+        g = state.getGraphics();
+        for( int i = 0; i < tiles.length; i++ ) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                g.drawImage( deco2[i][j].getSprite(), deco[i][j].getPos().x, deco[i][j].getPos().y, null );
+            }//inner for
+        }//for
+    }
+
     private void drawSquares(){	
         g.setColor( new Color(21, 104, 64));
         int x,y;
@@ -97,7 +109,7 @@ public class World extends JComponent implements  GameState {
             		x = (i*64)-32;
             		y = ( j*16 )-16;
             		g.drawLine( x, y, x+64, y + 32 );
-                         g.setColor( new Color(18, 89, 26));
+                    g.setColor( new Color(18, 89, 26));
             		g.drawLine( x, y,x+64, y-32);
             	}
             }//inner for
@@ -112,51 +124,51 @@ public class World extends JComponent implements  GameState {
         System.out.println("jugador ( " + (row) + ", " + (col) + " )" + 
         		"[ " + (row/64) + ", " + (col/16) + " ]" + "iso x,y( " + (iso.x) + ", " + (iso.y) + " )");
 
-        System.out.println( deco[4][6].getPos().x + "," + deco[4][6].getPos().y );
-
-        int x = deco[3][6].getPos().x;
-        int y = deco[3][6].getPos().y;
-        
-        g.setColor(Color.MAGENTA);
-        g.fillOval( (origin.x), (origin.y), 15, 15);
-        g.drawRect(pos.x, pos.y, 64, 64);     
-        
-        g.drawRect(x,y,64,32);     
-        g.drawLine(x , y+16, x+32, y); //p0p1
-        g.drawLine( x + 64, y + 16, x+32  , y); // p1p3 
-        g.drawLine( x, y+16, x+32, y + 32); // p0p2
-        g.drawLine( x + 64, y+16, x+32, y + 32); // p0p2
-        
         g.setColor( Color.red );
         g.drawRect(origin.x, origin.y, 64-48, 64-48);
         
         g.fillRect( (int)jugador.getBounds().getX(), (int)jugador.getBounds().getY(), (int)jugador.getBounds().getWidth(),
                 (int)jugador.getBounds().getHeight() );
-        
-        jugador.setOrigin( 24, 40 );
+
     }
-	
+
+    private void drawPlayer(){
+        if ( anim.getCurrentSheet() == 0 )
+            idle();
+        if( anim.getCurrentSheet() == 1 )
+            move();
+        if( anim.getCurrentSheet() == 2 )
+            attack();
+    }
+
+
+    private boolean overLap = false;
 	@Override public void draw(){
-        //System.out.println( "World draw" );
+        if( firstCall ){
+            CurrentData.initCanvas();
+            firstCall = false;
+        }
+        System.out.println( "World draw" );
 		g = state.getGraphics();
 
         //ESCENARIO ---------------------
-		drawMap();     
+        debug();
+		drawMap();
 		drawSquares();
-		debug();
 		// ------------------------------
-                     
-        // JUGADOR ---------------------  
-		if ( anim.getCurrentSheet() == 0 )
-            idle();
-		if( anim.getCurrentSheet() == 1 )
-            move();
-		if( anim.getCurrentSheet() == 2 )
-            attack();
-		// ------------------------------	
-		/*g.setColor(Color.white);
-		g.fillRect(40, 32, 100, 100);*/
-		
+
+        // JUGADOR ---------------------
+        overLap = (origin.y > deco2[iso.y][iso.x].getPos().y) && deco2[iso.y][iso.x].isOverLapAble() &&
+                !deco2[iso.y - 1][iso.x].isOverLapAble() && !deco2[iso.y + 1][iso.x].isOverLapAble();
+
+        if( overLap){
+            drawPlayer();
+            drawDeco();
+        }else{
+            drawDeco();
+            drawPlayer();
+        }
+		// ------------------------------
 	}
 	
 	@Override public void menu() {
@@ -181,13 +193,6 @@ public class World extends JComponent implements  GameState {
 	private void setData(){
         CurrentData.jugador = jugador;
         CurrentData.lvl = lvl;
-        CurrentData.tiles = tiles;
-        CurrentData.deco = deco;
-        CurrentData.anim = anim;
-        CurrentData.pos = pos;
-        CurrentData.iso = iso;
-        CurrentData.aux = aux;
-        CurrentData.origin = origin;
         CurrentData.lKey = lKey;
         CurrentData.state = state;
 	}
