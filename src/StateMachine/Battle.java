@@ -107,7 +107,7 @@ public class Battle implements GameState {
 
     private void drawGui(){
 
-        g.drawImage(vida.crop(0,0,64,32), pos.x-20, pos.y-42 , null );
+        g.drawImage(vida.crop(0,0,100,32), pos.x-20, pos.y-42 , null );
 
     }
 	@Override
