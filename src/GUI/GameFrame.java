@@ -14,7 +14,6 @@ public class GameFrame extends JFrame {
     private JPanel gamePanel;
     private JPanel menuPanel;
     private CardLayout cLayout;
-
      
 
     private JPanel panel( int width, int height ){
@@ -57,17 +56,14 @@ public class GameFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setBackground(Color.black);
+        this.setIconImage(getIconImage());
         //setResizable(false);
 
     }
-    @Override
-    public void setIconImage(Image image) {
-        super.setIconImage(getIconImage());
-    }
-    @Override
- public Image getIconImage(){
-        Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Resources/image/calaca.png"));
-        return retvalue;    
-    }
     public Canvas getCanvas(){ return canvas; }
+    @Override
+    public Image getIconImage(){
+        Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Resources/image/calcaca.png"));
+        return retvalue;
+    }
 }
