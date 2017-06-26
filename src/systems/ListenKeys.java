@@ -116,31 +116,29 @@ public class ListenKeys implements KeyListener {
         aux = jugador.getPos();
         int x = (int)deco[iso.y][iso.x].getPos().getX();
         int y = (int)deco[iso.y][iso.x].getPos().getY();
-        aux.x = x; aux.y = y;
+        aux.setLocation( x, y );
         System.out.println("reach");
-        if( up ){
+        if( up && currentPos != Pos.TOP ){
             if ( currentPos == Pos.MID ){
             	System.out.println(" mid to top");
                 currentPos = Pos.TOP;
                 aux.setLocation( aux.x - 32, aux.y - 16 );
-                }
-            else if( currentPos == Pos.BOT ){
+            }else if( currentPos == Pos.BOT ){
             	System.out.println("bot to mid");
                 currentPos = Pos.MID;
                 aux.setLocation( aux.x + 32, aux.y - 16 );
             }
         }
-        if( down ){
+        else if( down  && currentPos != Pos.BOT ){
             if( currentPos == Pos.TOP ){
             	System.out.println("top to mid");
                 currentPos = Pos.MID;
                 aux.setLocation( aux.x + 32, aux.y + 16 );
-            }
-            else if ( currentPos == Pos.MID ){
+            }else if ( currentPos == Pos.MID ){
             	System.out.println("mid to bot");
                 currentPos = Pos.BOT;
                 aux.setLocation( aux.x - 32, aux.y + 16 );
-                }
+            }
         }
 
     }
