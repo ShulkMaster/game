@@ -14,45 +14,52 @@ public class Menu implements GameState {
         private XBoton botonstart;
         private XBoton botonscore;
         private XBoton botonsalir;
-        Font fuentex = new Font("Resources/fonts/fotana/fuente.ttf", Font.PLAIN, 15);
+        private JLabel menuicon;
+        private Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", 2, 15);
         private ButtonListener lbutton = new ButtonListener();
 	
 	public Menu( GameStateManager newGameState ){
+        
 	state = newGameState;
+        //boton inicio
         botonstart = new XBoton(Color.BLUE, Color.CYAN);
         botonstart.setBackground(Color.CYAN);
-        botonstart.setBounds(436,317,130,25);
-        //botonscore.setFont(fuentex);
+        botonstart.setBounds(264,317,130,30); 
+        botonstart.setFont(fuentex);
         botonstart.setText("LordZerxes");
+        //boton de scorea
         botonscore = new XBoton(Color.BLUE, Color.CYAN);
         botonscore.setBackground(Color.CYAN);
-        botonscore.setBounds(436,370,130,25);
-        //botonscore.setFont(fuentex);
+        botonscore.setBounds(264,370,130,25);
+        botonscore.setFont(fuentex);
         botonscore.setText("Escores");
+        //boton salir 
+        botonsalir = new XBoton(Color.BLUE, Color.CYAN);
+        botonsalir.setBackground(Color.CYAN);
+        botonsalir.setBounds(264,450,130,30);
+        botonsalir.setFont(fuentex);
+        botonsalir.setText("Salir");
+        //icono del menu XD
+        menuicon = new JLabel();
+        menuicon.setText("Hola XD");
 	JPanel menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
         menuPanel.add(botonstart);
         menuPanel.add(botonscore);
+        menuPanel.add(botonsalir);
+        menuPanel.add(menuicon);
         botonstart.addActionListener(lbutton);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
         
-
     }
 	
 	@Override public void draw(){
         //System.out.println("reach menu draw");
         //g = state.getGraphics();
-
-        //cadena("hola A33", 14, 400, 350, Color.BLACK);
 	}
 	
-	private void cadena (String cadena, int fontsize, int Xcor, int Ycor, Color color ){
-		g.setColor(color);
-		g.setFont(new Font("/Resources/fonts/fotana/upheavtt.ttf", Font.PLAIN, fontsize));
-		g.drawString(cadena, Xcor, Ycor);
-	}
 	
 	@Override public void menu() {
         System.out.println( "Menu state" );

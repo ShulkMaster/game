@@ -15,6 +15,8 @@ public class GameFrame extends JFrame {
     private JPanel menuPanel;
     private CardLayout cLayout;
 
+     
+
     private JPanel panel( int width, int height ){
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(width, height));
@@ -58,6 +60,14 @@ public class GameFrame extends JFrame {
         //setResizable(false);
 
     }
-
+    @Override
+    public void setIconImage(Image image) {
+        super.setIconImage(getIconImage());
+    }
+    @Override
+ public Image getIconImage(){
+        Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Resources/image/calaca.png"));
+        return retvalue;    
+    }
     public Canvas getCanvas(){ return canvas; }
 }
