@@ -5,12 +5,10 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-
 import Data.CurrentData;
 import Data.SpriteSheet;
 import entity.Player;
 import maps.Tile;
-import org.omg.CORBA.Current;
 import systems.Animator;
 import systems.ImageLoader;
 
@@ -29,7 +27,6 @@ public class Battle implements GameState {
     private Animator anim;
     private SpriteSheet vida;
     private SpriteSheet barraVida;
-    private int life;
 
     private Point pos;
     //--------------------------
@@ -44,7 +41,6 @@ public class Battle implements GameState {
         BufferedImage image = ImageLoader.loadImage("/Resources/Sprites/vida.png");
         vida = new SpriteSheet(image);
         barraVida = new SpriteSheet(image);
-
     }
 
     private void idle(){
@@ -113,7 +109,7 @@ public class Battle implements GameState {
 
     private void drawGui(){
         g.drawImage( barraVida.crop(0,33,100,31), pos.x-20,pos.y-42,null );
-        g.drawImage(vida.crop(0,0, life,32), pos.x-20, pos.y-42 , null );
+        g.drawImage(vida.crop(0,0, 100,32), pos.x-20, pos.y-42 , null );
     }
 
 	@Override
@@ -121,7 +117,6 @@ public class Battle implements GameState {
 		if(!inBattle){
 			battle();
 			initGUI();
-			life = (int) jugador.getLife();
 			inBattle = true;
 			g.dispose();
 		}

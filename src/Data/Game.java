@@ -30,10 +30,10 @@ class Game{
 
     private void addListeners(){
     	if( gameStateMachine.getCurrentState() == gameStateMachine.getWorld() && firstCall) {
-			KeyListener[] l = gameStateMachine.getComponent().getKeyListeners();
-			window.getCanvas().addKeyListener(l[0]);
 			window.getCanvas().setFocusable(true);
 			window.getCanvas().requestFocus();
+			KeyListener[] l = gameStateMachine.getComponent().getKeyListeners();
+			window.getCanvas().addKeyListener(l[0]);
 			firstCall = false;
 		}
 	}

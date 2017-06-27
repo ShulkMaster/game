@@ -21,6 +21,7 @@ public class Menu implements GameState {
         private final JLabel fuego;
         private final Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", 2, 15);
         private final ButtonListener lbutton = new ButtonListener();
+        private final JPanel menuPanel;
         //private final AudioManager music; esto es adudio kk ;v
         //private final AudioMaster music;
         // inicio del constructor
@@ -66,7 +67,7 @@ public class Menu implements GameState {
         fuego.setBounds(0, 0,932 , 658);
 
         
-        JPanel menuPanel = CurrentData.menuPanel;
+        menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
         //adding all Jcomponens to the panel
@@ -103,6 +104,8 @@ public class Menu implements GameState {
 		//AQUI SE LLAMA AL MUNDO
         Level.generateLevel( 0 );
         systems.AudioManager.stopMusic();
+        CurrentData.gamePanel.grabFocus();
+        CurrentData.panel.requestFocus();
         state.setGameState( state.getWorld());
 	}
 
