@@ -73,6 +73,7 @@ public class World extends JComponent implements  GameState {
                         enemigo.getAnimation().state() , 0, 64, 64), enemigo.getPos().x , enemigo.getPos().y,
                 null );
     }
+
     private void idle(){
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
@@ -121,7 +122,7 @@ public class World extends JComponent implements  GameState {
             		x = (i*64)-32;
             		y = ( j*16 )-16;
             		g.drawLine( x, y, x+64, y + 32 );
-                    g.setColor( new Color(18, 89, 26));
+                    g.setColor( new Color(21, 104, 64));
             		g.drawLine( x, y,x+64, y-32);
             	}
             }//inner for
@@ -162,6 +163,7 @@ public class World extends JComponent implements  GameState {
             firstCall = false;
             enemigo = new Enemy(100, 400,400);
             enemigo.move("up");
+            this.transferFocus();
         }
         System.out.println( "World draw" );
 		g = state.getGraphics();

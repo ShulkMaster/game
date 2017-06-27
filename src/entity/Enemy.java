@@ -27,9 +27,6 @@ public class Enemy extends Character {
         for (int i = 0; i < sheet.length; i++) {
             sheet[i] = new SpriteSheet(null);
         }
-        //Cargamos las hojas de sprites que utilizara nuestro personaje
-        //Esto se puede lograr con cualquier tipo de objeto mediante
-        //la clase SpriteSheet e ImageLoader
         setSheet( 0,"/Resources/Sprites/idle.png");
     }
 

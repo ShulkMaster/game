@@ -29,6 +29,7 @@ public class Battle implements GameState {
     private Animator anim;
     private SpriteSheet vida;
     private SpriteSheet barraVida;
+    private int life;
 
     private Point pos;
     //--------------------------
@@ -85,7 +86,7 @@ public class Battle implements GameState {
                     x = (i*64)-32;
                     y = ( j*16 )-16;
                     g.drawLine( x, y, x+64, y + 32 );
-                    g.setColor( new Color(18, 89, 26));
+                    g.setColor( new Color(21, 104, 64));
                     g.drawLine( x, y,x+64, y-32);
                 }
             }//inner for
@@ -112,7 +113,7 @@ public class Battle implements GameState {
 
     private void drawGui(){
         g.drawImage( barraVida.crop(0,33,100,31), pos.x-20,pos.y-42,null );
-        g.drawImage(vida.crop(0,0, 100 ,32), pos.x-20, pos.y-42 , null );
+        g.drawImage(vida.crop(0,0, life,32), pos.x-20, pos.y-42 , null );
     }
 
 	@Override
@@ -120,6 +121,7 @@ public class Battle implements GameState {
 		if(!inBattle){
 			battle();
 			initGUI();
+			life = (int) jugador.getLife();
 			inBattle = true;
 			g.dispose();
 		}
