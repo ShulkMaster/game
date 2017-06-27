@@ -10,15 +10,14 @@ public class Enemy extends Character {
     private Animator animator;
     private Collider collider;
     private int velocity = 5;
-    private int x, y;
+    private int limit;
 
     public Enemy(int life, int x, int y) {
         super(life, x, y);
-        this.x = x;
-        this.y = y;
         init();
         animator = new Animator( sheet );
-        this.getPos().setLocation(x,y);
+        getPos().setLocation(x,y);
+        limit = (int) getPos().getY() - 40;
     }
 
     private void init(){
@@ -27,7 +26,7 @@ public class Enemy extends Character {
         for (int i = 0; i < sheet.length; i++) {
             sheet[i] = new SpriteSheet(null);
         }
-        setSheet( 0,"/Resources/Sprites/idle.png");
+        setSheet( 0,"/Resources/Sprites/walk.png");
     }
 
     private boolean notTop = true;
@@ -36,16 +35,21 @@ public class Enemy extends Character {
     public void move( ){
         if( notTop ){
             getPos().y--;
-            if( getPos().y == y ){
+            System.out.println( getPos().y);
+            System.out.println( limit);
+            if( getPos().y == limit ){
+                System.out.println("limit reach");
                 notTop = false;
                 notBot = true;
+                limit += 80;
             }
         }
         if( notBot ){
             getPos().y++;
-            if( getPos().y == y ){
+            if( getPos().y == limit ){
                 notBot = false;
                 notTop = true;
+                limit -= 80;
             }
         }
     }
