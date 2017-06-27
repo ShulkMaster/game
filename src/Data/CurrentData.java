@@ -3,20 +3,19 @@ package Data;
 import java.awt.*;
 
 import StateMachine.GameStateManager;
-import org.omg.CORBA.Current;
 import systems.ListenKeys;
 import entity.Player;
+import entity.Enemy;
 
 import javax.swing.*;
 
 import maps.GameMap;
-import maps.Tile;
-import systems.Animator;
 import GUI.GameFrame;
 
 public class CurrentData {	
     public static GameStateManager state;
     public static Player jugador;
+    public static Enemy enemigo;
     public static ListenKeys lKey;
     public static GameMap lvl;
     public static GameFrame frame;

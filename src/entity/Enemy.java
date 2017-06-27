@@ -34,7 +34,7 @@ public class Enemy extends Character {
 
     public void move( ){
         if( notTop ){
-            getPos().y--;
+            getPos().y -= velocity;
             System.out.println( getPos().y);
             System.out.println( limit);
             if( getPos().y == limit ){
@@ -45,7 +45,7 @@ public class Enemy extends Character {
             }
         }
         if( notBot ){
-            getPos().y++;
+            getPos().y += velocity;
             if( getPos().y == limit ){
                 notBot = false;
                 notTop = true;

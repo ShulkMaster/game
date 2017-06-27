@@ -33,22 +33,34 @@ public class ListenKeys implements KeyListener {
         iso = CurrentData.jugador.getIso();
         aux =  new Point();
     }
-    
+
+    private void  enemyCollision(){
+        if( jugador.getIso().x == CurrentData.enemigo.getIso().x &&  jugador.getIso().y == CurrentData.enemigo.getIso().y){
+            jugador.toIso();
+            jugador.getPos().setLocation( deco[iso.y][iso.x].getPos() );
+            state.setGameState( state.getBattle() );
+        }
+    }
+
     private boolean checkCollision( String axis ){
         try{
             switch( axis ){
                 case "up":
                     aux.setLocation(aux.x = deco[iso.y-1][iso.x].getPos().x, aux.y = deco[iso.y-1][iso.x].getPos().y);
-                    return deco[iso.y - 1][iso.x].isSolid() && jugador.checkCollision(aux.x, aux.y);
+                    enemyCollision();
+                    return (deco[iso.y - 1][iso.x].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 case "down":
                     aux.setLocation(aux.x = deco[iso.y+1][iso.x].getPos().x, aux.y = deco[iso.y+1][iso.x].getPos().y);
-                    return deco[iso.y + 1][iso.x].isSolid() && jugador.checkCollision(aux.x, aux.y);
+                    enemyCollision();
+                    return  (deco[iso.y + 1][iso.x].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 case "left":
                     aux.setLocation(aux.x = deco[iso.y][iso.x-1].getPos().x, aux.y = deco[iso.y][iso.x-1].getPos().y);
-                    return deco[iso.y][iso.x-1].isSolid() && jugador.checkCollision(aux.x, aux.y);
+                    enemyCollision();
+                    return  (deco[iso.y][iso.x-1].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 case "right":
                     aux.setLocation(aux.x = deco[iso.y][iso.x+1].getPos().x, aux.y = deco[iso.y][iso.x+1].getPos().y);
-                    return deco[iso.y][iso.x+1].isSolid() && jugador.checkCollision(aux.x, aux.y);
+                    enemyCollision();
+                    return  (deco[iso.y][iso.x+1].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 default:
                     return false;
         }
@@ -70,6 +82,7 @@ public class ListenKeys implements KeyListener {
         right = e.getKeyCode() == KeyEvent.VK_RIGHT;
         attack = e.getKeyCode() == KeyEvent.VK_SPACE;
         jugador.toIso();
+        CurrentData.enemigo.toIso();
         //-------------------------------------------
         
         //BATTLE VARIABLES

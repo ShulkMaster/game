@@ -168,6 +168,7 @@ public class World extends JComponent implements  GameState {
             loadLevel();
             firstCall = false;
             enemigo = new Enemy(100, 400,400);
+            CurrentData.enemigo = enemigo;
         }
 
         moveEnemy();
@@ -220,6 +221,7 @@ public class World extends JComponent implements  GameState {
         CurrentData.lvl = lvl;
         CurrentData.lKey = lKey;
         CurrentData.state = state;
+        CurrentData.enemigo = enemigo;
 	}
 
 }
