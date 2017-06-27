@@ -30,32 +30,24 @@ public class Enemy extends Character {
         setSheet( 0,"/Resources/Sprites/idle.png");
     }
 
-    public synchronized void move( String aux){
-        y -= 10;
-        Thread hilo = new Thread() {
-            @Override public void run(){
-                String axis = aux;
-                if( axis == "up") {
-                    while (axis == "up") {
-                        if( getPos().y != y ){
-                            y = ( getPos().y > y ) ? y--: y;
-                            axis = ( getPos().y == y ) ? "down": axis;
-                        }
-                    }
-                }
-                if( axis == "down"){
-                    while ( axis == "down") {
-                        if( getPos().y != y ){
-                            y = ( getPos().y < y ) ? y++: y;
-                            axis = ( getPos().y == y ) ? "up": axis;
-                        }
-                    }
+    private boolean notTop = true;
+    private boolean notBot = false;
 
-                }
-
+    public void move( ){
+        if( notTop ){
+            getPos().y--;
+            if( getPos().y == y ){
+                notTop = false;
+                notBot = true;
             }
-        };
-        hilo.start();
+        }
+        if( notBot ){
+            getPos().y++;
+            if( getPos().y == y ){
+                notBot = false;
+                notTop = true;
+            }
+        }
     }
 
     public void setSheet( int i, String path ){ sheet[i] = new SpriteSheet( ImageLoader.loadImage(path) ); }

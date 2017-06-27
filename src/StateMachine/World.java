@@ -155,6 +155,10 @@ public class World extends JComponent implements  GameState {
     }
 
 
+    private void moveEnemy(){
+        enemigo.move();
+    }
+
     private boolean overLap = false;
 	@Override public void draw(){
         if( firstCall ){
@@ -162,8 +166,10 @@ public class World extends JComponent implements  GameState {
             loadLevel();
             firstCall = false;
             enemigo = new Enemy(100, 400,400);
-            enemigo.move("up");
         }
+
+        moveEnemy();
+
         System.out.println( "World draw" );
 		g = state.getGraphics();
 
