@@ -25,7 +25,6 @@ class Game{
     	window = new GameFrame();
     	window.init( (int) dimension.getWidth(), (int) dimension.getHeight() );
 		gameStateMachine = new GameStateManager( dimension );
-		window.getCanvas().requestFocus();
 		window.getCanvas().createBufferStrategy(2);
     }
 
@@ -33,6 +32,8 @@ class Game{
     	if( gameStateMachine.getCurrentState() == gameStateMachine.getWorld() && firstCall) {
 			KeyListener[] l = gameStateMachine.getComponent().getKeyListeners();
 			window.getCanvas().addKeyListener(l[0]);
+			window.getCanvas().setFocusable(true);
+			window.getCanvas().requestFocus();
 			firstCall = false;
 		}
 	}

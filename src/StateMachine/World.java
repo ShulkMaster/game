@@ -163,7 +163,6 @@ public class World extends JComponent implements  GameState {
             firstCall = false;
             enemigo = new Enemy(100, 400,400);
             enemigo.move("up");
-            this.transferFocus();
         }
         System.out.println( "World draw" );
 		g = state.getGraphics();
