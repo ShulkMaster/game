@@ -54,6 +54,6 @@ public class Enemy extends Character {
         }
     }
 
-    public void setSheet( int i, String path ){ sheet[i] = new SpriteSheet( ImageLoader.loadImage(path) ); }
+    private void setSheet(int i, String path){ sheet[i] = new SpriteSheet( ImageLoader.loadImage(path) ); }
     public Animator getAnimation(){ return animator; }
 }

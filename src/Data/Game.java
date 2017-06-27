@@ -25,18 +25,9 @@ class Game{
     	window = new GameFrame();
     	window.init( (int) dimension.getWidth(), (int) dimension.getHeight() );
 		gameStateMachine = new GameStateManager( dimension );
+		window.getCanvas().requestFocus();
 		window.getCanvas().createBufferStrategy(2);
     }
-
-    private void addListeners(){
-    	if( gameStateMachine.getCurrentState() == gameStateMachine.getWorld() && firstCall) {
-			window.getCanvas().setFocusable(true);
-			window.getCanvas().requestFocus();
-			KeyListener[] l = gameStateMachine.getComponent().getKeyListeners();
-			window.getCanvas().addKeyListener(l[0]);
-			firstCall = false;
-		}
-	}
 
     private void update(){
         gameStateMachine.draw();
@@ -46,7 +37,7 @@ class Game{
     	try{
 			bs = window.getCanvas().getBufferStrategy();
 			if(bs == null){
-				window.getCanvas().createBufferStrategy(3);
+				window.getCanvas().createBufferStrategy(2);
 				return;
 			}
 			System.out.println("Menu stopped");
@@ -66,7 +57,6 @@ class Game{
 						bs = window.getCanvas().getBufferStrategy();
 						g = bs.getDrawGraphics();
 						gameStateMachine.setG(g);
-						//addListeners();
 						update();
 						bs.show();
 						g.dispose();
@@ -79,7 +69,6 @@ class Game{
 			}
 		};
         t.start();
-
     }
 
 }
