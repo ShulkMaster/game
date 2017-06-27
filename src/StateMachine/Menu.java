@@ -7,8 +7,8 @@ import javax.swing.*;
 import GUI.XBoton;
 import Data.CurrentData;
 import maps.Level;
-import systems.AudioManager;
-import systems.AudioMaster;
+/* import systems.AudioManager;
+import systems.AudioMaster; */
 
 public class Menu implements GameState {
 
@@ -26,7 +26,7 @@ public class Menu implements GameState {
         // inicio del constructor
 	public Menu( GameStateManager newGameState ){
         
-	state = newGameState;
+        state = newGameState;
         /*musica plox 
         audio manager es una kk no funciona :v
         music = new AudioManager();
@@ -66,7 +66,7 @@ public class Menu implements GameState {
         fuego.setBounds(0, 0,932 , 658);
 
         
-	JPanel menuPanel = CurrentData.menuPanel;
+        JPanel menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
         //adding all Jcomponens to the panel
@@ -80,8 +80,14 @@ public class Menu implements GameState {
         //AudioMaster musica = new AudioMaster("C:\\Users\\David\\Documents\\NetBeansProjects\\Juego\\src\\Resources\\Music\\emo.mp3");
         
     }
-	
+
+    private boolean firstCall = true;
 	@Override public void draw(){
+	    if( firstCall ) {
+            System.out.println("reach");
+            systems.AudioManager.playMusic("src/Resources/Music/menu.wav");
+            firstCall = false;
+        }
         //System.out.println("reach menu draw");
         //g = state.getGraphics();
 	}
@@ -96,6 +102,7 @@ public class Menu implements GameState {
 		System.out.println( " Entering World state"	 );
 		//AQUI SE LLAMA AL MUNDO
         Level.generateLevel( 0 );
+        systems.AudioManager.stopMusic();
         state.setGameState( state.getWorld());
 	}
 

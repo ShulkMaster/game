@@ -11,34 +11,36 @@ public class AudioManager {
 	
 	//private static AudioStream music;
 	private static AudioStream sound;
+	private static Thread MusicPlayer;
+	private static ContinuousAudioDataStream loopyLoopytyLoop;
+	//private static Clip clip;
 	
-    /**
-     *
-     * @param path
-     */
     public static void playMusic( final String path){
-		Thread thread = new Thread() {
-                        @Override
-			public void run(){
-        try{
-	        /* music = new AudioStream(new FileInputStream(path));
-	        for(;;){
-		        AudioPlayer.player.start(music);	
-	        }*/
-        	 Clip clip = AudioSystem.getClip();
-             AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-            		 AudioManager.class.getResourceAsStream(path)
-            		 );
-             clip.open(inputStream);
-             clip.start(); 
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-			}
-		};
-		thread.start();        
+		MusicPlayer = new Thread(){
+		    @Override public void run() {
+                try {
+                    AudioStream music = new AudioStream(new FileInputStream(path)); //ruta incluye src/
+                    AudioData data = music.getData();
+                    loopyLoopytyLoop = new ContinuousAudioDataStream( data);
+                    AudioPlayer.player.start(loopyLoopytyLoop);
+                    /*clip = AudioSystem.getClip();
+                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+                            AudioManager.class.getResourceAsStream(path)); // usa ruta que no incluye src/
+                    clip.open(inputStream);
+                    clip.start();*/
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+		MusicPlayer.start();
 	}
-	
+
+	public static void stopMusic(){
+        //clip.stop();
+        AudioPlayer.player.stop( loopyLoopytyLoop);
+
+    }
 	public static void playSound( String path ){
         try{
 	        sound = new AudioStream(new FileInputStream(path));

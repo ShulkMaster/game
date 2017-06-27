@@ -28,18 +28,23 @@ public class Battle implements GameState {
     private Graphics g;
     private Animator anim;
     private SpriteSheet vida;
+    private SpriteSheet barraVida;
 
     private Point pos;
-
     //--------------------------
-    //
+
     Battle(GameStateManager newGameState){
 		state = newGameState;
         //this.setFocusable(true);
         //this.addKeyListener( lKey );
+	}
+
+	private void initGUI(){
         BufferedImage image = ImageLoader.loadImage("/Resources/Sprites/vida.png");
         vida = new SpriteSheet(image);
-	}
+        barraVida = new SpriteSheet(image);
+
+    }
 
     private void idle(){
         //aqui esta idle, idle en nuestro contexto
@@ -106,14 +111,15 @@ public class Battle implements GameState {
     }
 
     private void drawGui(){
-
+        g.drawImage( barraVida.crop(0,33,100,31), pos.x-20,pos.y-42,null );
         g.drawImage(vida.crop(0,0,100,32), pos.x-20, pos.y-42 , null );
-
     }
+
 	@Override
 	public void draw(){
 		if(!inBattle){
 			battle();
+			initGUI();
 			inBattle = true;
 			g.dispose();
 		}
