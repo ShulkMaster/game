@@ -30,8 +30,7 @@ public class World extends JComponent implements  GameState {
     private Graphics g;
     private Animator anim;
     private boolean firstCall = true;
-    private Thread hilo;
-    
+
     private Point iso, pos, origin, aux;
     //--------------------------
     
@@ -66,7 +65,6 @@ public class World extends JComponent implements  GameState {
         CurrentData.canvas.addKeyListener(lKey);
         this.setFocusable(true);
         this.addKeyListener( lKey );
-        hilo = new Thread();
 	}
 
 	private void drawEnemy(){
