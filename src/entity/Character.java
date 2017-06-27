@@ -6,12 +6,17 @@ public abstract class Character extends GameObject {
     private float life;
     private String name;
 
-    public Character( String name, float life ){
+    public Character( String name, int life ){
         this.name = name;
         this.life = life;
     }
-    Character(String name, float life, int x, int y){
+
+    Character(String name, int life, int x, int y){
         super( x, y );
+    }
+
+    Character( int life, int x, int y ){
+        super( x, y);
     }
 
     public float getLife() { return life; }

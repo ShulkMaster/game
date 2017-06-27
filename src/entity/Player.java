@@ -16,7 +16,7 @@ public class Player extends Character {
      * Atributos/funciones del sistema de combate.
      */
 
-    public Player( String name, float life, int x, int y, int w, int h, int ox, int oy ){
+    public Player( String name, int life, int x, int y, int w, int h, int ox, int oy ){
         super( name, life, x, y );
         init();
         animator = new Animator( sheet );

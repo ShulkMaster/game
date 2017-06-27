@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 
 import Data.CurrentData;
 import entity.Player;
+import entity.Enemy;
 import maps.GameMap;
 import maps.Level;
 import maps.Tile;
@@ -23,6 +24,7 @@ public class World extends JComponent implements  GameState {
 
     //AUXILIAR FIELDS ----------
     private Player jugador;
+    private Enemy enemigo;
     private GameMap lvl;
     private Tile[][] tiles, deco,deco2;
     private Graphics g;
@@ -43,7 +45,7 @@ public class World extends JComponent implements  GameState {
 	}
 	
 	private void loadPlayer(){
-            jugador = new Player("lol",100, 352,192, 20, 20, 20,20 );
+            jugador = new Player("lol",50, 352,192, 20, 20, 20,20 );
             anim = jugador.getAnimation();
             pos = jugador.getPos();
             jugador.setOrigin( 32, 32 );
@@ -64,7 +66,13 @@ public class World extends JComponent implements  GameState {
         this.setFocusable(true);
         this.addKeyListener( lKey );
 	}
-    
+
+	private void drawEnemy(){
+        g.drawImage( enemigo.getAnimation().getSprites(
+                enemigo.getAnimation().getCurrentSheet()).crop(
+                        enemigo.getAnimation().state() , 0, 64, 64), enemigo.getPos().x , enemigo.getPos().y,
+                null );
+    }
     private void idle(){
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
@@ -152,6 +160,8 @@ public class World extends JComponent implements  GameState {
             CurrentData.initCanvas();
             loadLevel();
             firstCall = false;
+            enemigo = new Enemy(100, 400,400);
+            enemigo.move("up");
         }
         System.out.println( "World draw" );
 		g = state.getGraphics();
@@ -160,6 +170,7 @@ public class World extends JComponent implements  GameState {
         debug();
 		drawMap();
 		drawSquares();
+		drawEnemy();
 		// ------------------------------
 
         // JUGADOR ---------------------

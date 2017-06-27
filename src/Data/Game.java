@@ -45,7 +45,7 @@ class Game{
     	try{
 			bs = window.getCanvas().getBufferStrategy();
 			if(bs == null){
-				window.getCanvas().createBufferStrategy(2);
+				window.getCanvas().createBufferStrategy(3);
 				return;
 			}
 			System.out.println("Menu stopped");
