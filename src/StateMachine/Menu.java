@@ -13,6 +13,8 @@ import systems.AudioMaster; */
 
 public class Menu implements GameState {
 
+    private JLabel texto;
+
 	private final GameStateManager state;
         private final XBoton botonstart;
         private final XBoton botonscore;
@@ -136,14 +138,10 @@ public class Menu implements GameState {
 			}
                         if( evt.getSource() == botonscore ){                           
                             System.out.println( "score listener online");
-                            submenuPanel.setVisible(true);
-                                
-                                
-                                
-                                
-                                
-                               
-                                
+                            //CurrentData.menuPanel.add( texto );
+                            CurrentData.layout.show( CurrentData.panel, CurrentData.score);
+                            CurrentData.frame.revalidate();
+                            //submenuPanel.setVisible(true);
 			}
                         if( evt.getSource() == botonsalir ){
 				System.exit(0);

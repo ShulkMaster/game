@@ -13,6 +13,7 @@ public class GameFrame extends JFrame {
     private JPanel panel;
     private JPanel gamePanel;
     private JPanel menuPanel;
+    private JPanel scorePanel;
     private CardLayout cLayout;
      
 
@@ -37,10 +38,12 @@ public class GameFrame extends JFrame {
 
         gamePanel = panel( width, height  );
         menuPanel = panel( width, height );
+        scorePanel = panel ( width, height );
 
         gamePanel.add(canvas);
         panel.add( menuPanel, CurrentData.menu);
         panel.add(gamePanel, CurrentData.game);
+        panel.add( scorePanel, CurrentData.score );
 
 		CurrentData.layout = this.cLayout;
         CurrentData.panel = this.panel;

@@ -26,6 +26,7 @@ public class CurrentData {
     public static CardLayout layout;
     public static final String menu = "menu";
     public static final String game = "game";
+    public static final String score = "score";
 
     public static void initCanvas(){
         layout.show(panel, game);
