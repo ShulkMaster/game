@@ -18,10 +18,12 @@ public class Menu implements GameState {
         private final XBoton botonsalir;
         private final JLabel menuicon;
         private final JLabel fuego;
+        private final JLabel fuego2;
         private final Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 25);
         private final ButtonListener lbutton = new ButtonListener();
         private final JPanel menuPanel;
         private final JPanel escorepanel = CurrentData.scorePanel;
+        public ScoreDrawer PaneldePuntajes;
         //private final AudioManager music; esto es adudio kk ;v
         //private final AudioMaster music;
         // inicio del constructor
@@ -30,8 +32,8 @@ public class Menu implements GameState {
         /*musica plox 
         audio manager es una kk no funciona :v
         music = new AudioManager();
-        ninguno de los audio manager es capaz de encontrar el puto mp3 :v en ruta relativa solo en ruta absoluta
-        por la puta ponagele fix plox
+        ninguno de los audio manager es capaz de encontrar el mp3 :v en ruta relativa solo en ruta absoluta
+        ponagele fix plox
         music = new AudioMaster(this.getClass().getResourceAsStream("/Resources/Music/epicmusic.mp3"));
         boton inicio
         */  
@@ -63,9 +65,14 @@ public class Menu implements GameState {
         fuego = new JLabel();
         fuego.setIcon(getIconImage("/Resources/image/fire.gif"));
         fuego.setBounds(0, 0,932 , 658);
+        //auxiliar del fuego
+        fuego2 = fuego;
         // incializamos el subpanel JTable y lo dejamos listo para el overlaping              
         //inicializar el Jpanel que contiene todo
-
+        escorepanel.setBackground(Color.BLACK);
+        escorepanel.setLayout(null);
+        PaneldePuntajes = new ScoreDrawer(escorepanel);
+        //agregamos todos los componente a menu
         menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
@@ -130,13 +137,9 @@ public class Menu implements GameState {
 			}
                         if( evt.getSource() == botonscore ){                           
                             System.out.println( "score listener online");
-                            escorepanel.setBackground(Color.BLACK);
-                            escorepanel.setLayout(null);
-                            new ScoreDrawer(escorepanel);
-                            escorepanel.add(fuego);
-                            CurrentData.layout.show( CurrentData.panel, CurrentData.score);                          
+                            escorepanel.add(fuego2);  
+                            CurrentData.layout.show( CurrentData.panel, CurrentData.score);
                             CurrentData.frame.revalidate();
-                            //submenuPanel.setVisible(true);
 			}
             if( evt.getSource() == botonsalir ){
 				System.exit(0);
