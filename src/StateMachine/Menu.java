@@ -133,14 +133,12 @@ public class Menu implements GameState {
 				System.out.println( "reach boton");
 				world();
 			}
-                        if( evt.getSource() == botonscore ){                           
-                            System.out.println( "score listener online");
-                            //CurrentData.menuPanel.add( texto );
-                            CurrentData.layout.show( CurrentData.panel, CurrentData.score);
-                            CurrentData.frame.revalidate();
-                            //submenuPanel.setVisible(true);
+            if( evt.getSource() == botonscore ){
+                System.out.println( "score listener online");
+                CurrentData.layout.show( CurrentData.panel, CurrentData.score);
+                CurrentData.frame.revalidate();
 			}
-                        if( evt.getSource() == botonsalir ){
+            if( evt.getSource() == botonsalir ){
 				System.exit(0);
 			}
 		}
