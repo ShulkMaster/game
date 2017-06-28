@@ -24,7 +24,7 @@ public class World extends JComponent implements  GameState {
 
     //AUXILIAR FIELDS ----------
     private Player jugador;
-    private Enemy enemigo;
+    private Enemy[] enemigo;
     private GameMap lvl;
     private Tile[][] tiles, deco,deco2;
     private Graphics g;
@@ -45,7 +45,7 @@ public class World extends JComponent implements  GameState {
 	}
 	
 	private void loadPlayer(){
-            jugador = new Player(100, 352,192, 20, 20, 20,20, 84 );
+            jugador = new Player(100, 352,192, 20, 20, 20,20,0) ;
             anim = jugador.getAnimation();
             pos = jugador.getPos();
             jugador.setOrigin( 32, 32 );
@@ -60,33 +60,36 @@ public class World extends JComponent implements  GameState {
         tiles = lvl.getTiles();
         deco = lvl.getLayer1();
         deco2 = lvl.getLayer2();
+        enemigo = new Enemy[1];
+        enemigo[0] = new Enemy(100, 400,400);
         setData();
         lKey = new ListenKeys();
+        firstCall = false;
         CurrentData.canvas.addKeyListener(lKey);
         this.setFocusable(true);
         this.addKeyListener( lKey );
 	}
 
 	private void drawEnemy(){
-        g.drawImage( enemigo.getAnimation().getSprites(
-                enemigo.getAnimation().getCurrentSheet()).crop(
-                        enemigo.getAnimation().state() , 0, 64, 64), enemigo.getPos().x , enemigo.getPos().y,
+        g.drawImage( enemigo[0].getAnimation().getSprites(
+                enemigo[0].getAnimation().getCurrentSheet()).crop(
+                        enemigo[0].getAnimation().state() , 0, 64, 64),
+                enemigo[0].getPos().x , enemigo[0].getPos().y,
                 null );
     }
 
     private void idle(){
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
-		//g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
-        anim.setPixels(0);
-        g.drawImage(anim.getSheet().crop( anim.nextFrame(254), 0, 84, 84), pos.x , pos.y, null );
+        g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
+        //g.drawImage(anim.getSheet().crop( anim.nextFrame(0,254), 0, 84, 84), pos.x , pos.y, null );
     }
 
     private void move(){
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
-		//g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
-        g.drawImage(anim.getSheet().crop( anim.nextFrame(672), 0, 84, 84), pos.x , pos.y, null );
+		g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
+        //g.drawImage(anim.getSheet().crop( anim.nextFrame(254,672), 0, 84, 84), pos.x , pos.y, null );
     }
     
     private void attack(){
@@ -161,7 +164,7 @@ public class World extends JComponent implements  GameState {
 
 
     private void moveEnemy(){
-        enemigo.move();
+        enemigo[0].move();
     }
 
     private boolean overLap = false;
@@ -169,9 +172,6 @@ public class World extends JComponent implements  GameState {
         if( firstCall ){
             CurrentData.initCanvas();
             loadLevel();
-            firstCall = false;
-            enemigo = new Enemy(100, 400,400);
-            CurrentData.enemigo = enemigo;
         }
 
         moveEnemy();

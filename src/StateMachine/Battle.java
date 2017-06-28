@@ -8,9 +8,11 @@ import java.awt.image.BufferedImage;
 import Data.CurrentData;
 import Data.SpriteSheet;
 import entity.Player;
+import entity.Enemy;
 import maps.Tile;
 import systems.Animator;
 import systems.ImageLoader;
+
 
 @SuppressWarnings("serial")
 public class Battle implements GameState {
@@ -22,11 +24,12 @@ public class Battle implements GameState {
 
     //AUXILIAR FIELDS ----------
     private Player jugador;
+    private Enemy[] enemigo;
     private Tile[][] tiles, deco,deco2;
     private Graphics g;
     private Animator anim;
-    private SpriteSheet vida;
-    private SpriteSheet barraVida;
+    private SpriteSheet vida,vidaEnemigo;
+    private SpriteSheet barraVida,barraEnemigo;
 
     private Point pos;
     //--------------------------
@@ -41,6 +44,14 @@ public class Battle implements GameState {
         BufferedImage image = ImageLoader.loadImage("/Resources/Sprites/vida.png");
         vida = new SpriteSheet(image);
         barraVida = new SpriteSheet(image);
+    }
+
+    private void drawEnemy(){
+        g.drawImage( enemigo[0].getAnimation().getSprites(
+                enemigo[0].getAnimation().getCurrentSheet()).crop(
+                enemigo[0].getAnimation().state() , 0, 64, 64),
+                enemigo[0].getPos().x , enemigo[0].getPos().y,
+                null );
     }
 
     private void idle(){
@@ -129,6 +140,7 @@ public class Battle implements GameState {
 		// ------------------------------
 
         // JUGADOR ---------------------
+        drawEnemy();
         drawPlayer();
 		// ------------------------------
         drawDeco();

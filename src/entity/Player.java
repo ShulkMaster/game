@@ -23,6 +23,7 @@ public class Player extends Character {
             animator = new Animator( sheet[0], pixels );
         else
             animator = new Animator( sheet );
+
         collider = new Collider( x, y , width, height, ox, oy );
     }
 
@@ -37,10 +38,10 @@ public class Player extends Character {
         //Esto se puede lograr con cualquier tipo de objeto mediante
         //la clase SpriteSheet e ImageLoader
 
-        setSheet( 0,"/Resources/Sprites/jugador.png");
-        //setSheet( 0,"/Resources/Sprites/idle.png");
-        //setSheet( 1,"/Resources/Sprites/walk.png");
-        //setSheet( 2,"/Resources/Sprites/attack.png");
+        //setSheet( 0,"/Resources/Sprites/jugador.png");
+        setSheet( 0,"/Resources/Sprites/idle.png");
+        setSheet( 1,"/Resources/Sprites/walk.png");
+        setSheet( 2,"/Resources/Sprites/attack.png");
     }
     
     public void move( String axis ){

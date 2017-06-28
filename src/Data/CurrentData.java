@@ -15,7 +15,7 @@ import GUI.GameFrame;
 public class CurrentData {	
     public static GameStateManager state;
     public static Player jugador;
-    public static Enemy enemigo;
+    public static Enemy[] enemigo;
     public static ListenKeys lKey;
     public static GameMap lvl;
     public static GameFrame frame;

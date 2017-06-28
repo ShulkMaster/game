@@ -86,7 +86,7 @@ public class MapLoader {
     	MapLoader.level = level;
     	try{
             //Cargamos el archivo json
-            Object data = parser.parse( new FileReader("src/Resources/Map/map2.json") );
+            Object data = parser.parse( new FileReader("src/Resources/Map/map.json") );
             JSONObject map = (JSONObject) data;
             //-----------------------
 

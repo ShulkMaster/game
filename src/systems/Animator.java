@@ -5,7 +5,8 @@ import Data.SpriteSheet;
 public class Animator {
 	private SpriteSheet[] sheet = new SpriteSheet[3];
 	private SpriteSheet singleSheet;
-    private int initialSpritePixels = 0;
+    private boolean firstCall = true;
+    private int initialSpritePixels ;
     private int currentSheet = 0;
     private int nextFrame[];
     private int nextFrameSingle;
@@ -28,7 +29,7 @@ public class Animator {
         calculatePixelsPerFrame();
     }
 
-    private void fixedInit( int pixels){
+    private void fixedInit( int pixels ){
         nextFrameSingle = pixels;
     }
 
@@ -42,12 +43,24 @@ public class Animator {
         init();
     }
 
-    private int init;
-    public int nextFrame(int limit){
-        if( initialSpritePixels >= singleSheet.sheetWidht() || initialSpritePixels > limit )
+    public int nextFrame(int start, int limit){
+        if( firstCall ){
+            initialSpritePixels = start;
+            firstCall = false;
+            System.out.println("animr reach");
+        }
+        System.out.println(initialSpritePixels);
+        System.out.println(firstCall);
+        System.out.println(nextFrameSingle);
+        if( initialSpritePixels >= singleSheet.sheetWidht() ){
             initialSpritePixels -= limit;
+            System.out.println("true reach");
+            firstCall = true;
+        }
+        System.out.println( initialSpritePixels += nextFrameSingle );
         return initialSpritePixels += nextFrameSingle;
     }
+
     public int state(){
         //esta funcion se utilizada para devolver que animacion se esta reproduciendo.
         switch( currentSheet ){

@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import Data.CurrentData;
 import StateMachine.GameStateManager;
 import entity.Player;
+import entity.Enemy;
 import maps.Tile;
 
 public class ListenKeys implements KeyListener {
@@ -34,12 +35,17 @@ public class ListenKeys implements KeyListener {
         aux =  new Point();
     }
 
-    private void  enemyCollision(){
-        if( jugador.getIso().x == CurrentData.enemigo.getIso().x &&  jugador.getIso().y == CurrentData.enemigo.getIso().y){
-            jugador.toIso();
-            jugador.getPos().setLocation( deco[iso.y][iso.x].getPos() );
-            state.setGameState( state.getBattle() );
-        }
+    private void enemyCollision() {
+        //for (Enemy enem : CurrentData.enemigo) {
+        Enemy enem = CurrentData.enemigo[0];
+            if (jugador.getIso().x == enem.getIso().x && jugador.getIso().y == enem.getIso().y) {
+                jugador.toIso();
+                jugador.getPos().setLocation(deco[iso.y][iso.x].getPos());
+                enem.toIso();
+                enem.getPos().setLocation(deco[iso.y][iso.x + 1].getPos());
+                state.setGameState(state.getBattle());
+            }
+        //}
     }
 
     private boolean checkCollision( String axis ){
@@ -82,7 +88,7 @@ public class ListenKeys implements KeyListener {
         right = e.getKeyCode() == KeyEvent.VK_RIGHT;
         attack = e.getKeyCode() == KeyEvent.VK_SPACE;
         jugador.toIso();
-        CurrentData.enemigo.toIso();
+        CurrentData.enemigo[0].toIso();
         //-------------------------------------------
         
         //BATTLE VARIABLES
@@ -95,10 +101,6 @@ public class ListenKeys implements KeyListener {
         if( e.getKeyCode() == KeyEvent.VK_E  && state.getCurrentState() != state.getBattle()) {
             jugador.toIso();
             jugador.getPos().setLocation( deco[iso.y][iso.x].getPos() );
-            /*aux = jugador.getPos();
-            int x = (int)deco[iso.y][iso.x].getPos().getX();
-            int y = (int)deco[iso.y][iso.x].getPos().getY();
-            aux.setLocation( x, y ); */
             state.setGameState(state.getBattle());
         }
     }//func
@@ -106,25 +108,25 @@ public class ListenKeys implements KeyListener {
     private void inWorld(){
         if( left && !checkCollision("left") ){
             jugador.move("left");
-            //anim.setCurrentSheet(1);
+            anim.setCurrentSheet(1);
         }
         if( right  && !checkCollision("right") ){
             jugador.move("right");
-            //anim.setCurrentSheet(1);
+            anim.setCurrentSheet(1);
         }
 
         if( up && !checkCollision("up") ){
             jugador.move("up");
-            //anim.setCurrentSheet(1);
+            anim.setCurrentSheet(1);
         }
         if( down && !checkCollision("down") ){
             jugador.move("down");
-            //anim.setCurrentSheet(1);
+            anim.setCurrentSheet(1);
         }
         if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ){
             //anim.setPixels( 0 );
             System.out.println("ATTACK");
-            //anim.setCurrentSheet(2);
+            anim.setCurrentSheet(2);
        }
        
     }
