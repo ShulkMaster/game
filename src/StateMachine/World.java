@@ -45,7 +45,7 @@ public class World extends JComponent implements  GameState {
 	}
 	
 	private void loadPlayer(){
-            jugador = new Player("lol",50, 352,192, 20, 20, 20,20 );
+            jugador = new Player(100, 352,192, 20, 20, 20,20, 84 );
             anim = jugador.getAnimation();
             pos = jugador.getPos();
             jugador.setOrigin( 32, 32 );
@@ -77,19 +77,22 @@ public class World extends JComponent implements  GameState {
     private void idle(){
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
-		g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
+		//g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
+        anim.setPixels(0);
+        g.drawImage(anim.getSheet().crop( anim.nextFrame(254), 0, 84, 84), pos.x , pos.y, null );
     }
 
     private void move(){
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
-		g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
+		//g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
+        g.drawImage(anim.getSheet().crop( anim.nextFrame(672), 0, 84, 84), pos.x , pos.y, null );
     }
     
     private void attack(){
-		g.drawImage( anim.getSprites(2).crop( anim.state(), 0, 96, 96), pos.x, pos.y-38, null );
+		/*g.drawImage( anim.getSprites(2).crop( anim.state(), 0, 96, 96), pos.x, pos.y-38, null );
 		if( anim.state() >= 800 ) // el limite de la sprite sheet es 800 asi que al llegar se acabo el ataque
-		    anim.setCurrentSheet(0);
+		    anim.setCurrentSheet(0);*/
     }
 
     private void drawMap(){

@@ -138,7 +138,7 @@ public class Menu implements GameState {
                             CurrentData.frame.revalidate();
                             //submenuPanel.setVisible(true);
 			}
-                        if( evt.getSource() == botonsalir ){
+            if( evt.getSource() == botonsalir ){
 				System.exit(0);
 			}
 		}

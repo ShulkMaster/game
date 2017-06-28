@@ -16,13 +16,17 @@ public class Player extends Character {
      * Atributos/funciones del sistema de combate.
      */
 
-    public Player( String name, int life, int x, int y, int w, int h, int ox, int oy ){
-        super( name, life, x, y );
+    public Player( int life, int x, int y, int width, int height, int ox, int oy, int pixels ){
+        super( life, x, y );
         init();
-        animator = new Animator( sheet );
-        collider = new Collider( x, y , w, h, ox, oy );
+        if( pixels != 0 )
+            animator = new Animator( sheet[0], pixels );
+        else
+            animator = new Animator( sheet );
+        collider = new Collider( x, y , width, height, ox, oy );
     }
-    
+
+
     private void init(){
         //se usa para inicializar
         sheet = new SpriteSheet[3];
@@ -32,9 +36,11 @@ public class Player extends Character {
         //Cargamos las hojas de sprites que utilizara nuestro personaje
         //Esto se puede lograr con cualquier tipo de objeto mediante
         //la clase SpriteSheet e ImageLoader
-        setSheet( 0,"/Resources/Sprites/idle.png");
-        setSheet( 1,"/Resources/Sprites/walk.png");
-        setSheet( 2,"/Resources/Sprites/attack.png");
+
+        setSheet( 0,"/Resources/Sprites/jugador.png");
+        //setSheet( 0,"/Resources/Sprites/idle.png");
+        //setSheet( 1,"/Resources/Sprites/walk.png");
+        //setSheet( 2,"/Resources/Sprites/attack.png");
     }
     
     public void move( String axis ){

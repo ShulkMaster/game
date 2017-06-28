@@ -4,9 +4,11 @@ import Data.SpriteSheet;
 
 public class Animator {
 	private SpriteSheet[] sheet = new SpriteSheet[3];
+	private SpriteSheet singleSheet;
     private int initialSpritePixels = 0;
     private int currentSheet = 0;
     private int nextFrame[];
+    private int nextFrameSingle;
  
     private void calculatePixelsPerFrame(){
         //Esta funcion realiza operaciones matematicas para
@@ -25,12 +27,27 @@ public class Animator {
         nextFrame = new int[sheet.length];
         calculatePixelsPerFrame();
     }
-    
+
+    private void fixedInit( int pixels){
+        nextFrameSingle = pixels;
+    }
+
+    public Animator( SpriteSheet sheet , int pixels ){
+        this.singleSheet = sheet;
+        fixedInit( pixels);
+    }
+
     public Animator( SpriteSheet[] sheet ){
     	this.sheet = sheet;
         init();
     }
 
+    private int init;
+    public int nextFrame(int limit){
+        if( initialSpritePixels >= singleSheet.sheetWidht() || initialSpritePixels > limit )
+            initialSpritePixels -= limit;
+        return initialSpritePixels += nextFrameSingle;
+    }
     public int state(){
         //esta funcion se utilizada para devolver que animacion se esta reproduciendo.
         switch( currentSheet ){
@@ -38,7 +55,7 @@ public class Animator {
                 return animationCurrentState(0);
             case 1:
                 return animationCurrentState(1);
-            case 2: 
+            case 2:
                 return animationCurrentState(2);
             default:
                 System.out.println( "Error, Animation state out of default animations values");
@@ -67,5 +84,6 @@ public class Animator {
     //GETTERS -------------------------
     public int getCurrentSheet() { return currentSheet; }
     public SpriteSheet getSprites( int i ){ return this.sheet[i]; }
+    public SpriteSheet getSheet(){ return this.singleSheet; }
     //---------------------------------
 }
