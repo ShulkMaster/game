@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class ScoreDrawer {
      XBoton botonreturn;
      XBoton actualizar;
+     XBoton Ranking;
      private Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 15);
      private final JTable tabladejugadores;
      private final JScrollPane scroll;
@@ -34,6 +36,12 @@ public class ScoreDrawer {
         actualizar.setText("Actualizar");
         actualizar.setBounds(250, 550, 150, 100);
         actualizar.addActionListener(lbutton);
+        // dibuja el boton para llenar el raking
+        Ranking = new XBoton(getIconImage("src/Resources/image/update.png"),Color.DARK_GRAY);
+        Ranking.setBackground(Color.DARK_GRAY);
+        Ranking.setText("Ranking");
+        Ranking.setBounds(434, 550, 150, 100);
+        Ranking.addActionListener(lbutton);
         //dibuja el label que dice PUNTUACIONES
         JLabel tablero = new JLabel();
         fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 50);
@@ -45,32 +53,19 @@ public class ScoreDrawer {
         panel.add(actualizar);
         panel.add(botonreturn);
         panel.add(tablero);
+        panel.add(Ranking);
         //Dibuja la tabla y la inicializa en vacio
         scroll = new javax.swing.JScrollPane();
-        model = new DefaultTableModel(
-                new String [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {"Rango", "Jugador", "Puntaje", "Fecha"}
-        )
-         {
+        model = new DefaultTableModel( 
+                new String [][] {},
+                new String [] {"Rango", "Jugador", "Puntaje", "Fecha"}){
                 @Override
                 public boolean isCellEditable(int row, int col)
                 {
                     return false;
                 }
             };
- 
-        
+     
         tabladejugadores = new javax.swing.JTable();
         tabladejugadores.setFillsViewportHeight(true);
         tabladejugadores.setDragEnabled(false);
@@ -78,7 +73,6 @@ public class ScoreDrawer {
         tabladejugadores.setModel(model);
         tabladejugadores.setColumnSelectionAllowed(false);
         tabladejugadores.setPreferredSize(new Dimension(700, 450));
-        model.isCellEditable(0, 0);
         scroll.setViewportView(tabladejugadores);
         scroll.setBounds(116, 140, 700, 400);
         panel.add(scroll);
@@ -88,12 +82,12 @@ public class ScoreDrawer {
         ImageIcon retvalue = new javax.swing.ImageIcon(path);
         return retvalue;
     }
-       public void setValue(String dato, int fila, int conlumna){
-            model.setValueAt(dato, conlumna, fila);
-            //tabladejugadores.setModel(model);
-            //model.addRow(rowData);
-       }
-        
+//       public void setValue(String[] dato){
+//            //model.setValueAt(dato, conlumna, fila);
+//            //tabladejugadores.setModel(model);
+//            model.addRow(dato);
+//       }
+//        
             
         
        private class ButtonListenerS implements ActionListener{
@@ -107,11 +101,16 @@ public class ScoreDrawer {
                             /* BLOQUE DE CODIGO AQL AQUI
                             under construction
                             */
-                            model.isCellEditable(0, 0);
-                            setValue("PruebaA", 1, 3);
-                            setValue("PruebaB", 1, 8);
-                            setValue("PruebaC", 2, 9);
-                            setValue("PruebaX", 3, 7);
+                            //setValue("PruebaA", "f", "d");
+                            //setValue("PruebaA", "f", "d");
+                            //setValue("PruebaA", "f", "d");
+                            
+			}
+                        if( evt.getSource() == Ranking ){                           
+                            /* BLOQUE DE CODIGO AQL AQUI
+                            under construction
+                            */
+                             model.addRow(new String[]{"holi2", "jugado2", "inumal2", "tobal2"});
                             
 			}
 
