@@ -1,8 +1,8 @@
 package GUI;
 import Data.CurrentData;
-import StateMachine.Menu;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
@@ -24,7 +24,7 @@ public class ScoreDrawer {
         //dibujar boton para regresar al menu
         botonreturn = new XBoton(getIconImage("src/Resources/image/flecha.png"),Color.DARK_GRAY);
         botonreturn.setBackground(Color.DARK_GRAY);
-        botonreturn.setText("salida");
+        botonreturn.setText("Atras");
         botonreturn.setBounds(116, 550, 100, 100);
         botonreturn.setFont(fuentex);
         botonreturn.addActionListener(lbutton);
@@ -57,24 +57,45 @@ public class ScoreDrawer {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {"Rango", "Jugador", "Puntaje", "Fecha"}
-        );
+        )
+         {
+                @Override
+                public boolean isCellEditable(int row, int col)
+                {
+                    return false;
+                }
+            };
+ 
+        
         tabladejugadores = new javax.swing.JTable();
+        tabladejugadores.setFillsViewportHeight(true);
         tabladejugadores.setDragEnabled(false);
         tabladejugadores.setBounds(116, 140, 700, 450);
         tabladejugadores.setModel(model);
+        tabladejugadores.setColumnSelectionAllowed(false);
+        tabladejugadores.setPreferredSize(new Dimension(700, 450));
+        model.isCellEditable(0, 0);
         scroll.setViewportView(tabladejugadores);
         scroll.setBounds(116, 140, 700, 400);
         panel.add(scroll);
-        tabladejugadores.getModel().setValueAt("hola", 0, 0);
      }
  
        public ImageIcon getIconImage(String path){
         ImageIcon retvalue = new javax.swing.ImageIcon(path);
         return retvalue;
     }
+       public void setValue(String dato, int fila, int conlumna){
+            model.setValueAt(dato, conlumna, fila);
+            //tabladejugadores.setModel(model);
+            //model.addRow(rowData);
+       }
+        
+            
+        
        private class ButtonListenerS implements ActionListener{
 			@Override public void actionPerformed(ActionEvent evt) {
 			if( evt.getSource() == botonreturn ){
@@ -86,6 +107,12 @@ public class ScoreDrawer {
                             /* BLOQUE DE CODIGO AQL AQUI
                             under construction
                             */
+                            model.isCellEditable(0, 0);
+                            setValue("PruebaA", 1, 3);
+                            setValue("PruebaB", 1, 8);
+                            setValue("PruebaC", 2, 9);
+                            setValue("PruebaX", 3, 7);
+                            
 			}
 
 		}

@@ -66,7 +66,9 @@ public class Menu implements GameState {
         fuego.setIcon(getIconImage("/Resources/image/fire.gif"));
         fuego.setBounds(0, 0,932 , 658);
         //auxiliar del fuego
-        fuego2 = fuego;
+        fuego2 =  new JLabel();
+        fuego2.setIcon(getIconImage("/Resources/image/fire.gif"));
+        fuego2.setBounds(0, 0,932 , 658);
         // incializamos el subpanel JTable y lo dejamos listo para el overlaping              
         //inicializar el Jpanel que contiene todo
         escorepanel.setBackground(Color.BLACK);
@@ -91,7 +93,7 @@ public class Menu implements GameState {
 	@Override public void draw(){
 	    if( firstCall ) {
             System.out.println("reach");
-            //systems.AudioManager.playMusic("src/Resources/Music/menu.wav");
+            systems.AudioManager.playMusic("src/Resources/Music/menu.wav");
             firstCall = false;
         }
         //System.out.println("reach menu draw");
