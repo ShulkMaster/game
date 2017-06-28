@@ -30,7 +30,7 @@ public class World extends JComponent implements  GameState {
     private Graphics g;
     private Animator anim;
     private boolean firstCall = true;
-    
+
     private Point iso, pos, origin, aux;
     //--------------------------
     
@@ -152,8 +152,14 @@ public class World extends JComponent implements  GameState {
             move();
         if( anim.getCurrentSheet() == 2 )
             attack();
+        /*if( jugador.checkCollision( enemigo.getPos().x , enemigo.getPos().y ) )
+            battle();*/
     }
 
+
+    private void moveEnemy(){
+        enemigo.move();
+    }
 
     private boolean overLap = false;
 	@Override public void draw(){
@@ -162,8 +168,11 @@ public class World extends JComponent implements  GameState {
             loadLevel();
             firstCall = false;
             enemigo = new Enemy(100, 400,400);
-            enemigo.move("up");
+            CurrentData.enemigo = enemigo;
         }
+
+        moveEnemy();
+
         System.out.println( "World draw" );
 		g = state.getGraphics();
 
@@ -212,6 +221,7 @@ public class World extends JComponent implements  GameState {
         CurrentData.lvl = lvl;
         CurrentData.lKey = lKey;
         CurrentData.state = state;
+        CurrentData.enemigo = enemigo;
 	}
 
 }

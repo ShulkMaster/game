@@ -3,7 +3,7 @@ package systems;
 public class Time {
 	
 	//ticker
-    private static int fps = 30; //frames per second
+    private static int fps = 12; //frames per second
 	private static long targetTime = 1000 / fps; //milisegundos entre fps
 	private static boolean running = true;
     private static long wait;

@@ -10,15 +10,14 @@ public class Enemy extends Character {
     private Animator animator;
     private Collider collider;
     private int velocity = 5;
-    private int x, y;
+    private int limit;
 
     public Enemy(int life, int x, int y) {
         super(life, x, y);
-        this.x = x;
-        this.y = y;
         init();
         animator = new Animator( sheet );
-        this.getPos().setLocation(x,y);
+        getPos().setLocation(x,y);
+        limit = (int) getPos().getY() - 40;
     }
 
     private void init(){
@@ -27,37 +26,34 @@ public class Enemy extends Character {
         for (int i = 0; i < sheet.length; i++) {
             sheet[i] = new SpriteSheet(null);
         }
-        setSheet( 0,"/Resources/Sprites/idle.png");
+        setSheet( 0,"/Resources/Sprites/walk.png");
     }
 
-    public synchronized void move( String aux){
-        y -= 10;
-        Thread hilo = new Thread() {
-            @Override public void run(){
-                String axis = aux;
-                if( axis == "up") {
-                    while (axis == "up") {
-                        if( getPos().y != y ){
-                            y = ( getPos().y > y ) ? y--: y;
-                            axis = ( getPos().y == y ) ? "down": axis;
-                        }
-                    }
-                }
-                if( axis == "down"){
-                    while ( axis == "down") {
-                        if( getPos().y != y ){
-                            y = ( getPos().y < y ) ? y++: y;
-                            axis = ( getPos().y == y ) ? "up": axis;
-                        }
-                    }
+    private boolean notTop = true;
+    private boolean notBot = false;
 
-                }
-
+    public void move( ){
+        if( notTop ){
+            getPos().y -= velocity;
+            System.out.println( getPos().y);
+            System.out.println( limit);
+            if( getPos().y == limit ){
+                System.out.println("limit reach");
+                notTop = false;
+                notBot = true;
+                limit += 80;
             }
-        };
-        hilo.start();
+        }
+        if( notBot ){
+            getPos().y += velocity;
+            if( getPos().y == limit ){
+                notBot = false;
+                notTop = true;
+                limit -= 80;
+            }
+        }
     }
 
-    public void setSheet( int i, String path ){ sheet[i] = new SpriteSheet( ImageLoader.loadImage(path) ); }
+    private void setSheet(int i, String path){ sheet[i] = new SpriteSheet( ImageLoader.loadImage(path) ); }
     public Animator getAnimation(){ return animator; }
 }
