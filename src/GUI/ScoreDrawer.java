@@ -8,8 +8,7 @@ import javax.swing.JLabel;
 public class ScoreDrawer {
      XBoton botonreturn;
      private final Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 50);
-    public ScoreDrawer(JPanel panel){
-        //botonreturn.setIcon(new ImageIcon("src/Resources/image/calcaca.png"));
+     public ScoreDrawer(JPanel panel){
         botonreturn = new XBoton(getIconImage("src/Resources/image/flecha.png"),getIconImage("src/Resources/image/calcacamini.png"));
         botonreturn.setIcon(getIconImage("src/Resources/image/calcacamini.png"));
         botonreturn.setBounds(0, 0, 100, 100);
@@ -20,6 +19,9 @@ public class ScoreDrawer {
         tablero.setBounds(266, 20, 400, 100);
         tablero.setForeground(Color.WHITE);
         panel.add(tablero);
+        
+        
+        
         
         
     
