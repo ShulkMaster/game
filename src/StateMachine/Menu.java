@@ -23,14 +23,13 @@ public class Menu implements GameState {
         private final ButtonListener lbutton = new ButtonListener();
         private final JPanel menuPanel;
         private JTable submenuPanel;
-        private Graphics g;
+        DefaultTableModel subtabla = new DefaultTableModel();
+        JScrollPane scrollPane;
         //private final AudioManager music; esto es adudio kk ;v
         //private final AudioMaster music;
         // inicio del constructor
 	public Menu( GameStateManager newGameState ){
-        
         state = newGameState;
-        fuentex.isItalic();
         /*musica plox 
         audio manager es una kk no funciona :v
         music = new AudioManager();
@@ -67,22 +66,18 @@ public class Menu implements GameState {
         fuego = new JLabel();
         fuego.setIcon(getIconImage("/Resources/image/fire.gif"));
         fuego.setBounds(0, 0,932 , 658);
-        // incializamos el subpanel Jlist y lo dejamos listo para el overlaping              
-        //submenuPanel = new JTable();
+        // incializamos el subpanel JTable y lo dejamos listo para el overlaping              
         //inicializar el Jpanel que contiene todo
+
         menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
         //SE agrega todo al panel y se imprime, adding all Jcomponens to the panel
-        //menuPanel.add(submenuPanel);
-        //menuPanel.add(botonstart);
+        menuPanel.add(botonstart);
         menuPanel.add(botonscore);
         menuPanel.add(botonsalir);
-        //menuPanel.add(menuicon);
-        //menuPanel.add(fuego);
-        //submenuPanel.setVisible(false);
-        //submenuPanel.setBackground(Color.WHITE);
-        //submenuPanel.setBounds(0, 0, 400, 400);  
+        menuPanel.add(menuicon);
+        menuPanel.add(fuego); 
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
         
@@ -139,15 +134,8 @@ public class Menu implements GameState {
 				System.out.println( "reach boton");
 				world();
 			}
-                        if( evt.getSource() == botonscore ){
-                            DefaultTableModel subtabla = new DefaultTableModel();
+                        if( evt.getSource() == botonscore ){                           
                             System.out.println( "score listener online");
-                            subtabla.addColumn("Ranking");
-                            subtabla.addColumn("Juagador");
-                            subtabla.addColumn("Puntaje");
-                            submenuPanel = new JTable(subtabla);
-                            menuPanel.add(submenuPanel);
-                            submenuPanel.setBounds(0, 0, 400, 400);  
                             submenuPanel.setVisible(true);
                                 
                                 
