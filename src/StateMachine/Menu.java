@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import GUI.XBoton;
 import Data.CurrentData;
+import javax.swing.table.DefaultTableModel;
 import maps.Level;
 /* import systems.AudioManager;
 import systems.AudioMaster; */
@@ -13,47 +14,48 @@ import systems.AudioMaster; */
 public class Menu implements GameState {
 
 	private final GameStateManager state;
-	private Graphics g;
         private final XBoton botonstart;
         private final XBoton botonscore;
         private final XBoton botonsalir;
         private final JLabel menuicon;
         private final JLabel fuego;
-        private final Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", 2, 15);
+        private final Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 25);
         private final ButtonListener lbutton = new ButtonListener();
         private final JPanel menuPanel;
+        private JTable submenuPanel;
+        private Graphics g;
         //private final AudioManager music; esto es adudio kk ;v
         //private final AudioMaster music;
         // inicio del constructor
 	public Menu( GameStateManager newGameState ){
         
         state = newGameState;
+        fuentex.isItalic();
         /*musica plox 
         audio manager es una kk no funciona :v
         music = new AudioManager();
         ninguno de los audio manager es capaz de encontrar el puto mp3 :v en ruta relativa solo en ruta absoluta
         por la puta ponagele fix plox
-*/     
-        
-        //music = new AudioMaster(this.getClass().getResourceAsStream("/Resources/Music/epicmusic.mp3"));
-        //boton inicio
-        botonstart = new XBoton(Color.BLUE, Color.CYAN);
-        botonstart.setBackground(Color.CYAN);
-        botonstart.setBounds(401,350,130,30); 
+        music = new AudioMaster(this.getClass().getResourceAsStream("/Resources/Music/epicmusic.mp3"));
+        boton inicio
+        */  
+        botonstart = new XBoton(Color.RED, Color.DARK_GRAY);
+        botonstart.setBackground( Color.DARK_GRAY);
+        botonstart.setBounds(351,350,230,70); 
         botonstart.setFont(fuentex);
         botonstart.setText("Play");
         botonstart.addActionListener(lbutton);
         //boton de scorea
-        botonscore = new XBoton(Color.BLUE, Color.CYAN);
-        botonscore.setBackground(Color.CYAN);
-        botonscore.setBounds(401,420,130,30);
+        botonscore = new XBoton(Color.RED, Color.DARK_GRAY);
+        botonscore.setBackground( Color.DARK_GRAY);
+        botonscore.setBounds(351,450,230,70);
         botonscore.setFont(fuentex);
         botonscore.setText("puntajes");
         botonscore.addActionListener(lbutton);
         //boton salir 
-        botonsalir = new XBoton(Color.BLUE, Color.CYAN);
-        botonsalir.setBackground(Color.CYAN);
-        botonsalir.setBounds(401,490,130,30);
+        botonsalir = new XBoton(Color.RED, Color.DARK_GRAY);
+        botonsalir.setBackground( Color.DARK_GRAY);
+        botonsalir.setBounds(351,550,230,70);
         botonsalir.setFont(fuentex);
         botonsalir.setText("Salir");
         botonsalir.addActionListener(lbutton);
@@ -65,20 +67,24 @@ public class Menu implements GameState {
         fuego = new JLabel();
         fuego.setIcon(getIconImage("/Resources/image/fire.gif"));
         fuego.setBounds(0, 0,932 , 658);
-
-        
+        // incializamos el subpanel Jlist y lo dejamos listo para el overlaping              
+        //submenuPanel = new JTable();
+        //inicializar el Jpanel que contiene todo
         menuPanel = CurrentData.menuPanel;
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
-        //adding all Jcomponens to the panel
-        menuPanel.add(botonstart);
+        //SE agrega todo al panel y se imprime, adding all Jcomponens to the panel
+        //menuPanel.add(submenuPanel);
+        //menuPanel.add(botonstart);
         menuPanel.add(botonscore);
         menuPanel.add(botonsalir);
-        menuPanel.add(menuicon);
-        menuPanel.add(fuego);
+        //menuPanel.add(menuicon);
+        //menuPanel.add(fuego);
+        //submenuPanel.setVisible(false);
+        //submenuPanel.setBackground(Color.WHITE);
+        //submenuPanel.setBounds(0, 0, 400, 400);  
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
-        //AudioMaster musica = new AudioMaster("C:\\Users\\David\\Documents\\NetBeansProjects\\Juego\\src\\Resources\\Music\\emo.mp3");
         
     }
 
@@ -90,7 +96,6 @@ public class Menu implements GameState {
             firstCall = false;
         }
         //System.out.println("reach menu draw");
-        //g = state.getGraphics();
 	}
 	
 	
@@ -135,7 +140,22 @@ public class Menu implements GameState {
 				world();
 			}
                         if( evt.getSource() == botonscore ){
-				System.out.println( "la puta");
+                            DefaultTableModel subtabla = new DefaultTableModel();
+                            System.out.println( "score listener online");
+                            subtabla.addColumn("Ranking");
+                            subtabla.addColumn("Juagador");
+                            subtabla.addColumn("Puntaje");
+                            submenuPanel = new JTable(subtabla);
+                            menuPanel.add(submenuPanel);
+                            submenuPanel.setBounds(0, 0, 400, 400);  
+                            submenuPanel.setVisible(true);
+                                
+                                
+                                
+                                
+                                
+                               
+                                
 			}
                         if( evt.getSource() == botonsalir ){
 				System.exit(0);

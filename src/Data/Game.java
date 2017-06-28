@@ -9,8 +9,10 @@ import GUI.GameFrame;
 //import Data.Player;
 import systems.Time;
 import StateMachine.GameStateManager;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
-class Game{
+public class Game{
 	//ticker
 	private boolean running = true;
 	//-----------------------------
@@ -21,8 +23,25 @@ class Game{
 	private Graphics g;
 	private boolean firstCall = true;
 
-    Game(Dimension dimension){
-    	window = new GameFrame();
+    public Game(Dimension dimension){
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                //System.out.println(info.getName());
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        window = new GameFrame();
     	window.init( (int) dimension.getWidth(), (int) dimension.getHeight() );
 		gameStateMachine = new GameStateManager( dimension );
 		window.getCanvas().createBufferStrategy(2);
@@ -81,5 +100,6 @@ class Game{
         t.start();
 
     }
+ 
 
 }

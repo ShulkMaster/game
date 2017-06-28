@@ -59,13 +59,11 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setBackground(Color.black);
         this.setIconImage(getIconImage());
-        //setResizable(false);
-
     }
     public Canvas getCanvas(){ return canvas; }
     @Override
     public Image getIconImage(){
         Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Resources/image/calcaca.png"));
         return retvalue;
-    }
+    }       
 }
