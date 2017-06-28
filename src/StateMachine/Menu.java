@@ -6,15 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import GUI.XBoton;
 import Data.CurrentData;
-import javax.swing.table.DefaultTableModel;
 import maps.Level;
+import GUI.ScoreDrawer;
 /* import systems.AudioManager;
 import systems.AudioMaster; */
 
 public class Menu implements GameState {
-
-    private JLabel texto;
-
 	private final GameStateManager state;
         private final XBoton botonstart;
         private final XBoton botonscore;
@@ -24,9 +21,7 @@ public class Menu implements GameState {
         private final Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 25);
         private final ButtonListener lbutton = new ButtonListener();
         private final JPanel menuPanel;
-        private JTable submenuPanel;
-        DefaultTableModel subtabla = new DefaultTableModel();
-        JScrollPane scrollPane;
+        private final JPanel escorepanel = CurrentData.scorePanel;
         //private final AudioManager music; esto es adudio kk ;v
         //private final AudioMaster music;
         // inicio del constructor
@@ -89,7 +84,7 @@ public class Menu implements GameState {
 	@Override public void draw(){
 	    if( firstCall ) {
             System.out.println("reach");
-            systems.AudioManager.playMusic("src/Resources/Music/menu.wav");
+            //systems.AudioManager.playMusic("src/Resources/Music/menu.wav");
             firstCall = false;
         }
         //System.out.println("reach menu draw");
@@ -133,10 +128,15 @@ public class Menu implements GameState {
 				System.out.println( "reach boton");
 				world();
 			}
-            if( evt.getSource() == botonscore ){
-                System.out.println( "score listener online");
-                CurrentData.layout.show( CurrentData.panel, CurrentData.score);
-                CurrentData.frame.revalidate();
+                        if( evt.getSource() == botonscore ){                           
+                            System.out.println( "score listener online");
+                            escorepanel.setBackground(Color.BLACK);
+                            escorepanel.setLayout(null);
+                            new ScoreDrawer(escorepanel);
+                            escorepanel.add(fuego);
+                            CurrentData.layout.show( CurrentData.panel, CurrentData.score);                          
+                            CurrentData.frame.revalidate();
+                            //submenuPanel.setVisible(true);
 			}
             if( evt.getSource() == botonsalir ){
 				System.exit(0);
