@@ -22,6 +22,7 @@ public class CurrentData {
     public static JPanel menuPanel;
     public static JPanel panel;
     public static JPanel gamePanel;
+    public static JPanel scorePanel;
     public static Canvas canvas;
     public static CardLayout layout;
     public static final String menu = "menu";

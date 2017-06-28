@@ -100,7 +100,6 @@ public class Menu implements GameState {
         System.out.println( "Menu state" );
 	}
 
-	
 	@Override public void world() {
 		System.out.println( " Entering World state"	 );
 		//AQUI SE LLAMA AL MUNDO
@@ -115,12 +114,10 @@ public class Menu implements GameState {
        System.out.println( "No has ni entrado al mundo! " );
 	}
 
-	
 	@Override public void pause() {
        System.out.println( "No puedees pausar el menu!" );
 	}
 
-	
 	@Override public void gameOver() {
        System.out.println( "Como pierdes estando en el menu???" );
 	}

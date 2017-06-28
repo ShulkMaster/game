@@ -46,10 +46,11 @@ public class GameFrame extends JFrame {
         panel.add( scorePanel, CurrentData.score );
 
 		CurrentData.layout = this.cLayout;
+        CurrentData.canvas = this.canvas;
         CurrentData.panel = this.panel;
         CurrentData.menuPanel = this.menuPanel;
-        CurrentData.canvas = this.canvas;
         CurrentData.gamePanel = this.gamePanel;
+        CurrentData.scorePanel = this.scorePanel;
         CurrentData.frame = this;
 
         this.setContentPane(panel);
