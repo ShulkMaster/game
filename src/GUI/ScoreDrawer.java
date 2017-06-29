@@ -72,7 +72,8 @@ public class ScoreDrawer {
         tabladejugadores.setBounds(116, 140, 700, 450);
         tabladejugadores.setModel(model);
         tabladejugadores.setColumnSelectionAllowed(false);
-        tabladejugadores.setPreferredSize(new Dimension(700, 450));
+        tabladejugadores.setSelectionBackground(Color.RED);
+        tabladejugadores.setSize(new Dimension(700, 450));
         scroll.setViewportView(tabladejugadores);
         scroll.setBounds(116, 140, 700, 400);
         panel.add(scroll);
@@ -107,9 +108,10 @@ public class ScoreDrawer {
                             
 			}
                         if( evt.getSource() == Ranking ){                           
-                            /* BLOQUE DE CODIGO AQL AQUI
+                            /* BLOQUE DE CODIGO SQL AQUI
                             under construction
                             */
+                            //ejemplo de metodo addRow
                              model.addRow(new String[]{"holi2", "jugado2", "inumal2", "tobal2"});
                             
 			}
