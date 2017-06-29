@@ -37,7 +37,7 @@ public class ScoreDrawer {
         actualizar.setBounds(250, 550, 150, 100);
         actualizar.addActionListener(lbutton);
         // dibuja el boton para llenar el raking
-        Ranking = new XBoton(getIconImage("src/Resources/image/update.png"),Color.DARK_GRAY);
+        Ranking = new XBoton(getIconImage("src/Resources/image/rank.png"),Color.DARK_GRAY);
         Ranking.setBackground(Color.DARK_GRAY);
         Ranking.setText("Ranking");
         Ranking.setBounds(434, 550, 150, 100);
@@ -69,6 +69,8 @@ public class ScoreDrawer {
         tabladejugadores = new javax.swing.JTable();
         tabladejugadores.setFillsViewportHeight(true);
         tabladejugadores.setDragEnabled(false);
+        fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 15);
+        tabladejugadores.setFont(fuentex);
         tabladejugadores.setBounds(116, 140, 700, 450);
         tabladejugadores.setModel(model);
         tabladejugadores.setColumnSelectionAllowed(false);
