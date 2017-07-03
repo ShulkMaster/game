@@ -45,7 +45,7 @@ public class World extends JComponent implements  GameState {
 	}
 	
 	private void loadPlayer(){
-            jugador = new Player(100, 352,192, 20, 20, 20,20,0) ;
+            jugador = new Player(100, 352,192, 20, 20, 20,20,84) ;
             anim = jugador.getAnimation();
             pos = jugador.getPos();
             jugador.setOrigin( 32, 32 );
@@ -81,15 +81,15 @@ public class World extends JComponent implements  GameState {
     private void idle(){
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
-        g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
-        //g.drawImage(anim.getSheet().crop( anim.nextFrame(0,254), 0, 84, 84), pos.x , pos.y, null );
+        //g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
+        g.drawImage( anim.currentAnimation(0,0,4), pos.x, pos.y , null);
     }
 
     private void move(){
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
-		g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
-        //g.drawImage(anim.getSheet().crop( anim.nextFrame(254,672), 0, 84, 84), pos.x , pos.y, null );
+		//g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
+        g.drawImage( jugador.getCurrentAnimation(), pos.x, pos.y , null);
     }
     
     private void attack(){

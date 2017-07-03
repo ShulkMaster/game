@@ -1,24 +1,31 @@
 package systems;
 
 import Data.SpriteSheet;
+import java.awt.image.BufferedImage;
 
 public class Animator {
 	private SpriteSheet[] sheet = new SpriteSheet[3];
-	private SpriteSheet singleSheet;
     private boolean firstCall = true;
     private int initialSpritePixels ;
     private int currentSheet = 0;
     private int nextFrame[];
-    private int nextFrameSingle;
- 
+
+    //SINGLE SHEET ANIMATION
+    private BufferedImage[][] sprite;
+    private int currentSprite = 0;
+    private int pixels;
+    private SpriteSheet singleSheet;
+    private int width;
+    private int height;
+
     private void calculatePixelsPerFrame(){
         //Esta funcion realiza operaciones matematicas para
         //calcular cada cuantos pixeles es el siguiente frame
         //de la hoja de sprites para poder hacer la animacion
         int aux;
         for( int i = 0; i < sheet.length; i ++ ){
-        aux = sheet[i].sheetWidht() / sheet[i].sheetHeight();
-        nextFrame[i] = sheet[i].sheetWidht() / aux ;
+            aux = sheet[i].sheetWidht() / sheet[i].sheetHeight();
+            nextFrame[i] = sheet[i].sheetWidht() / aux ;
         }
     }
 
@@ -29,36 +36,36 @@ public class Animator {
         calculatePixelsPerFrame();
     }
 
-    private void fixedInit( int pixels ){
-        nextFrameSingle = pixels;
+    //SINGLE SHEET ANIMATION
+
+    public void initSprites(){
+        sprite = new BufferedImage[height/pixels][width/pixels];
+       for( int i = 0; i < (height/pixels); i++){
+           for( int j = 0; j < (width/pixels); j++){
+               sprite[i][j] = singleSheet.crop(j*pixels,i*pixels,pixels,pixels);
+               System.out.printf("x: %d, y: %d, w: %d, h: %d \n",i*pixels,j*pixels,pixels,pixels);
+           }
+       }//for
     }
 
-    public Animator( SpriteSheet sheet , int pixels ){
-        this.singleSheet = sheet;
-        fixedInit( pixels);
+    public BufferedImage currentAnimation(int start,int height, int limit){
+        if( currentSprite >= limit )
+            currentSprite = start;
+        return sprite[height][currentSprite++];
     }
+    //---------------------------------------------------
 
-    public Animator( SpriteSheet[] sheet ){
-    	this.sheet = sheet;
-        init();
-    }
-
-    public int nextFrame(int start, int limit){
-        if( firstCall ){
-            initialSpritePixels = start;
-            firstCall = false;
-            System.out.println("animr reach");
-        }
-        System.out.println(initialSpritePixels);
-        System.out.println(firstCall);
-        System.out.println(nextFrameSingle);
-        if( initialSpritePixels >= singleSheet.sheetWidht() ){
-            initialSpritePixels -= limit;
-            System.out.println("true reach");
-            firstCall = true;
-        }
-        System.out.println( initialSpritePixels += nextFrameSingle );
-        return initialSpritePixels += nextFrameSingle;
+    private int animationCurrentState( int state ){
+        //esta funcion devuelve que animacion se esta reproduciendo y tambien la setea
+        //al setearla, estamos totalmente seguros que animacion se reproduce
+        //y la reproducimos de una vez. el verdadero manejador de que animacion se va a
+        //reproducir es el setCurrentSheet(), ya que es lo que evaluamos en nuestro state();
+        currentSheet = state;
+        if( initialSpritePixels >= sheet[state].sheetWidht() && currentSheet == state )
+            initialSpritePixels = 0;
+        return initialSpritePixels += nextFrame[state];
+        // initialSpritePixels es nuestro iterador entre los frame de la spriteSheet
+        // y se debe reiniciar cada vez que llegue al ultimo frame.
     }
 
     public int state(){
@@ -76,17 +83,22 @@ public class Animator {
         }
     }
 
-    private int animationCurrentState( int state ){
-        //esta funcion devuelve que animacion se esta reproduciendo y tambien la setea
-        //al setearla, estamos totalmente seguros que animacion se reproduce
-        //y la reproducimos de una vez. el verdadero manejador de que animacion se va a 
-        //reproducir es el setCurrentSheet(), ya que es lo que evaluamos en nuestro state();
-        currentSheet = state;
-        if( initialSpritePixels >= sheet[state].sheetWidht() && currentSheet == state )
-            initialSpritePixels = 0;
-        return initialSpritePixels += nextFrame[state];
-        // initialSpritePixels es nuestro iterador entre los frame de la spriteSheet
-        // y se debe reiniciar cada vez que llegue al ultimo frame.
+    public Animator ( SpriteSheet sheet, int width, int height, int pixels ){
+        this.singleSheet = sheet;
+        this.width = width;
+        this.height = height;
+        this.pixels = pixels;
+        initSprites();
+    }
+
+    public Animator( SpriteSheet sheet , int pixels ){
+        this.singleSheet = sheet;
+        this.pixels = pixels;
+    }
+
+    public Animator( SpriteSheet[] sheet ){
+        this.sheet = sheet;
+        init();
     }
 
     //SETTERS -------------------------
