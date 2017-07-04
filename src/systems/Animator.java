@@ -1,6 +1,8 @@
 package systems;
 
 import Data.SpriteSheet;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Animator {
@@ -46,6 +48,7 @@ public class Animator {
                System.out.printf("x: %d, y: %d, w: %d, h: %d \n",i*pixels,j*pixels,pixels,pixels);
            }
        }//for
+        System.out.println( sprite.length + "," + sprite[0].length );
     }
 
     public BufferedImage currentAnimation(int start,int height, int limit){
@@ -110,5 +113,6 @@ public class Animator {
     public int getCurrentSheet() { return currentSheet; }
     public SpriteSheet getSprites( int i ){ return this.sheet[i]; }
     public SpriteSheet getSheet(){ return this.singleSheet; }
+
     //---------------------------------
 }
