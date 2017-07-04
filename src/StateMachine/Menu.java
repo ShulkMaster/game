@@ -6,6 +6,7 @@ import GUI.XBoton;
 import Data.CurrentData;
 import maps.Level;
 import GUI.ScoreDrawer;
+import systems.Fontloader;
 import systems.GUIFX.menuanimator;
 
 public class Menu implements GameState {
@@ -15,7 +16,8 @@ public class Menu implements GameState {
     private final JLabel fuego2;
     private final JPanel menuPanel;
     private final JPanel escorepanel = CurrentData.scorePanel;
-    private Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 120);
+    private Fontloader loader = new Fontloader("/Resources/fonts/fotana/fuente.ttf");
+    private Font fuentex = loader.MyFont(0, 120);
     private JLabel menuicon;
     private JLabel fuego;
     private JLabel startlabel;
@@ -108,6 +110,8 @@ public class Menu implements GameState {
 
     }
     private void initJcomponens() {
+        loader = new Fontloader("/Resources/fonts/fotana/Blood.ttf");
+        fuentex = loader.MyFont(0, 60);
         //boton inicio
         botonstart = new XBoton(Color.RED, Color.DARK_GRAY);
         botonstart.setBackground(Color.DARK_GRAY);
@@ -162,7 +166,9 @@ public class Menu implements GameState {
             System.out.println("reach boton");
             world();
         });
-        menuanimator.continuar = false;
+        blinklabel.suspend();
+        //boolean method form legacy
+        //menuanimator.continuar = false;
         startlabel.setVisible(false);     
 
     }
@@ -171,7 +177,7 @@ public class Menu implements GameState {
 	@Override public void draw(){
 	    if( firstCall ) {
             System.out.println("reach");
-            //systems.AudioManager.playMusic("src/Resources/Music/menu.wav");
+            systems.AudioManager.playMusic("src/Resources/Music/menu.wav");
             firstCall = false;
         }
         //System.out.println("reach menu draw");
