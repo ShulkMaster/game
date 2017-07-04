@@ -15,7 +15,7 @@ public class Animator {
     //SINGLE SHEET ANIMATION
     private BufferedImage[][] sprite;
     private int currentSprite = 0;
-    private int pixels;
+    private int pixels, auxPixels;
     private SpriteSheet singleSheet;
     private int width;
     private int height;
@@ -38,9 +38,9 @@ public class Animator {
         calculatePixelsPerFrame();
     }
 
-    //SINGLE SHEET ANIMATION
+    //SINGLE SHEET ANIMATION -------------------------
 
-    public void initSprites(){
+    private void initSprites(){
         sprite = new BufferedImage[height/pixels][width/pixels];
        for( int i = 0; i < (height/pixels); i++){
            for( int j = 0; j < (width/pixels); j++){
@@ -55,6 +55,22 @@ public class Animator {
         if( currentSprite >= limit )
             currentSprite = start;
         return sprite[height][currentSprite++];
+    }
+
+
+    public void setAuxAnimation( int height, int pixels, int iterations ){
+        for( int i = 0; i < iterations; i++) {
+            for (int j = 0; j < iterations; j++) {
+                sprite[i][j] = singleSheet.crop(j*pixels,i*pixels,pixels,pixels);
+
+            }
+        }
+
+    }
+
+    public BufferedImage tempAnimation( int start, int height, int limit, int pixels ){
+        if( )
+
     }
     //---------------------------------------------------
 

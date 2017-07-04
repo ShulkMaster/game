@@ -203,6 +203,7 @@ public class World extends JComponent implements  GameState {
             CurrentData.initCanvas();
             loadLevel();
             initGUI();
+            systems.AudioManager.playMusic("src/Resources/Music/mundo1.wav");
         }
         moveEnemy();
 
