@@ -13,6 +13,8 @@ public class Player extends Character {
     private Animator animator;
     private Collider collider;
     private int velocity = 5;
+    public enum LastPos{ UP,LEFT,RIGHT,DOWN }
+    public LastPos lastPos = LastPos.DOWN;
 
     //animation
     int start,height,limit;
@@ -61,15 +63,19 @@ public class Player extends Character {
         switch( axis ) {
             case "up":
                 setCurrentAnimation(1,8,8);
+                lastPos = LastPos.UP;
                 break;
             case "left":
                 setCurrentAnimation(1,8,8);
+                lastPos = LastPos.LEFT;
                 break;
             case "right":
                 setCurrentAnimation(1,8,8);
+                lastPos = LastPos.RIGHT;
                 break;
             case "down":
                 setCurrentAnimation(1,8,8);
+                lastPos = LastPos.DOWN;
                 break;
             default:
                 break;
@@ -103,6 +109,7 @@ public class Player extends Character {
                 setCurrentAnimation(1,10,8);
                 break;
             default:
+
                 break;
         }
     }

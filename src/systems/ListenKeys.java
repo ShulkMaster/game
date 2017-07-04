@@ -11,7 +11,8 @@ import entity.Enemy;
 import maps.Tile;
 
 public class ListenKeys implements KeyListener {
-    private boolean up, down, left, right, attack;
+    private boolean up, down, left, right, attack, pause;
+    private boolean firstPress = true;
     private enum Pos{ TOP, MID, BOT }
     private Pos currentPos = Pos.MID;
 
@@ -112,6 +113,7 @@ public class ListenKeys implements KeyListener {
         left = e.getKeyCode() == KeyEvent.VK_LEFT;
         right = e.getKeyCode() == KeyEvent.VK_RIGHT;
         attack = e.getKeyCode() == KeyEvent.VK_SPACE;
+        pause = e.getKeyCode() == KeyEvent.VK_ESCAPE;
         jugador.toIso();
         CurrentData.enemigo[0].toIso();
         //-------------------------------------------
@@ -153,6 +155,13 @@ public class ListenKeys implements KeyListener {
             //anim.setCurrentSheet(2);
             jugador.attack("up");
        }
+       if( pause ){
+            if( firstPress )
+                CurrentData.layout.show( CurrentData.panel, CurrentData.pause );
+            else if( !firstPress  && state.getCurrentState() != state.getWorld() ){
+                CurrentData.layout.show( CurrentData.panel, CurrentData.game );
+            }
+       }
        
     }
 
@@ -184,7 +193,23 @@ public class ListenKeys implements KeyListener {
 
     }
 
-	@Override public void keyReleased(KeyEvent e) { anim.setCurrentSheet(0); }
+	@Override public void keyReleased(KeyEvent e) {
+        if( left  ){
+            jugador.lastPos = Player.LastPos.LEFT;
+        }
+        if( right ){
+            jugador.lastPos = Player.LastPos.RIGHT;
+        }
+        if( up){
+            jugador.lastPos = Player.LastPos.UP;
+        }
+        if( down ){
+            jugador.lastPos = Player.LastPos.DOWN;
+        }
+        if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ) {
+        }
+    }
+
 	@Override public void keyTyped(KeyEvent e) { }
 	
 	public KeyListener getListen(){ return this; }
