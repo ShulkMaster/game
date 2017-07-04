@@ -57,7 +57,7 @@ public class Player extends Character {
         this.limit = limit;
     }
 
-    private void attack( String axis ){
+    public void attack( String axis ){
         switch( axis ) {
             case "up":
                 setCurrentAnimation(1,8,8);

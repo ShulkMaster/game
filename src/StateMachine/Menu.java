@@ -177,7 +177,7 @@ public class Menu implements GameState {
 	@Override public void draw(){
 	    if( firstCall ) {
             System.out.println("reach");
-            systems.AudioManager.playMusic("src/Resources/Music/menu.wav");
+            //systems.AudioManager.playMusic("src/Resources/Music/menu.wav");
             firstCall = false;
         }
         //System.out.println("reach menu draw");

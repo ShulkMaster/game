@@ -149,8 +149,9 @@ public class ListenKeys implements KeyListener {
         }
         if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ){
             //anim.setPixels( 0 );
-            System.out.println("ATTACK");
-            anim.setCurrentSheet(2);
+            //System.out.println("ATTACK");
+            //anim.setCurrentSheet(2);
+            jugador.attack("up");
        }
        
     }
