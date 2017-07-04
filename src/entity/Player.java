@@ -21,7 +21,7 @@ public class Player extends Character {
         super( life, x, y );
         init();
         if( pixels != 0 )
-            animator = new Animator( sheet[0],672,420, pixels );
+            animator = new Animator( sheet[0],sheet[0].sheetWidht(),sheet[0].sheetHeight(), pixels );
         else
             animator = new Animator( sheet );
 
@@ -39,7 +39,7 @@ public class Player extends Character {
         //Esto se puede lograr con cualquier tipo de objeto mediante
         //la clase SpriteSheet e ImageLoader
 
-        setSheet( 0,"/Resources/Sprites/jugador.png");
+        setSheet( 0,"/Resources/Sprites/sprite.png");
         //setSheet( 0,"/Resources/Sprites/idle.png");
         //setSheet( 1,"/Resources/Sprites/walk.png");
         //setSheet( 2,"/Resources/Sprites/attack.png");
@@ -61,25 +61,25 @@ public class Player extends Character {
                 pos.y -= velocity;
                 origin.y -= velocity;
                 updateBounds();
-                setCurrentAnimation(1,1,5);
+                setCurrentAnimation(1,8,8);
                 break;
             case "left":
                 pos.x -= velocity;
                 origin.x -= velocity;
                 updateBounds();
-                setCurrentAnimation(0,3,2);
+                setCurrentAnimation(1,9,8);
                 break;
             case "right":
                 pos.x += velocity;
                 origin.x += velocity;
                 updateBounds();
-                setCurrentAnimation(2,2,4);
+                setCurrentAnimation(1,11,8);
                 break;
             case "down":
                 pos.y += velocity;
                 origin.y += velocity;
                 updateBounds();
-                setCurrentAnimation(4,0,8);
+                setCurrentAnimation(1,10,8);
                 break;
             default:
                 break;

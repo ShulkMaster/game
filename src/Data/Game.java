@@ -45,7 +45,7 @@ public class Game{
     	window.init( (int) dimension.getWidth(), (int) dimension.getHeight() );
 		gameStateMachine = new GameStateManager( dimension );
 		window.getCanvas().requestFocus();
-		window.getCanvas().createBufferStrategy(2);
+		window.getCanvas().createBufferStrategy(3);
     }
 
     private void update(){

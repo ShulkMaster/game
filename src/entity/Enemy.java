@@ -5,17 +5,22 @@ import systems.Animator;
 import systems.Collider;
 import systems.ImageLoader;
 
+import java.awt.image.BufferedImage;
+
 public class Enemy extends Character {
     private SpriteSheet[] sheet;
+    private SpriteSheet singleSheet;
     private Animator animator;
     private Collider collider;
     private int velocity = 5;
     private int limit;
 
+    int start,height,limit2;
+
     public Enemy(int life, int x, int y) {
         super(life, x, y);
         init();
-        animator = new Animator( sheet );
+        animator = new Animator( singleSheet,singleSheet.sheetWidht(),singleSheet.sheetHeight(),64 );
         getPos().setLocation(x,y);
         limit = (int) getPos().getY() - 40;
     }
@@ -26,11 +31,25 @@ public class Enemy extends Character {
         for (int i = 0; i < sheet.length; i++) {
             sheet[i] = new SpriteSheet(null);
         }
-        setSheet( 0,"/Resources/Sprites/eskel.png");
+        setSheet( "/Resources/Sprites/eskel.png");
     }
 
     private boolean notTop = true;
     private boolean notBot = false;
+
+    private void attack( /*set direction*/){
+        //TODO
+    }
+
+    public BufferedImage getCurrentAnimation(){
+        return animator.currentAnimation(start, height,limit2);
+    }
+
+    private void setCurrentAnimation( int start, int height, int limit ){
+        this.start = start;
+        this.height = height;
+        this.limit2 = limit;
+    }
 
     public void move( ){
         if( notTop ){
@@ -42,6 +61,7 @@ public class Enemy extends Character {
                 notTop = false;
                 notBot = true;
                 limit += 80;
+                setCurrentAnimation(1,2,8);
             }
         }
         if( notBot ){
@@ -50,10 +70,12 @@ public class Enemy extends Character {
                 notBot = false;
                 notTop = true;
                 limit -= 80;
+                setCurrentAnimation(1,0,8);
             }
         }
     }
 
     private void setSheet(int i, String path){ sheet[i] = new SpriteSheet( ImageLoader.loadImage(path) ); }
+    private void setSheet( String path ){ singleSheet = new SpriteSheet( ImageLoader.loadImage(path)); }
     public Animator getAnimation(){ return animator; }
 }

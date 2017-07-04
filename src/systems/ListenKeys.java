@@ -14,13 +14,14 @@ public class ListenKeys implements KeyListener {
     private boolean up, down, left, right, attack;
     private enum Pos{ TOP, MID, BOT }
     private Pos currentPos = Pos.MID;
-    
+
     //AUXILIAR FIELDS ----------
     private GameStateManager state;
     private Player jugador;
     private Tile[][]  deco;
     private Animator anim;
-    
+    private Enemy[] enem = new Enemy[3];
+
     private Point iso;
     private Point aux;
     private Point pos = new Point();
@@ -48,24 +49,48 @@ public class ListenKeys implements KeyListener {
         //}
     }
 
+    private void initEnemies(){
+        for( int i = 0 ; i < 3 ; i++){
+            enem[i] = CurrentData.enemigo[i];
+        }
+    }
+
+
+    private void nearbyEnemy( String axis ){
+        initEnemies();
+
+        switch ( axis ){
+            case "up":
+                break;
+            case "down":
+                break;
+            case "left":
+                break;
+            case "right":
+                break;
+            default:
+                break;
+        }
+    }
+
     private boolean checkCollision( String axis ){
         try{
             switch( axis ){
                 case "up":
                     aux.setLocation(aux.x = deco[iso.y-1][iso.x].getPos().x, aux.y = deco[iso.y-1][iso.x].getPos().y);
-                    enemyCollision();
+                    //enemyCollision();
                     return (deco[iso.y - 1][iso.x].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 case "down":
                     aux.setLocation(aux.x = deco[iso.y+1][iso.x].getPos().x, aux.y = deco[iso.y+1][iso.x].getPos().y);
-                    enemyCollision();
+                    //enemyCollision();
                     return  (deco[iso.y + 1][iso.x].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 case "left":
                     aux.setLocation(aux.x = deco[iso.y][iso.x-1].getPos().x, aux.y = deco[iso.y][iso.x-1].getPos().y);
-                    enemyCollision();
+                    //enemyCollision();
                     return  (deco[iso.y][iso.x-1].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 case "right":
                     aux.setLocation(aux.x = deco[iso.y][iso.x+1].getPos().x, aux.y = deco[iso.y][iso.x+1].getPos().y);
-                    enemyCollision();
+                    //enemyCollision();
                     return  (deco[iso.y][iso.x+1].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 default:
                     return false;
@@ -114,7 +139,6 @@ public class ListenKeys implements KeyListener {
             jugador.move("right");
             anim.setCurrentSheet(1);
         }
-
         if( up && !checkCollision("up") ){
             jugador.move("up");
             anim.setCurrentSheet(1);
@@ -158,6 +182,7 @@ public class ListenKeys implements KeyListener {
         }
 
     }
+
 	@Override public void keyReleased(KeyEvent e) { anim.setCurrentSheet(0); }
 	@Override public void keyTyped(KeyEvent e) { }
 	
