@@ -26,7 +26,7 @@ public class Enemy extends Character {
         for (int i = 0; i < sheet.length; i++) {
             sheet[i] = new SpriteSheet(null);
         }
-        setSheet( 0,"/Resources/Sprites/walk.png");
+        setSheet( 0,"/Resources/Sprites/eskel.png");
     }
 
     private boolean notTop = true;

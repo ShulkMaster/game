@@ -182,7 +182,7 @@ public class World extends JComponent implements  GameState {
         //ESCENARIO ---------------------
         debug();
 		drawMap();
-		drawSquares();
+		//drawSquares();
 		drawEnemy();
 		// ------------------------------
 
