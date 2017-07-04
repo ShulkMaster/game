@@ -1,17 +1,18 @@
 package StateMachine;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 
 import Data.CurrentData;
+import Data.SpriteSheet;
 import entity.Player;
 import entity.Enemy;
 import maps.GameMap;
 import maps.Level;
 import maps.Tile;
 import systems.Animator;
+import systems.ImageLoader;
 import systems.ListenKeys;
 
 @SuppressWarnings("serial")
@@ -30,6 +31,9 @@ public class World extends JComponent implements  GameState {
     private Graphics g;
     private Animator anim;
     private boolean firstCall = true;
+
+    private SpriteSheet vida,vidaEnemigo;
+    private SpriteSheet barraVida,barraEnemigo;
 
     private Point iso, pos, origin, aux;
     //--------------------------
@@ -53,9 +57,10 @@ public class World extends JComponent implements  GameState {
             iso = jugador.getIso();
             aux = new Point();
             jugador.toIso();
+            //auxVida = (int) jugador.getLife();
 	}
 	
-	public void loadLevel(){
+	private void loadLevel(){
         lvl = Level.getLevel( 0 );
         tiles = lvl.getTiles();
         deco = lvl.getLayer1();
@@ -69,6 +74,12 @@ public class World extends JComponent implements  GameState {
         this.setFocusable(true);
         this.addKeyListener( lKey );
 	}
+
+    private void initGUI(){
+        BufferedImage image = ImageLoader.loadImage("/Resources/Sprites/vida.png");
+        vida = new SpriteSheet(image);
+        barraVida = new SpriteSheet(image);
+    }
 
 	private void drawEnemy(){
         g.drawImage( enemigo[0].getAnimation().getSprites(
@@ -132,9 +143,24 @@ public class World extends JComponent implements  GameState {
             		g.drawLine( x, y,x+64, y-32);
             	}
             }//inner for
-        }//for             
+        }//for
+        g.setColor(Color.black);
+        g.fillRect(0,625,932,38);
     } //func
-    
+
+    private int score = 0;
+    private final Font font = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 16);
+    private void drawGui(){
+        int aux = jugador.getLife();
+        g.drawImage( barraVida.crop(0,33,100 ,31), 160,620,null );
+        g.drawImage(vida.crop(0, 0, 100, 32), 160, 620, null);
+        g.setColor(Color.white);
+        g.setFont(font);
+        g.drawString("HP",140,642);
+        g.drawString("SCORE: " + score,640,642);
+        //CurrentData.canvas.
+    }
+
     private void debug(){
         int row = (int) ( origin.getX() );
         int col = (int) ( origin.getY() );
@@ -172,6 +198,7 @@ public class World extends JComponent implements  GameState {
         if( firstCall ){
             CurrentData.initCanvas();
             loadLevel();
+            initGUI();
         }
 
         moveEnemy();
@@ -198,6 +225,8 @@ public class World extends JComponent implements  GameState {
             drawPlayer();
         }
 		// ------------------------------
+
+        drawGui();
 	}
 	
 	@Override public void menu() {

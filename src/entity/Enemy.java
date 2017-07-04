@@ -32,6 +32,10 @@ public class Enemy extends Character {
     private boolean notTop = true;
     private boolean notBot = false;
 
+    private void attack( /*set direction*/){
+        //TODO
+    }
+
     public void move( ){
         if( notTop ){
             getPos().y -= velocity;

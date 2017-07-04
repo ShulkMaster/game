@@ -57,7 +57,7 @@ public class Battle implements GameState {
     private void idle(){
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
-		g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
+		g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 84, 84), pos.x , pos.y, null );
     }
 
     private void move(){
