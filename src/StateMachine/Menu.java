@@ -1,33 +1,36 @@
 package StateMachine;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import GUI.XBoton;
 import Data.CurrentData;
 import maps.Level;
 import GUI.ScoreDrawer;
-/* import systems.AudioManager;
-import systems.AudioMaster; */
+import systems.GUIFX.menuanimator;
 
 public class Menu implements GameState {
-	private final GameStateManager state;
-        private final XBoton botonstart;
-        private final XBoton botonscore;
-        private final XBoton botonsalir;
-        private final JLabel menuicon;
-        private final JLabel fuego;
-        private final JLabel fuego2;
-        private final Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 25);
-        private final ButtonListener lbutton = new ButtonListener();
-        private final JPanel menuPanel;
-        private final JPanel escorepanel = CurrentData.scorePanel;
-        public ScoreDrawer PaneldePuntajes;
-        //private final AudioManager music; esto es adudio kk ;v
-        //private final AudioMaster music;
-        // inicio del constructor
-	public Menu( GameStateManager newGameState ){
+
+    //declarando todos los elemnetos del GUImenu
+    private final GameStateManager state;
+    private final JLabel fuego2;
+    private final JPanel menuPanel;
+    private final JPanel escorepanel = CurrentData.scorePanel;
+    private Font fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 120);
+    private JLabel menuicon;
+    private JLabel fuego;
+    private JLabel startlabel;
+    private JLabel titlelabel;
+    private XBoton botonstart;
+    private XBoton botonscore;
+    private XBoton botonsalir;
+    private Thread blinklabel;
+
+    public ScoreDrawer PaneldePuntajes;
+    //private final AudioManager music; esto es adudio kk ;v
+    //private final AudioMaster music;
+    
+    // inicio del constructor
+    public Menu(GameStateManager newGameState) {
         state = newGameState;
         /*musica plox 
         audio manager es una kk no funciona :v
@@ -36,57 +39,132 @@ public class Menu implements GameState {
         ponagele fix plox
         music = new AudioMaster(this.getClass().getResourceAsStream("/Resources/Music/epicmusic.mp3"));
         boton inicio
-        */  
-        botonstart = new XBoton(Color.RED, Color.DARK_GRAY);
-        botonstart.setBackground( Color.DARK_GRAY);
-        botonstart.setBounds(351,350,230,70); 
-        botonstart.setFont(fuentex);
-        botonstart.setText("Play");
-        botonstart.addActionListener(lbutton);
-        //boton de scorea
-        botonscore = new XBoton(Color.RED, Color.DARK_GRAY);
-        botonscore.setBackground( Color.DARK_GRAY);
-        botonscore.setBounds(351,450,230,70);
-        botonscore.setFont(fuentex);
-        botonscore.setText("puntajes");
-        botonscore.addActionListener(lbutton);
-        //boton salir 
-        botonsalir = new XBoton(Color.RED, Color.DARK_GRAY);
-        botonsalir.setBackground( Color.DARK_GRAY);
-        botonsalir.setBounds(351,550,230,70);
-        botonsalir.setFont(fuentex);
-        botonsalir.setText("Salir");
-        botonsalir.addActionListener(lbutton);
-        //icono del menu XD las calaveras we
-        menuicon = new JLabel();
-        menuicon.setIcon(getIconImage("/Resources/image/calavera.png"));
-        menuicon.setBounds(66, 0,800 , 328);
-        // dibuja el fueguito :3
-        fuego = new JLabel();
-        fuego.setIcon(getIconImage("/Resources/image/fire.gif"));
-        fuego.setBounds(0, 0,932 , 658);
-        //auxiliar del fuego
+         */
+               
+        //auxiliar del fuego para scorepanel
         fuego2 =  new JLabel();
         fuego2.setIcon(getIconImage("/Resources/image/fire.gif"));
         fuego2.setBounds(0, 0,932 , 658);
-        // incializamos el subpanel JTable y lo dejamos listo para el overlaping              
-        //inicializar el Jpanel que contiene todo
+               
+        // incializamos el subpanel escorepanel y lo dejamos listo para el overlaping 
         escorepanel.setBackground(Color.BLACK);
         escorepanel.setLayout(null);
+        escorepanel.add(fuego2); 
         PaneldePuntajes = new ScoreDrawer(escorepanel);
-        //agregamos todos los componente a menu
+        
+        //inicializar el Jpanel que contiene todo el main menu y el listener del mouse
         menuPanel = CurrentData.menuPanel;
+        menuPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Presstart(evt);
+            }
+        });
         menuPanel.setBackground(Color.BLACK);
         menuPanel.setLayout(null);
+        
+        //inicializamos componentes de la pantalla de inicio
+        initJmenu();
+        
         //SE agrega todo al panel y se imprime, adding all Jcomponens to the panel
-        menuPanel.add(botonstart);
-        menuPanel.add(botonscore);
-        menuPanel.add(botonsalir);
-        menuPanel.add(menuicon);
-        menuPanel.add(fuego); 
+        initJcomponens();
+        menuPanel.add(fuego);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
         
+    }
+    private void initJmenu() {
+        //icono del menu XD las calaveras we
+        menuicon = new JLabel();
+        menuicon.setIcon(getIconImage("/Resources/image/calavera.png"));
+        menuicon.setBounds(66, 0, 800, 328);
+
+        // dibuja el fueguito :3
+        fuego = new JLabel();
+        fuego.setIcon(getIconImage("/Resources/image/fire.gif"));
+        fuego.setBounds(0, 0, 932, 658);
+
+        //imprime el titulo del juego
+        titlelabel = new JLabel();
+        titlelabel.setFont(fuentex);
+        titlelabel.setBounds(210, 350, 650, 220);
+        titlelabel.setForeground(Color.WHITE);
+        titlelabel.setText("The cave");
+        
+        //Imprime el mensaje  para dar click en ka pantalla
+        startlabel = new JLabel();
+        startlabel.setBounds(305, 520, 600, 250);
+        fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 25);
+        startlabel.setFont(fuentex);
+        startlabel.setText("Click On Screen to start");
+
+        //creamos un thread de animacion para los Jlabels
+        blinklabel = new Thread(new menuanimator(startlabel));
+        blinklabel.start();
+        //añade los elementos al panel
+        menuPanel.add(titlelabel);
+        menuPanel.add(startlabel);
+        menuPanel.add(menuicon);
+
+    }
+    private void initJcomponens() {
+        //boton inicio
+        botonstart = new XBoton(Color.RED, Color.DARK_GRAY);
+        botonstart.setBackground(Color.DARK_GRAY);
+        botonstart.setBounds(351, 350, 230, 70);
+        botonstart.setFont(fuentex);
+        botonstart.setText("Play");
+        botonstart.setVisible(false);
+        //boton de scorea
+        botonscore = new XBoton(Color.RED, Color.DARK_GRAY);
+        botonscore.setBackground(Color.DARK_GRAY);
+        botonscore.setBounds(351, 450, 230, 70);
+        botonscore.setFont(fuentex);
+        botonscore.setText("puntajes");
+        botonscore.setVisible(false);
+        
+        //boton salir 
+        botonsalir = new XBoton(Color.RED, Color.DARK_GRAY);
+        botonsalir.setBackground(Color.DARK_GRAY);
+        botonsalir.setBounds(351, 550, 230, 70);
+        botonsalir.setFont(fuentex);
+        botonsalir.setText("Salir");
+        botonsalir.setVisible(false);
+
+        //ahora los añadimos al panel para ser mostrados
+        menuPanel.add(botonstart);
+        menuPanel.add(botonscore);
+        menuPanel.add(botonsalir);
+
+    }
+    public void Presstart(java.awt.event.MouseEvent e) {
+        //elimina el mensaje de la pantalla
+        titlelabel.setVisible(false);
+        //preparando botonsalir para entrar al menu state
+        botonsalir.setVisible(true);
+        botonsalir.addActionListener((java.awt.event.ActionEvent evt) -> {
+            System.exit(0);
+        });
+        
+        //preparando botonscore para entrar al menu state
+        botonscore.setVisible(true);
+        botonscore.addActionListener((java.awt.event.ActionEvent evt) -> {
+            System.out.println("score listener online");
+            escorepanel.add(fuego2);
+            CurrentData.layout.show(CurrentData.panel, CurrentData.score);
+            CurrentData.frame.revalidate();
+        });
+
+        //preparando botonstart para entrar al menu state
+        botonstart.setVisible(true);
+        botonstart.addActionListener((java.awt.event.ActionEvent evt) -> {
+            System.out.println("score play online");
+            System.out.println("reach boton");
+            world();
+        });
+        menuanimator.continuar = false;
+        startlabel.setVisible(false);     
+
     }
 
     private boolean firstCall = true;
@@ -125,29 +203,8 @@ public class Menu implements GameState {
 	@Override public void gameOver() {
        System.out.println( "Como pierdes estando en el menu???" );
 	}
-       public ImageIcon getIconImage(String path){
+    public ImageIcon getIconImage(String path) {
         ImageIcon retvalue = new javax.swing.ImageIcon(getClass().getResource(path));
         return retvalue;
-    }
-	
-	private class ButtonListener implements ActionListener{
-			@Override public void actionPerformed(ActionEvent evt) {
-			System.out.println( "reach0");
-			if( evt.getSource() == botonstart ){
-				System.out.println( "reach boton");
-				world();
-			}
-                        if( evt.getSource() == botonscore ){                           
-                            System.out.println( "score listener online");
-                            escorepanel.add(fuego2);  
-                            CurrentData.layout.show( CurrentData.panel, CurrentData.score);
-                            CurrentData.frame.revalidate();
-			}
-            if( evt.getSource() == botonsalir ){
-				System.exit(0);
-			}
-		}
-	}
-
-}
-
+    }               
+ }
