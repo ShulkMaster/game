@@ -20,8 +20,10 @@ public class Player extends Character {
     public Player( int life, int x, int y, int width, int height, int ox, int oy, int pixels ){
         super( life, x, y );
         init();
-        if( pixels != 0 )
-            animator = new Animator( sheet[0],sheet[0].sheetWidht(),sheet[0].sheetHeight(), pixels );
+        if( pixels != 0 ) {
+            animator = new Animator(sheet[0], sheet[0].sheetWidht(), sheet[0].sheetHeight(), pixels);
+            animator.setAuxAnimation(20,80,4);
+        }
         else
             animator = new Animator( sheet );
 

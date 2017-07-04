@@ -28,6 +28,9 @@ public class CurrentData {
     public static final String menu = "menu";
     public static final String game = "game";
     public static final String score = "score";
+    public static final String win = "win";
+    public static final String pause = "pause";
+    public static final String gameOver = "gameOver";
 
     public static void initCanvas(){
         layout.show(panel, game);

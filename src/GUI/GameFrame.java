@@ -14,6 +14,9 @@ public class GameFrame extends JFrame {
     private JPanel gamePanel;
     private JPanel menuPanel;
     private JPanel scorePanel;
+    private JPanel winPanel;
+    private JPanel gameOverPanel;
+    private JPanel pausePanel;
     private CardLayout cLayout;
      
 
@@ -39,11 +42,17 @@ public class GameFrame extends JFrame {
         gamePanel = panel( width, height  );
         menuPanel = panel( width, height );
         scorePanel = panel ( width, height );
+        gameOverPanel = panel( width, height);
+        winPanel = panel( width, height);
+        pausePanel = panel(width, height);
 
         gamePanel.add(canvas);
         panel.add( menuPanel, CurrentData.menu);
         panel.add(gamePanel, CurrentData.game);
         panel.add( scorePanel, CurrentData.score );
+        panel.add( gameOverPanel, CurrentData.gameOver );
+        panel.add( pausePanel, CurrentData.pause );
+        panel.add( winPanel, CurrentData.win );
 
 		CurrentData.layout = this.cLayout;
         CurrentData.canvas = this.canvas;
@@ -64,6 +73,7 @@ public class GameFrame extends JFrame {
         this.setBackground(Color.black);
         this.setIconImage(getIconImage());
     }
+
     public Canvas getCanvas(){ return canvas; }
     @Override
     public Image getIconImage(){

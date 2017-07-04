@@ -61,16 +61,14 @@ public class Animator {
     public void setAuxAnimation( int height, int pixels, int iterations ){
         for( int i = 0; i < iterations; i++) {
             for (int j = 0; j < iterations; j++) {
-                sprite[i][j] = singleSheet.crop(j*pixels,i*pixels,pixels,pixels);
-
+                sprite[height++][j] = singleSheet.crop(j*pixels,i*pixels,pixels,pixels);
             }
         }
-
     }
 
     public BufferedImage tempAnimation( int start, int height, int limit, int pixels ){
-        if( )
 
+        return null;
     }
     //---------------------------------------------------
 
