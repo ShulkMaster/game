@@ -95,9 +95,13 @@ public class World extends JComponent implements  GameState {
         tiles = lvl.getTiles();
         deco = lvl.getLayer1();
         deco2 = lvl.getLayer2();
-        enemigo = new Enemy[1];
-        enemigo[0] = new Enemy(100, 400,400,20,20,22,32);
+        enemigo = new Enemy[3];
+        enemigo[0] = new Enemy(100, 450,400,20,20,22,32);
         enemigo[0].setOrigin(24,48);
+        enemigo[1] = new Enemy(100, 370,300,20,20,22,32);
+        enemigo[1].setOrigin(24,48);
+        enemigo[2] = new Enemy(100, 300,400,20,20,22,32);
+        enemigo[2].setOrigin(24,48);
         setData();
     }
 
@@ -246,8 +250,10 @@ public class World extends JComponent implements  GameState {
 
     private void moveEnemy(){
         enemigo[0].move("up");
-        if( nivel == 2)
+        if( nivel == 2 || nivel == 3)
             enemigo[1].move("left");
+        if( nivel == 3)
+            enemigo[2].move("up");
     }
 
     private boolean overLap = false;
@@ -290,6 +296,9 @@ public class World extends JComponent implements  GameState {
         drawGui();
 
         checkMapTransition();
+
+        if( jugador.getScore() == 100*6)
+            CurrentData.layout.show( CurrentData.panel,CurrentData.win);
 	}
 
 	@Override public void menu() {
@@ -351,7 +360,7 @@ public class World extends JComponent implements  GameState {
             nivel = 3;
             Level.generateLevel(2);
             loadLevel3();
-            jugador.getPos().setLocation(jugador.getPos().x,jugador.getPos().y-600);
+            jugador.getPos().setLocation(jugador.getPos().x,jugador.getPos().y+500);
             jugador.toIso();
             jugador.recalculateOrigin();
 
