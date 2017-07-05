@@ -6,6 +6,11 @@ import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import systems.Fontloader;
+
 
 public class ScoreDrawer {
 
@@ -25,7 +31,11 @@ public class ScoreDrawer {
     private JScrollPane scroll;
     private DefaultTableModel model;
     private final ButtonListenerS lbutton = new ButtonListenerS();
-
+    //SQL
+    private Connection conexion = null;
+    private Statement comando = null;
+    private ResultSet resultados = null;
+    
     //inicio del constructor
     public ScoreDrawer(JPanel panel) {
 
@@ -42,6 +52,7 @@ public class ScoreDrawer {
         tablero.setForeground(Color.WHITE);
 
         //creando la tabla de puntuaciones
+        
         inittable();
 
         //agregando al panel
@@ -108,6 +119,9 @@ public class ScoreDrawer {
         tabladejugadores.setSize(new Dimension(700, 450));
         scroll.setViewportView(tabladejugadores);
         scroll.setBounds(116, 140, 700, 400);
+        
+        
+        
     }
 
     private class ButtonListenerS implements ActionListener {
@@ -121,23 +135,58 @@ public class ScoreDrawer {
             }
             if (evt.getSource() == actualizar) {
                 /* BLOQUE DE CODIGO AQL AQUI
-                            under construction
+                            
                  */
-                //setValue("PruebaA", "f", "d");
-                //setValue("PruebaA", "f", "d");
-                //setValue("PruebaA", "f", "d");
-
+                 try {
+            // Obtener datos de la tabla
+            this.leerDatos();
+            
+            while(resultados.next() == true) {
+                int id, obtenido;
+                String nombre, fecha; 
+                id = resultados.getInt("idPlayer");
+                nombre = resultados.getString("nickPlayer");
+                obtenido = resultados.getInt("scorePlayer");
+                fecha = resultados.getString("fecha");
+                
+                model.addRow( new Object[] {id, nombre, obtenido, fecha} );                
+            }
+            
+            this.cerrar();
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Error de lectura de BD\n\n");
+            
+            e.printStackTrace();
+                    } 
             }
             if (evt.getSource() == Ranking) {
                 /* BLOQUE DE CODIGO SQL AQUI
-                            under construction
+                            
                  */
                 //ejemplo de metodo addRow
-                model.addRow(new String[]{"holi2", "jugado2", "inumal2", "tobal2"});
+                //model.addRow(new String[]{"holi2", "jugado2", "inumal2", "tobal2"});
 
             }
 
         }
-    }
+        //abro conexion con la database Game
+        private void leerDatos() throws ClassNotFoundException, SQLException {
+        String usuario = "postgres";
+        String passwd = "5ce3d2a5";
+        String instruccion = "SELECT * FROM RANKING ";
 
+        Class.forName("org.postgresql.Driver");
+        conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Game" + "?" + "user=" + usuario + "&" + "password=" + passwd + "");
+        comando = conexion.createStatement();
+        resultados = comando.executeQuery(instruccion);
+    }
+        //cierro conexion con database Game
+        private void cerrar() throws SQLException {
+        conexion.close();        
+        } 
+    }
+         
+    
+    
 }
