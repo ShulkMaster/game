@@ -137,6 +137,7 @@ public class ScoreDrawer {
                 /* BLOQUE DE CODIGO AQL AQUI
                             
                  */
+                
                  try {
             // Obtener datos de la tabla
             this.leerDatos();
