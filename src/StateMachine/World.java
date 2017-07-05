@@ -40,6 +40,7 @@ public class World extends JComponent implements  GameState {
 
     private int score = 0;
     private final Font font = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 16);
+    private int nivel = 1;
     //--------------------------
     
 	World(GameStateManager newGameState){
@@ -281,13 +282,22 @@ public class World extends JComponent implements  GameState {
         drawGui();
 
         jugador.toIso();
-        if( iso.x > 12 ) {
+        if( iso.x > 12 && nivel == 1 ) {
             nivel = 2;
             Level.generateLevel(1);
             world();
-            jugador.getPos().setLocation(932/2,658/2);
+            jugador.getPos().setLocation(jugador.getPos().x-930,658/2);
             jugador.toIso();
             jugador.recalculateOrigin();
+        }
+        if( iso < 1 && nivel == 2 ){
+            nivel = 2;
+            Level.generateLevel(1);
+            world();
+            jugador.getPos().setLocation(jugador.getPos().x+930,658/2);
+            jugador.toIso();
+            jugador.recalculateOrigin();
+
         }
 	}
 	
@@ -309,9 +319,12 @@ public class World extends JComponent implements  GameState {
 
 	@Override public void gameOver() { System.out.println( "Nadie se puede morir fuera de batalla!" ); }
 
-	private int nivel = 0;
 	@Override public void world( ) {
 	    //ya que ocupamos reiniciar el nivel, ocupamos el mismo nombre del mismo state de la statemachine para reiniciar el nivel.
+        if( !jugador.getAlive() ) {
+            loadPlayer();
+            jugador.setAlive(true);
+        }
         System.out.println("reach world");
         CurrentData.initCanvas();
         if( nivel == 1 )
