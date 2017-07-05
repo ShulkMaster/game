@@ -85,7 +85,7 @@ public class World extends JComponent implements  GameState {
         enemigo = new Enemy[2];
         enemigo[0] = new Enemy(100, 500,120,20,20,22,32);
         enemigo[0].setOrigin(24,48);
-        enemigo[1] = new Enemy(100, 450,30,20,20,22,32);
+        enemigo[1] = new Enemy(100, 250,30,20,20,22,32);
         enemigo[1].setOrigin(24,48);
         setData();
     }
@@ -286,7 +286,7 @@ public class World extends JComponent implements  GameState {
         }
         // ------------------------------
 
-        debug();
+        //debug();
         drawGui();
 
         checkMapTransition();

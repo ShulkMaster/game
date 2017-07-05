@@ -18,6 +18,7 @@ public class Enemy extends Character {
     private Collider collider;
     private int velocity = 5;
     private int limit;
+    private int limitX;
     private boolean agro = false;
     private int defense = 2;
     private boolean alive = true;
@@ -30,6 +31,7 @@ public class Enemy extends Character {
         animator = new Animator( singleSheet,singleSheet.sheetWidht(),singleSheet.sheetHeight(),64 );
         getPos().setLocation(x,y);
         limit = (int) getPos().getY() - 40;
+        limitX = (int) getPos().getX() - 40;
     }
 
     public Enemy(int life, int x, int y , int width, int height, int ox, int oy) {
@@ -39,6 +41,7 @@ public class Enemy extends Character {
         getPos().setLocation(x,y);
         collider = new Collider( x, y , width, height, ox, oy );
         limit = (int) getPos().getY() - 40;
+        limitX = (int) getPos().getX() - 40;
     }
 
     private void init(){
@@ -94,23 +97,23 @@ public class Enemy extends Character {
                 origin.x -= velocity;
                 //System.out.println( getPos().y);
                 //System.out.println( limit);
-                if( getPos().x == limit ){
+                if( getPos().x == limitX ){
                     //System.out.println("limit reach");
                     notLeft = false;
                     notRight = true;
-                    limit += 80;
-                    setCurrentAnimation(0,1,8);
+                    limitX += 80;
+                    setCurrentAnimation(0,3,8);
                 }
             }
 
             if( notRight  && alive && axis == "left" ){
                 getPos().x += velocity;
                 origin.x += velocity;
-                if( getPos().x == limit ){
+                if( getPos().x == limitX ){
                     notRight = false;
                     notLeft = true;
-                    limit -= 80;
-                    setCurrentAnimation(0,4,8);
+                    limitX -= 80;
+                    setCurrentAnimation(0,1,8);
                 }
         }
         updateBounds();
