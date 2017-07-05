@@ -1,4 +1,5 @@
 package GUI;
+
 import Data.CurrentData;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,16 +15,49 @@ import javax.swing.table.DefaultTableModel;
 import systems.Fontloader;
 
 public class ScoreDrawer {
-     XBoton botonreturn;
-     XBoton actualizar;
-     XBoton Ranking;
-     Fontloader loader = new Fontloader("/Resources/fonts/fotana/metal.ttf");
-     Font  fuentex = loader.MyFont(0, 30);
-     private final JTable tabladejugadores;
-     private final JScrollPane scroll;
-     private final DefaultTableModel model;
-     private final ButtonListenerS lbutton = new ButtonListenerS();
-     public ScoreDrawer(JPanel panel) {
+
+    XBoton botonreturn;
+    XBoton actualizar;
+    XBoton Ranking;
+    Fontloader loader = new Fontloader("/Resources/fonts/fotana/metal.ttf");
+    Font fuentex = loader.MyFont(0, 30);
+    private JTable tabladejugadores;
+    private JScrollPane scroll;
+    private DefaultTableModel model;
+    private final ButtonListenerS lbutton = new ButtonListenerS();
+
+    //inicio del constructor
+    public ScoreDrawer(JPanel panel) {
+
+        //inizializa y carga los Xbottons
+        intitBotons();
+
+        //dibuja el label que dice PUNTUACIONES
+        JLabel tablero = new JLabel();
+        loader = new Fontloader("/Resources/fonts/fotana/metal.ttf");
+        fuentex = loader.MyFont(0, 90);
+        tablero.setFont(fuentex);
+        tablero.setText("PUNTUACIONES");
+        tablero.setBounds(266, 20, 400, 100);
+        tablero.setForeground(Color.WHITE);
+
+        //creando la tabla de puntuaciones
+        inittable();
+
+        //agregando al panel
+        panel.add(actualizar);
+        panel.add(botonreturn);
+        panel.add(tablero);
+        panel.add(Ranking);
+        panel.add(scroll);
+    }
+
+    public ImageIcon getIconImage(String path) {
+        ImageIcon retvalue = new javax.swing.ImageIcon(path);
+        return retvalue;
+    }
+
+    private void intitBotons() {
         //dibujar boton para regresar al menu
         botonreturn = new XBoton(getIconImage("src/Resources/image/flecha.png"), Color.DARK_GRAY);
         botonreturn.setBackground(Color.DARK_GRAY);
@@ -47,19 +81,9 @@ public class ScoreDrawer {
         Ranking.setBounds(434, 550, 150, 100);
         Ranking.setFont(fuentex);
         Ranking.addActionListener(lbutton);
-        //dibuja el label que dice PUNTUACIONES
-        JLabel tablero = new JLabel();
-        loader = new Fontloader("/Resources/fonts/fotana/metal.ttf");
-        fuentex = loader.MyFont(0, 90);
-        tablero.setFont(fuentex);
-        tablero.setText("PUNTUACIONES");
-        tablero.setBounds(266, 20, 400, 100);
-        tablero.setForeground(Color.WHITE);
-        //agregando al panel
-        panel.add(actualizar);
-        panel.add(botonreturn);
-        panel.add(tablero);
-        panel.add(Ranking);
+    }
+
+    private void inittable() {
         //Dibuja la tabla y la inicializa en vacio
         scroll = new javax.swing.JScrollPane();
         model = new DefaultTableModel(
@@ -84,47 +108,36 @@ public class ScoreDrawer {
         tabladejugadores.setSize(new Dimension(700, 450));
         scroll.setViewportView(tabladejugadores);
         scroll.setBounds(116, 140, 700, 400);
-        panel.add(scroll);
     }
 
-       public ImageIcon getIconImage(String path){
-        ImageIcon retvalue = new javax.swing.ImageIcon(path);
-        return retvalue;
-    }
-//       public void setValue(String[] dato){
-//            //model.setValueAt(dato, conlumna, fila);
-//            //tabladejugadores.setModel(model);
-//            model.addRow(dato);
-//       }
-//        
-            
-        
-       private class ButtonListenerS implements ActionListener{
-			@Override public void actionPerformed(ActionEvent evt) {
-			if( evt.getSource() == botonreturn ){
-				System.out.println( "reach botonreturn");
-				CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
-                                CurrentData.frame.revalidate();
-			}
-                        if( evt.getSource() == actualizar ){                           
-                            /* BLOQUE DE CODIGO AQL AQUI
-                            under construction
-                            */
-                            //setValue("PruebaA", "f", "d");
-                            //setValue("PruebaA", "f", "d");
-                            //setValue("PruebaA", "f", "d");
-                            
-			}
-                        if( evt.getSource() == Ranking ){                           
-                            /* BLOQUE DE CODIGO SQL AQUI
-                            under construction
-                            */
-                            //ejemplo de metodo addRow
-                             model.addRow(new String[]{"holi2", "jugado2", "inumal2", "tobal2"});
-                            
-			}
+    private class ButtonListenerS implements ActionListener {
 
-		}
-	}
-    
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            if (evt.getSource() == botonreturn) {
+                System.out.println("reach botonreturn");
+                CurrentData.layout.show(CurrentData.panel, CurrentData.menu);
+                CurrentData.frame.revalidate();
+            }
+            if (evt.getSource() == actualizar) {
+                /* BLOQUE DE CODIGO AQL AQUI
+                            under construction
+                 */
+                //setValue("PruebaA", "f", "d");
+                //setValue("PruebaA", "f", "d");
+                //setValue("PruebaA", "f", "d");
+
+            }
+            if (evt.getSource() == Ranking) {
+                /* BLOQUE DE CODIGO SQL AQUI
+                            under construction
+                 */
+                //ejemplo de metodo addRow
+                model.addRow(new String[]{"holi2", "jugado2", "inumal2", "tobal2"});
+
+            }
+
+        }
+    }
+
 }

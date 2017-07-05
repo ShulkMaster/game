@@ -26,7 +26,6 @@ public class Menu implements GameState {
     private XBoton botonscore;
     private XBoton botonsalir;
     private Thread blinklabel;
-
     public ScoreDrawer PaneldePuntajes;
     //private final AudioManager music; esto es adudio kk ;v
     //private final AudioMaster music;
@@ -95,7 +94,7 @@ public class Menu implements GameState {
         
         //Imprime el mensaje  para dar click en ka pantalla
         startlabel = new JLabel();
-        startlabel.setBounds(305, 520, 600, 250);
+        startlabel.setBounds(305, 500, 580, 250);
         fuentex = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 25);
         startlabel.setFont(fuentex);
         startlabel.setText("Click On Screen to start");
@@ -141,9 +140,11 @@ public class Menu implements GameState {
         menuPanel.add(botonsalir);
 
     }
+    @SuppressWarnings("CallToThreadStopSuspendOrResumeManager")
     public void Presstart(java.awt.event.MouseEvent e) {
         //elimina el mensaje de la pantalla
         titlelabel.setVisible(false);
+        
         //preparando botonsalir para entrar al menu state
         botonsalir.setVisible(true);
         botonsalir.addActionListener((java.awt.event.ActionEvent evt) -> {
@@ -163,7 +164,6 @@ public class Menu implements GameState {
         botonstart.setVisible(true);
         botonstart.addActionListener((java.awt.event.ActionEvent evt) -> {
             System.out.println("score play online");
-            System.out.println("reach boton");
             world();
         });
         blinklabel.suspend();

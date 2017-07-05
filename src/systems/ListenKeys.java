@@ -3,7 +3,7 @@ package systems;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import GUI.PauseDrawer;
 import Data.CurrentData;
 import StateMachine.GameStateManager;
 import entity.Player;
@@ -22,7 +22,7 @@ public class ListenKeys implements KeyListener {
     private Tile[][]  deco;
     private Animator anim;
     private Enemy[] enem = new Enemy[3];
-
+    private PauseDrawer pasado = new  PauseDrawer(CurrentData.pausepanel);
     private Point iso;
     private Point aux;
     private Point pos = new Point();
@@ -160,19 +160,19 @@ public class ListenKeys implements KeyListener {
                 jugador.attack("left");
             else if (jugador.lastPos == Player.LastPos.RIGHT)
                 jugador.attack("right");
-            else if (jugador.lastPos == Player.LastPos.DOWN)
+            else if (jugador.lastPos == Player.LastPos.DOWN) {
                 jugador.attack("down");
+            }
         }
 
-       if( pause ){
-            if( firstPress )
-                CurrentData.layout.show( CurrentData.panel, CurrentData.pause );
-            else if( !firstPress  && state.getCurrentState() != state.getWorld() ){
-                CurrentData.layout.show( CurrentData.panel, CurrentData.game );
+        if (pause) {
+            if (firstPress) {
+                CurrentData.layout.show(CurrentData.panel, CurrentData.pause);
             }
-       }
-       
+        }
     }
+
+    
 
     private void inBattle(){
         aux = jugador.getPos();
