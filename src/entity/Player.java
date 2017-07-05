@@ -79,6 +79,7 @@ public class Player extends Character {
 
     public void attack(String axis /*, Graphics g */){
         attack = true;
+        //systems.AudioManager.playSound();
         switch( axis ) {
             case "up":
                 System.out.println( "attack up");

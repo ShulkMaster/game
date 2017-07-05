@@ -57,6 +57,7 @@ public class World extends JComponent implements  GameState {
             iso = jugador.getIso();
             aux = new Point();
             jugador.toIso();
+            systems.AudioManager.loadEffect("/Resources/Music/FXsound/espada1.wav");
             //auxVida = (int) jugador.getLife();
 	}
 	
@@ -214,7 +215,8 @@ public class World extends JComponent implements  GameState {
             CurrentData.initCanvas();
             loadLevel();
             initGUI();
-            systems.AudioManager.playMusic("src/Resources/Music/mundo1.wav");
+            systems.AudioManager.loadSong("/Resources/Music/mundo1.wav");
+            systems.AudioManager.playMusic();
         }
         moveEnemy();
 
