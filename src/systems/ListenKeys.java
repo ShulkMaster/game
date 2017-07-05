@@ -152,21 +152,6 @@ public class ListenKeys implements KeyListener {
     }
 
 	@Override public void keyReleased(KeyEvent e) {
-        //anim.setCurrentSheet(0);
-        /*if( left  ){
-            jugador.lastPos = Player.LastPos.LEFT;
-        }
-        if( right ){
-            jugador.lastPos = Player.LastPos.RIGHT;
-        }
-        if( up){
-            jugador.lastPos = Player.LastPos.UP;
-        }
-        if( down ){
-            jugador.lastPos = Player.LastPos.DOWN;
-        }
-        if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ) {
-        }*/
     }
 
 	@Override public void keyTyped(KeyEvent e) { }
