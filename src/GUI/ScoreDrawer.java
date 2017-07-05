@@ -14,6 +14,7 @@ import java.sql.Statement;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -137,7 +138,7 @@ public class ScoreDrawer {
                 /* BLOQUE DE CODIGO AQL AQUI
                             
                  */
-                
+                this.limpiarTabla(tabladejugadores);
                  try {
             // Obtener datos de la tabla
             this.leerDatos();
@@ -192,6 +193,18 @@ public class ScoreDrawer {
         private void cerrar() throws SQLException {
         conexion.close();        
         } 
+        
+        public void limpiarTabla(JTable tabla){
+        try {
+            DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
+            int filas=tabla.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
     }
          
     
