@@ -68,6 +68,7 @@ public class World extends JComponent implements  GameState {
         deco2 = lvl.getLayer2();
         enemigo = new Enemy[1];
         enemigo[0] = new Enemy(100, 400,400);
+        enemigo[0].setOrigin(24,48);
         setData();
         lKey = new ListenKeys();
         firstCall = false;
@@ -176,9 +177,9 @@ public class World extends JComponent implements  GameState {
         int row = (int) ( origin.getX() );
         int col = (int) ( origin.getY() );
         jugador.toIso();
-        System.out.println("j:( " + pos.x + ", " + pos.y + " ) " );
-        System.out.println("jugador ( " + (row) + ", " + (col) + " )" + 
-        		"[ " + (row/64) + ", " + (col/16) + " ]" + "iso x,y( " + (iso.x) + ", " + (iso.y) + " )");
+        //System.out.println("j:( " + pos.x + ", " + pos.y + " ) " );
+        //System.out.println("jugador ( " + (row) + ", " + (col) + " )" +
+        //		"[ " + (row/64) + ", " + (col/16) + " ]" + "iso x,y( " + (iso.x) + ", " + (iso.y) + " )");
 
         g.setColor( Color.red );
         g.fillRect( (int)jugador.getBounds().getX(), (int)jugador.getBounds().getY(), (int)jugador.getBounds().getWidth(),
@@ -189,6 +190,11 @@ public class World extends JComponent implements  GameState {
         g.setColor(Color.PINK);
         g.fillOval(origin.x, origin.y,15,15);
         g.drawRect(origin.x, origin.y, 64-48, 64-48);
+
+        g.setColor(Color.cyan);
+        g.drawRect( enemigo[0].getPos().x , enemigo[0].getPos().y , 64,64);
+        g.fillOval(enemigo[0].getPos().x, enemigo[0].getPos().y,15,15);
+        g.drawRect(enemigo[0].getOrigin().x, enemigo[0].getOrigin().y, 64-48, 64-48);
 
     }
 
@@ -220,7 +226,7 @@ public class World extends JComponent implements  GameState {
         }
         moveEnemy();
 
-        System.out.println("World draw");
+        //System.out.println("World draw");
         g = state.getGraphics();
 
         //ESCENARIO ---------------------
@@ -242,7 +248,7 @@ public class World extends JComponent implements  GameState {
         }
         // ------------------------------
 
-        //debug();
+        debug();
         drawGui();
 	}
 	

@@ -54,10 +54,11 @@ public class Enemy extends Character {
     public void move( ){
         if( notTop ){
             getPos().y -= velocity;
-            System.out.println( getPos().y);
-            System.out.println( limit);
+            origin.y -= velocity;
+            //System.out.println( getPos().y);
+            //System.out.println( limit);
             if( getPos().y == limit ){
-                System.out.println("limit reach");
+                //System.out.println("limit reach");
                 notTop = false;
                 notBot = true;
                 limit += 80;
@@ -66,6 +67,7 @@ public class Enemy extends Character {
         }
         if( notBot ){
             getPos().y += velocity;
+            origin.y += velocity;
             if( getPos().y == limit ){
                 notBot = false;
                 notTop = true;
