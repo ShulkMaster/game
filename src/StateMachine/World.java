@@ -286,7 +286,7 @@ public class World extends JComponent implements  GameState {
             nivel = 2;
             Level.generateLevel(1);
             world();
-            jugador.getPos().setLocation(jugador.getPos().x-930,658/2);
+            jugador.getPos().setLocation(jugador.getPos().x-700,jugador.getPos().y);
             jugador.toIso();
             jugador.recalculateOrigin();
         }
@@ -294,7 +294,7 @@ public class World extends JComponent implements  GameState {
             nivel = 2;
             Level.generateLevel(1);
             world();
-            jugador.getPos().setLocation(jugador.getPos().x+930,658/2);
+            jugador.getPos().setLocation(jugador.getPos().x+800,jugador.getPos().y);
             jugador.toIso();
             jugador.recalculateOrigin();
 
