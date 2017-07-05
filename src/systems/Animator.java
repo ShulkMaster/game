@@ -59,10 +59,12 @@ public class Animator {
 
 
     public void setAuxAnimation( int height, int pixels, int iterations ){
+        int y = 7;
         for( int i = 0; i < iterations; i++) {
             for (int j = 0; j < iterations+2; j++) {
-                sprite[height][j] = singleSheet.crop( (j*192),( height*pixels ),192,192);
+                sprite[height][j] = singleSheet.crop( (j*192),( y*192 ),192,192);
             }
+            y++;
             height++;
         }
     }

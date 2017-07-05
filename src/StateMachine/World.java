@@ -109,6 +109,7 @@ public class World extends JComponent implements  GameState {
 		/*g.drawImage( anim.getSprites(2).crop( anim.state(), 0, 96, 96), pos.x, pos.y-38, null );
 		if( anim.state() >= 800 ) // el limite de la sprite sheet es 800 asi que al llegar se acabo el ataque
 		    anim.setCurrentSheet(0);*/
+        g.drawImage( jugador.getCurrentAnimation(), pos.x, pos.y , null);
     }
 
     private void drawMap(){
@@ -183,7 +184,7 @@ public class World extends JComponent implements  GameState {
     }
 
     private void drawPlayer(){
-        /*if ( anim.getCurrentSheet() == 0 )
+        if ( anim.getCurrentSheet() == 0 )
             idle();
         if( anim.getCurrentSheet() == 1 )
             move();
@@ -191,7 +192,6 @@ public class World extends JComponent implements  GameState {
             attack();
         /*if( jugador.checkCollision( enemigo.getPos().x , enemigo.getPos().y ) )
             battle();*/
-        g.drawImage( jugador.getCurrentAnimation(), pos.x, pos.y , null);
     }
 
 
@@ -232,10 +232,15 @@ public class World extends JComponent implements  GameState {
         // ------------------------------
 
         //debug();
-        g.drawImage( anim.getSheets()[22][0], 400, 400 , null);
-        g.drawImage( anim.getSheets()[22][1], 500, 400 , null);
-        g.drawImage( anim.getSheets()[22][2], 600, 400 , null);
-        g.drawImage( anim.getSheets()[22][3], 700, 400 , null);
+        g.drawImage( anim.getSheets()[21][0], 400, 450 , null);
+        g.drawImage( anim.getSheets()[21][1], 500, 450 , null);
+        g.drawImage( anim.getSheets()[21][2], 600, 450 , null);
+        g.drawImage( anim.getSheets()[21][3], 700, 450 , null);
+
+        g.drawImage( anim.getSheets()[22][0], 400, 500 , null);
+        g.drawImage( anim.getSheets()[22][1], 500, 500 , null);
+        g.drawImage( anim.getSheets()[22][2], 600, 500 , null);
+        g.drawImage( anim.getSheets()[22][3], 700, 500 , null);
         drawGui();
 	}
 	

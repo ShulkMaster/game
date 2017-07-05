@@ -154,7 +154,7 @@ public class ListenKeys implements KeyListener {
         //if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ) {
         if( attack ) {
             //anim.setPixels( 0 );
-            //anim.setCurrentSheet(2);
+            anim.setCurrentSheet(2);
 
             System.out.println("ATTACK");
             if (jugador.lastPos == Player.LastPos.UP)
