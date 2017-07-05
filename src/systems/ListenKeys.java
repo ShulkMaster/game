@@ -116,16 +116,17 @@ public class ListenKeys implements KeyListener {
     }//func
 
     private void inWorld(){
-        if( left && !checkCollision("left") ){
+        jugador.toIso();
+        if( left && !checkCollision("left") && iso.x > 1 ){
             jugador.move("left");
         }
-        if( right  && !checkCollision("right") ){
+        if( right  && !checkCollision("right")  && iso.x < 14){
             jugador.move("right");
         }
-        if( up && !checkCollision("up") ){
+        if( up && !checkCollision("up") && iso.y < 37){
             jugador.move("up");
         }
-        if( down && !checkCollision("down") ){
+        if( down && !checkCollision("down") && iso.y > 1 ){
             jugador.move("down");
         }
         if( attack ) {
