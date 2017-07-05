@@ -36,6 +36,9 @@ public class ScoreDrawer {
     private Statement comando = null;
     private ResultSet resultados = null;
 
+    public ScoreDrawer(){
+        
+    }
     //inicio del constructor
     public ScoreDrawer(JPanel panel) {
 
@@ -121,7 +124,7 @@ public class ScoreDrawer {
 
     }
 
-    private class ButtonListenerS implements ActionListener {
+    public class ButtonListenerS implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
@@ -176,7 +179,7 @@ public class ScoreDrawer {
         }
 
         //abro conexion con la database Game
-        private void leerDatos() throws ClassNotFoundException, SQLException {
+        public void leerDatos() throws ClassNotFoundException, SQLException {
             String usuario = "postgres";
             String passwd = "5ce3d2a5";
             String instruccion = "SELECT * FROM RANKING ORDER BY scorePlayer DESC LIMIT 10 ";
@@ -188,7 +191,7 @@ public class ScoreDrawer {
         }
 
         //cierro conexion con database Game
-        private void cerrar() throws SQLException {
+        public void cerrar() throws SQLException {
             conexion.close();
         }
 

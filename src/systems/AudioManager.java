@@ -33,7 +33,7 @@ public class AudioManager {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        try {
+       try {
             clip = AudioSystem.getClip();
             inputStream = AudioSystem.getAudioInputStream( AudioManager.class.getResourceAsStream(path));
             clip.open(inputStream);
