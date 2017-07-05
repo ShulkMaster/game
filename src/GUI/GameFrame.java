@@ -59,6 +59,7 @@ public class GameFrame extends JFrame {
         CurrentData.gamePanel = this.gamePanel;
         CurrentData.pausepanel = this.pausePanel;
         CurrentData.scorePanel = this.scorePanel;
+        CurrentData.GameOverPanel = this.gameOverPanel;
         CurrentData.frame = this;
 
         this.setContentPane(panel);
