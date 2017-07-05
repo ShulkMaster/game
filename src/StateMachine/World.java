@@ -20,6 +20,7 @@ public class World extends JComponent implements  GameState {
 
     //FIELDS -----------------
     private GameStateManager state;
+    
     private ListenKeys lKey;
     //--------------------------
 
@@ -221,8 +222,6 @@ public class World extends JComponent implements  GameState {
             CurrentData.initCanvas();
             loadLevel();
             initGUI();
-            systems.AudioManager.loadSong("/Resources/Music/mundo1.wav");
-            systems.AudioManager.playMusic();
         }
         moveEnemy();
 

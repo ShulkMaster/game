@@ -20,7 +20,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import systems.Fontloader;
 
-
 public class ScoreDrawer {
 
     XBoton botonreturn;
@@ -36,7 +35,7 @@ public class ScoreDrawer {
     private Connection conexion = null;
     private Statement comando = null;
     private ResultSet resultados = null;
-    
+
     //inicio del constructor
     public ScoreDrawer(JPanel panel) {
 
@@ -53,7 +52,6 @@ public class ScoreDrawer {
         tablero.setForeground(Color.WHITE);
 
         //creando la tabla de puntuaciones
-        
         inittable();
 
         //agregando al panel
@@ -120,9 +118,7 @@ public class ScoreDrawer {
         tabladejugadores.setSize(new Dimension(700, 450));
         scroll.setViewportView(tabladejugadores);
         scroll.setBounds(116, 140, 700, 400);
-        
-        
-        
+
     }
 
     private class ButtonListenerS implements ActionListener {
@@ -139,34 +135,34 @@ public class ScoreDrawer {
                             
                  */
                 this.limpiarTabla(tabladejugadores);
-                 try {
-            // Obtener datos de la tabla
-            this.leerDatos();
-            
-            while(resultados.next() == true) {
-                
-                String aux = "";
-                for(int i = 1 ; i <= tabladejugadores.getRowCount()+1 ; i++){
-                    aux = Integer.toString(i);
-                    //rango++; 
+                try {
+                    // Obtener datos de la tabla
+                    this.leerDatos();
+
+                    while (resultados.next() == true) {
+
+                        String aux = "";
+                        for (int i = 1; i <= tabladejugadores.getRowCount() + 1; i++) {
+                            aux = Integer.toString(i);
+                            //rango++; 
+                        }
+                        int obtenido;
+                        String nombre, fecha;
+                        //id = resultados.getInt("idPlayer");
+                        nombre = resultados.getString("nickPlayer");
+                        obtenido = resultados.getInt("scorePlayer");
+                        fecha = resultados.getString("fecha");
+
+                        model.addRow(new Object[]{aux, nombre, obtenido, fecha});
+                    }
+
+                    this.cerrar();
+
+                } catch (SQLException | ClassNotFoundException e) {
+                    System.out.println("Error de lectura de BD\n\n");
+
+                    e.printStackTrace();
                 }
-                int obtenido;
-                String nombre, fecha; 
-                //id = resultados.getInt("idPlayer");
-                nombre = resultados.getString("nickPlayer");
-                obtenido = resultados.getInt("scorePlayer");
-                fecha = resultados.getString("fecha");
-                
-                model.addRow( new Object[] {aux, nombre, obtenido, fecha} );                
-            }
-            
-            this.cerrar();
-            
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Error de lectura de BD\n\n");
-            
-            e.printStackTrace();
-                    } 
             }
             if (evt.getSource() == Ranking) {
                 /* BLOQUE DE CODIGO SQL AQUI
@@ -178,35 +174,35 @@ public class ScoreDrawer {
             }
 
         }
+
         //abro conexion con la database Game
         private void leerDatos() throws ClassNotFoundException, SQLException {
-        String usuario = "postgres";
-        String passwd = "5ce3d2a5";
-        String instruccion = "SELECT * FROM RANKING ORDER BY scorePlayer DESC LIMIT 10 ";
+            String usuario = "postgres";
+            String passwd = "5ce3d2a5";
+            String instruccion = "SELECT * FROM RANKING ORDER BY scorePlayer DESC LIMIT 10 ";
 
-        Class.forName("org.postgresql.Driver");
-        conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Game" + "?" + "user=" + usuario + "&" + "password=" + passwd + "");
-        comando = conexion.createStatement();
-        resultados = comando.executeQuery(instruccion);
-    }
+            Class.forName("org.postgresql.Driver");
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Game" + "?" + "user=" + usuario + "&" + "password=" + passwd + "");
+            comando = conexion.createStatement();
+            resultados = comando.executeQuery(instruccion);
+        }
+
         //cierro conexion con database Game
         private void cerrar() throws SQLException {
-        conexion.close();        
-        } 
-        
-        public void limpiarTabla(JTable tabla){
-        try {
-            DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
-            int filas=tabla.getRowCount();
-            for (int i = 0;filas>i; i++) {
-                modelo.removeRow(0);
+            conexion.close();
+        }
+
+        public void limpiarTabla(JTable tabla) {
+            try {
+                DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+                int filas = tabla.getRowCount();
+                for (int i = 0; filas > i; i++) {
+                    modelo.removeRow(0);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
         }
     }
-    }
-         
-    
-    
+
 }

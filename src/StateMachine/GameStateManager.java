@@ -3,19 +3,18 @@ package StateMachine;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
 import Data.CurrentData;
 
 public class GameStateManager {
-	//FIELDS ---------------	
-	private GameState menu;
-	private GameState world;
-	private GameState battle;
-	private GameState pause;
-	private GameState gameOver;
-	private GameState currentState;
-        public CurrentData graphics;
-    
+    //FIELDS ---------------	
+
+    private GameState menu;
+    private GameState world;
+    private GameState battle;
+    private GameState pause;
+    private GameState gameOver;
+    public GameState currentState;
+    public CurrentData graphics;
     public Graphics g;
     //---------------------
 	
@@ -27,7 +26,10 @@ public class GameStateManager {
 		gameOver = new GameOver(this);
 		
         currentState = menu;
-	}
+
+
+                }
+	
 	
 	public void draw(){     
 		currentState.draw();

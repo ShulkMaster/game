@@ -1,5 +1,6 @@
 package GUI;
 import Data.CurrentData;
+import static Data.CurrentData.state;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -64,6 +65,7 @@ public class PauseDrawer {
             if (evt.getSource() == resumir) {
                 System.out.println("reach botonreturn");
                 CurrentData.layout.show(CurrentData.panel, CurrentData.game);
+                state.setGameState( state.getWorld() );
                 CurrentData.frame.revalidate();
             }
             if (evt.getSource() == salir) {

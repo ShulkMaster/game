@@ -72,6 +72,7 @@ public class Menu implements GameState {
         menuPanel.add(fuego);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
+        menu();
         
     }
     private void initJmenu() {
@@ -177,8 +178,6 @@ public class Menu implements GameState {
 	@Override public void draw(){
 	    if( firstCall ) {
             System.out.println("reach");
-            systems.AudioManager.loadSong("/Resources/Music/menu.wav");
-            systems.AudioManager.playMusic();
             firstCall = false;
         }
         //System.out.println("reach menu draw");
@@ -186,14 +185,13 @@ public class Menu implements GameState {
 	
 	
 	@Override public void menu() {
-        System.out.println( "Menu state" );
+        CurrentData.state.getMenu();
 	}
 
 	@Override public void world() {
 		System.out.println( " Entering World state"	 );
 		//AQUI SE LLAMA AL MUNDO
         Level.generateLevel( 0 );
-        systems.AudioManager.stopMusic();
         CurrentData.gamePanel.grabFocus();
         CurrentData.panel.requestFocus();
         state.setGameState( state.getWorld());

@@ -11,6 +11,7 @@ import systems.Time;
 import StateMachine.GameStateManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import systems.MasterAudio;
 
 public class Game{
 	//ticker
@@ -21,6 +22,7 @@ public class Game{
 	private GameFrame window;
 	private BufferStrategy bs;
 	private Graphics g;
+        private MasterAudio sonido;
 	private boolean firstCall = true;
 
     public Game(Dimension dimension){
@@ -46,6 +48,7 @@ public class Game{
 		gameStateMachine = new GameStateManager( dimension );
 		window.getCanvas().requestFocus();
 		window.getCanvas().createBufferStrategy(3);
+                sonido = new MasterAudio();
     }
 
     private void update(){
