@@ -128,7 +128,6 @@ public class ListenKeys implements KeyListener {
         if( e.getKeyCode() == KeyEvent.VK_E  && state.getCurrentState() != state.getBattle()) {
             jugador.toIso();
             jugador.getPos().setLocation( deco[iso.y][iso.x].getPos() );
-            state.setGameState(state.getGameOver());
             CurrentData.layout.show(CurrentData.panel, CurrentData.gameOver);
             
         }
@@ -169,6 +168,7 @@ public class ListenKeys implements KeyListener {
         }
 
         if (pause) {
+            state.setGameState(state.getPause());
             CurrentData.layout.show(CurrentData.panel, CurrentData.pause);
         }
         
