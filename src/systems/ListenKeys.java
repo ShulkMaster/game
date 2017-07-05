@@ -40,12 +40,18 @@ public class ListenKeys implements KeyListener {
     private void enemyCollision() {
         //for (Enemy enem : CurrentData.enemigo) {
         Enemy enem = CurrentData.enemigo[0];
+        System.out.println( "enemy life: " + enem.getLife() );
             if (jugador.getIso().x == enem.getIso().x && jugador.getIso().y == enem.getIso().y) {
                 jugador.toIso();
                 jugador.getPos().setLocation(deco[iso.y][iso.x].getPos());
                 enem.toIso();
                 enem.getPos().setLocation(deco[iso.y][iso.x + 1].getPos());
-                state.setGameState(state.getBattle());
+        System.out.println( "enemy collision: " + enem.getLife() );
+                if( jugador.attack ) {
+                    enem.setLife( enem.getLife() - 20 );
+                    System.out.println( "hit! " +enem.getLife() );
+                }
+
             }
         //}
     }
@@ -56,23 +62,6 @@ public class ListenKeys implements KeyListener {
         }
     }
 
-
-    private void nearbyEnemy( String axis ){
-        initEnemies();
-
-        switch ( axis ){
-            case "up":
-                break;
-            case "down":
-                break;
-            case "left":
-                break;
-            case "right":
-                break;
-            default:
-                break;
-        }
-    }
 
     private boolean checkCollision( String axis ){
         try{
@@ -122,8 +111,6 @@ public class ListenKeys implements KeyListener {
         //
         if( state.getCurrentState() == state.getWorld() )
         	inWorld();
-        if( state.getCurrentState() == state.getBattle() )
-            inBattle();
 
         if( e.getKeyCode() == KeyEvent.VK_E  && state.getCurrentState() != state.getBattle()) {
             jugador.toIso();
@@ -155,15 +142,15 @@ public class ListenKeys implements KeyListener {
         if( attack ) {
             //anim.setPixels( 0 );
             anim.setCurrentSheet(2);
-
+            enemyCollision();
             System.out.println("ATTACK");
-            if (jugador.lastPos == Player.LastPos.UP)
+            if (jugador.lastPos == Player.LastPos.UP) {
                 jugador.attack("up" /*, state.getGraphics() */);
-            else if (jugador.lastPos == Player.LastPos.LEFT)
+            }else if (jugador.lastPos == Player.LastPos.LEFT) {
                 jugador.attack("left" /*, state.getGraphics() */);
-            else if (jugador.lastPos == Player.LastPos.RIGHT)
+            }else if (jugador.lastPos == Player.LastPos.RIGHT) {
                 jugador.attack("right" /*, state.getGraphics() */);
-            else if (jugador.lastPos == Player.LastPos.DOWN) {
+            }else if (jugador.lastPos == Player.LastPos.DOWN) {
                 jugador.attack("down" /*, state.getGraphics() */);
             }
         }
@@ -171,37 +158,8 @@ public class ListenKeys implements KeyListener {
         if (pause) {
             CurrentData.layout.show(CurrentData.panel, CurrentData.pause);
         }
-        
-    }
 
-    
-
-    private void inBattle(){
-        aux = jugador.getPos();
-        System.out.println("reach");
-        if( up && currentPos != Pos.TOP ){
-            if ( currentPos == Pos.MID ){
-            	System.out.println(" mid to top");
-                currentPos = Pos.TOP;
-                aux.setLocation( aux.x - 32, aux.y - 16 );
-            }else if( currentPos == Pos.BOT ){
-            	System.out.println("bot to mid");
-                currentPos = Pos.MID;
-                aux.setLocation( aux.x + 32, aux.y - 16 );
-            }//
-        }
-        else if( down  && currentPos != Pos.BOT ){
-            if( currentPos == Pos.TOP ){
-            	System.out.println("top to mid");
-                currentPos = Pos.MID;
-                aux.setLocation( aux.x + 32, aux.y + 16 );
-            }else if ( currentPos == Pos.MID ){
-            	System.out.println("mid to bot");
-                currentPos = Pos.BOT;
-                aux.setLocation( aux.x - 32, aux.y + 16 );
-            }
-        }
-
+        initEnemies();
     }
 
 	@Override public void keyReleased(KeyEvent e) {
