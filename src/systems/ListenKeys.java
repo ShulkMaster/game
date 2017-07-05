@@ -25,7 +25,6 @@ public class ListenKeys implements KeyListener {
     private GameOverDrawer perdi = new  GameOverDrawer(CurrentData.GameOverPanel);
     private Point iso;
     private Point aux;
-    private Point pos = new Point();
     //--------------------------
     
     public ListenKeys(){
@@ -70,25 +69,21 @@ public class ListenKeys implements KeyListener {
             switch( axis ){
                 case "up":
                     aux.setLocation(aux.x = deco[iso.y-1][iso.x].getPos().x, aux.y = deco[iso.y-1][iso.x].getPos().y);
-                    //enemyCollision();
                     return (deco[iso.y - 1][iso.x].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 case "down":
                     aux.setLocation(aux.x = deco[iso.y+1][iso.x].getPos().x, aux.y = deco[iso.y+1][iso.x].getPos().y);
-                    //enemyCollision();
                     return  (deco[iso.y + 1][iso.x].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 case "left":
                     aux.setLocation(aux.x = deco[iso.y][iso.x-1].getPos().x, aux.y = deco[iso.y][iso.x-1].getPos().y);
-                    //enemyCollision();
                     return  (deco[iso.y][iso.x-1].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 case "right":
                     aux.setLocation(aux.x = deco[iso.y][iso.x+1].getPos().x, aux.y = deco[iso.y][iso.x+1].getPos().y);
-                    //enemyCollision();
                     return  (deco[iso.y][iso.x+1].isSolid() && jugador.checkCollision(aux.x, aux.y) );
                 default:
                     return false;
         }
         }catch( Exception e ){                                  
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println( "out of bounce "+ "\n " + e );
             return false;
         }
@@ -109,8 +104,6 @@ public class ListenKeys implements KeyListener {
         CurrentData.enemigo[0].toIso();
         //-------------------------------------------
         
-        //BATTLE VARIABLES
-        //
         if( state.getCurrentState() == state.getWorld() )
         	inWorld();
 
@@ -125,34 +118,28 @@ public class ListenKeys implements KeyListener {
     private void inWorld(){
         if( left && !checkCollision("left") ){
             jugador.move("left");
-            //anim.setCurrentSheet(1);
         }
         if( right  && !checkCollision("right") ){
             jugador.move("right");
-            //anim.setCurrentSheet(1);
         }
         if( up && !checkCollision("up") ){
             jugador.move("up");
-            //anim.setCurrentSheet(1);
         }
         if( down && !checkCollision("down") ){
             jugador.move("down");
-            //anim.setCurrentSheet(1);
         }
-        //if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ) {
         if( attack ) {
-            //anim.setPixels( 0 );
             anim.setCurrentSheet(2);
             enemyCollision();
             System.out.println("ATTACK");
             if (jugador.lastPos == Player.LastPos.UP) {
-                jugador.attack("up" /*, state.getGraphics() */);
+                jugador.attack("up" );
             }else if (jugador.lastPos == Player.LastPos.LEFT) {
-                jugador.attack("left" /*, state.getGraphics() */);
+                jugador.attack("left"  );
             }else if (jugador.lastPos == Player.LastPos.RIGHT) {
-                jugador.attack("right" /*, state.getGraphics() */);
+                jugador.attack("right" );
             }else if (jugador.lastPos == Player.LastPos.DOWN) {
-                jugador.attack("down" /*, state.getGraphics() */);
+                jugador.attack("down" );
             }
         }
 

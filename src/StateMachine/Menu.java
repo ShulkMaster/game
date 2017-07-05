@@ -196,6 +196,7 @@ public class Menu implements GameState {
         Level.generateLevel( 0 );
         CurrentData.gamePanel.grabFocus();
         CurrentData.panel.requestFocus();
+        firstCall = true;
         state.setGameState( state.getWorld());
 	}
 

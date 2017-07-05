@@ -24,7 +24,8 @@ public class Player extends Character {
     private boolean alive = true;
 
     //animation
-    int start,height,limit;
+    private int start,height,limit;
+
 
     public Player( int life, int x, int y, int width, int height, int ox, int oy, int pixels ){
         super( life, x, y );
@@ -38,7 +39,7 @@ public class Player extends Character {
 
         collider = new Collider( x, y , width, height, ox, oy );
         swordCollider = new Collider(x,y ,40,5,ox,oy );
-        System.out.println( "jugador vida: " + super.getLife() );
+        //System.out.println( "jugador vida: " + super.getLife() );
     }
 
 
@@ -189,13 +190,11 @@ public class Player extends Character {
         swordCollider.updateBound(pos.x,pos.y);
     }
     
-    public void setVelocity( int velocity ){ this.velocity = velocity; }
     public void setSheet( int i, String path ){ sheet[i] = new SpriteSheet( ImageLoader.loadImage(path) ); }
     public void setScore( int score ){ this.score = score; }
     public void setAlive( boolean alive ){ this.alive = alive; }
 
     public Animator getAnimation(){ return animator; }
-    public int getVelocity(){ return this.velocity; }
     public Rectangle getBounds(){ return collider.getBounds(); }
     public Rectangle getSBounds(){ return swordCollider.getBounds(); }
     public int getDamage(){ return damage; }

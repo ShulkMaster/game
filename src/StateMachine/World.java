@@ -46,11 +46,6 @@ public class World extends JComponent implements  GameState {
 	World(GameStateManager newGameState){
 		state = newGameState;
         loadPlayer();
-		/*loadPlayer();
-		//loadLevel();
-		setData();
-        this.setFocusable(true);
-        this.addKeyListener( lKey ); */
 	}
 
 	private void loadPlayer(){
@@ -72,7 +67,7 @@ public class World extends JComponent implements  GameState {
         deco = lvl.getLayer1();
         deco2 = lvl.getLayer2();
         enemigo = new Enemy[1];
-        enemigo[0] = new Enemy(100, 400,400,20,20,22,32);
+        enemigo[0] = new Enemy(100, 800,200,20,20,22,32);
         enemigo[0].setOrigin(24,48);
         setData();
         lKey = new ListenKeys();
@@ -87,9 +82,11 @@ public class World extends JComponent implements  GameState {
         tiles = lvl.getTiles();
         deco = lvl.getLayer1();
         deco2 = lvl.getLayer2();
-        enemigo = new Enemy[1];
-        enemigo[0] = new Enemy(100, 500,220,20,20,22,32);
+        enemigo = new Enemy[2];
+        enemigo[0] = new Enemy(100, 500,120,20,20,22,32);
         enemigo[0].setOrigin(24,48);
+        enemigo[1] = new Enemy(100, 450,30,20,20,22,32);
+        enemigo[1].setOrigin(24,48);
         setData();
     }
 
@@ -111,7 +108,9 @@ public class World extends JComponent implements  GameState {
     }
 
 	private void drawEnemy(){
-        g.drawImage( enemigo[0].getCurrentAnimation(), enemigo[0].getPos().x, enemigo[0].getPos().y , null);
+        for( Enemy enem: enemigo )
+            g.drawImage( enem.getCurrentAnimation(), enem.getPos().x, enem.getPos().y , null);
+            //g.drawImage( enemigo[0].getCurrentAnimation(), enemigo[0].getPos().x, enemigo[0].getPos().y , null);
     }
 
     private int tick = 0 ;
@@ -176,10 +175,16 @@ public class World extends JComponent implements  GameState {
         g.drawString("HP",140,642);
         g.drawString("SCORE: " + jugador.getScore(),640,642);
 
-        if( enemigo[0].getAgro() && enemigo[0].getLife() > 0 ){
+        for( Enemy enem : enemigo) {
+            if (enem.getAgro() && enem.getLife() > 0) {
+                g.drawImage(vida.crop(0, 10, enem.getLife(), 11), enem.getPos().x,
+                        enem.getPos().y, null);
+            }
+        }
+        /*if( enemigo[0].getAgro() && enemigo[0].getLife() > 0 ){
             g.drawImage(vida.crop(0, 10,enemigo[0].getLife(), 11 ), enemigo[0].getPos().x,
                     enemigo[0].getPos().y, null);
-        }
+        }*/
     }
 
     private void debug(){
@@ -240,7 +245,9 @@ public class World extends JComponent implements  GameState {
 
 
     private void moveEnemy(){
-        enemigo[0].move();
+        enemigo[0].move("up");
+        if( nivel == 2)
+            enemigo[1].move("left");
     }
 
     private boolean overLap = false;
@@ -261,13 +268,14 @@ public class World extends JComponent implements  GameState {
 
         //ESCENARIO ---------------------
         drawMap();
-        drawSquares();
+        //drawSquares();
         drawEnemy();
         // ------------------------------
 
         // JUGADOR ---------------------
-        overLap = (origin.y > deco2[iso.y][iso.x].getPos().y) && deco2[iso.y][iso.x].isOverLapAble() &&
-                !deco2[iso.y - 1][iso.x].isOverLapAble() && !deco2[iso.y + 1][iso.x].isOverLapAble();
+        overLap = ( origin.y > deco2[iso.y][iso.x].getPos().y) && deco2[iso.y][iso.x].isOverLapAble() // la casilla actual
+                && !deco2[iso.y - 1][iso.x].isOverLapAble() // si la casilla de arriba no es clipeable y
+                && !deco2[iso.y + 1][iso.x].isOverLapAble(); // la casilla de abajo si
 
         if (overLap) {
             drawPlayer();
@@ -281,26 +289,9 @@ public class World extends JComponent implements  GameState {
         debug();
         drawGui();
 
-        jugador.toIso();
-        if( iso.x > 12 && nivel == 1 ) {
-            nivel = 2;
-            Level.generateLevel(1);
-            world();
-            jugador.getPos().setLocation(jugador.getPos().x-700,jugador.getPos().y);
-            jugador.toIso();
-            jugador.recalculateOrigin();
-        }
-        if( iso.x < 1 && nivel == 2 ){
-            nivel = 2;
-            Level.generateLevel(1);
-            world();
-            jugador.getPos().setLocation(jugador.getPos().x+800,jugador.getPos().y);
-            jugador.toIso();
-            jugador.recalculateOrigin();
-
-        }
+        checkMapTransition();
 	}
-	
+
 	@Override public void menu() {
         System.out.println( "Regresando al menu..." );
 	    state.setGameState( state.getMenu() );	
@@ -321,10 +312,11 @@ public class World extends JComponent implements  GameState {
 
 	@Override public void world( ) {
 	    //ya que ocupamos reiniciar el nivel, ocupamos el mismo nombre del mismo state de la statemachine para reiniciar el nivel.
-        if( !jugador.getAlive() ) {
+        if( !jugador.getAlive() == false) {
             loadPlayer();
             jugador.setAlive(true);
         }
+
         System.out.println("reach world");
         CurrentData.initCanvas();
         if( nivel == 1 )
@@ -343,5 +335,19 @@ public class World extends JComponent implements  GameState {
         CurrentData.state = state;
         CurrentData.enemigo = enemigo;
 	}
+
+    private void checkMapTransition(){
+        jugador.toIso();
+        if( iso.x > 12 && nivel == 1 ) {
+            nivel = 2;
+            Level.generateLevel(1);
+            //world();
+            loadLevel2();
+            jugador.getPos().setLocation(jugador.getPos().x-750,jugador.getPos().y);
+            jugador.toIso();
+            jugador.recalculateOrigin();
+        }
+
+    }
 
 }

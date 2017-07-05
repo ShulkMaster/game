@@ -22,7 +22,7 @@ public class Enemy extends Character {
     private int defense = 2;
     private boolean alive = true;
 
-    int start,height,limit2;
+    private int start,height,limit2;
 
     public Enemy(int life, int x, int y) {
         super(life, x, y);
@@ -52,6 +52,8 @@ public class Enemy extends Character {
 
     private boolean notTop = true;
     private boolean notBot = false;
+    private boolean notLeft = true;
+    private boolean notRight = false;
 
     public BufferedImage getCurrentAnimation(){
         return animator.currentAnimation(start, height,limit2);
@@ -63,8 +65,8 @@ public class Enemy extends Character {
         this.limit2 = limit;
     }
 
-    public void move( ){
-        if( notTop  && alive ){
+    public void move( String axis){
+        if( notTop  && alive  && axis == "up"){
             getPos().y -= velocity;
             origin.y -= velocity;
             //System.out.println( getPos().y);
@@ -74,18 +76,42 @@ public class Enemy extends Character {
                 notTop = false;
                 notBot = true;
                 limit += 80;
-                setCurrentAnimation(1,2,8);
+                setCurrentAnimation(0,2,8);
             }
         }
-        if( notBot  && alive ){
+        if( notBot  && alive && axis == "up" ) {
             getPos().y += velocity;
             origin.y += velocity;
-            if( getPos().y == limit ){
+            if (getPos().y == limit) {
                 notBot = false;
                 notTop = true;
                 limit -= 80;
-                setCurrentAnimation(1,0,8);
+                setCurrentAnimation(0, 0, 8);
             }
+        }
+            if( notLeft  && alive  && axis == "left"){
+                getPos().x -= velocity;
+                origin.x -= velocity;
+                //System.out.println( getPos().y);
+                //System.out.println( limit);
+                if( getPos().x == limit ){
+                    //System.out.println("limit reach");
+                    notLeft = false;
+                    notRight = true;
+                    limit += 80;
+                    setCurrentAnimation(0,1,8);
+                }
+            }
+
+            if( notRight  && alive && axis == "left" ){
+                getPos().x += velocity;
+                origin.x += velocity;
+                if( getPos().x == limit ){
+                    notRight = false;
+                    notLeft = true;
+                    limit -= 80;
+                    setCurrentAnimation(0,4,8);
+                }
         }
         updateBounds();
         if ( checkCollision( jugador.getBounds() )) {
