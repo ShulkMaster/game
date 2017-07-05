@@ -205,6 +205,7 @@ public class ListenKeys implements KeyListener {
     }
 
 	@Override public void keyReleased(KeyEvent e) {
+        anim.setCurrentSheet(0);
         /*if( left  ){
             jugador.lastPos = Player.LastPos.LEFT;
         }

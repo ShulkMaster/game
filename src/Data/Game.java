@@ -76,8 +76,8 @@ public class Game{
 						bs = window.getCanvas().getBufferStrategy();
 						g = bs.getDrawGraphics();
 						gameStateMachine.setG(g);
-						update();
 						bs.show();
+						update();
 						g.dispose();
 
 						sleep(Time.getTime());
