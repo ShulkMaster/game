@@ -41,18 +41,15 @@ public class ListenKeys implements KeyListener {
         //for (Enemy enem : CurrentData.enemigo) {
         Enemy enem = CurrentData.enemigo[0];
         System.out.println( "enemy life: " + enem.getLife() );
-            if (jugador.getIso().x == enem.getIso().x && jugador.getIso().y == enem.getIso().y) {
-                jugador.toIso();
-                jugador.getPos().setLocation(deco[iso.y][iso.x].getPos());
-                enem.toIso();
-                enem.getPos().setLocation(deco[iso.y][iso.x + 1].getPos());
-        System.out.println( "enemy collision: " + enem.getLife() );
-                if( jugador.attack ) {
-                    enem.setLife( enem.getLife() - 20 );
-                    System.out.println( "hit! " +enem.getLife() );
-                }
-
-            }
+        if( jugador.attack && enem.checkCollision( jugador.getSBounds() ) ) {
+            int damage = ((enem.getLife()) + enem.getDefense() - jugador.getDamage() ) > 0 ?
+                    (enem.getLife()) + enem.getDefense() - jugador.getDamage() : 0 ;
+            if( enem.getLife() == 0 )
+                enem = null;
+            enem.setLife(damage);
+            enem.setAgro( true);
+            System.out.println( "hit! " +enem.getLife() );
+        }
         //}
     }
 
@@ -159,7 +156,6 @@ public class ListenKeys implements KeyListener {
             CurrentData.layout.show(CurrentData.panel, CurrentData.pause);
         }
 
-        initEnemies();
     }
 
 	@Override public void keyReleased(KeyEvent e) {

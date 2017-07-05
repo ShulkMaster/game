@@ -27,8 +27,7 @@ public class GameStateManager {
 		
         currentState = menu;
 
-
-                }
+    }
 	
 	
 	public void draw(){     

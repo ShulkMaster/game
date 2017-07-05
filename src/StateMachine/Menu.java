@@ -185,7 +185,6 @@ public class Menu implements GameState {
 	
 	
 	@Override public void menu() {
-        CurrentData.state.getMenu();
 	}
 
 	@Override public void world() {

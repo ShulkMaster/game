@@ -12,11 +12,14 @@ public class Player extends Character {
 	private SpriteSheet[] sheet;
     private Animator animator;
     private Collider collider;
+    private Collider swordCollider;
     private int velocity = 5;
     public enum LastPos{ UP,LEFT,RIGHT,DOWN }
     public LastPos lastPos = LastPos.DOWN;
     private boolean moving = false;
     public boolean attack = false;
+    private int damage = 8;
+    private int defense = 3;
 
     //animation
     int start,height,limit;
@@ -32,6 +35,8 @@ public class Player extends Character {
             animator = new Animator( sheet );
 
         collider = new Collider( x, y , width, height, ox, oy );
+        swordCollider = new Collider(x,y ,40,5,ox,oy );
+        System.out.println( "jugador vida: " + super.getLife() );
     }
 
 
@@ -83,20 +88,25 @@ public class Player extends Character {
         switch( axis ) {
             case "up":
                 System.out.println( "attack up");
+                swordCollider.updateBound(pos.x,pos.y-40, 5,30);
                 setCurrentAnimation(0,21,6);
                 //animator.playAnimation(g,21,6,pos.x,pos.y);
                 break;
             case "left":
+                swordCollider.updateBound(pos.x-40,pos.y, 30,5);
                 System.out.println( "attack left");
                 setCurrentAnimation(0,22,6);
                 //animator.playAnimation(g,22,6,pos.x,pos.y);
                 break;
             case "right":
+                swordCollider.updateBound(pos.x+40,pos.y,30,5);
                 System.out.println( "attack right");
                 setCurrentAnimation(0,24,6);
                 //animator.playAnimation(g,24,6,pos.x,pos.y);
                 break;
             case "down":
+                swordCollider.updateBound(pos.x,pos.y+40,5,20);
+                setCurrentAnimation(0,21,6);
                 System.out.println( "attack down");
                 setCurrentAnimation(0,23,6);
                 //animator.playAnimation(g,23,6,pos.x,pos.y);
@@ -172,7 +182,10 @@ public class Player extends Character {
         return colFromBottom || colFromUp;
     }
     
-    private void updateBounds(){ collider.updateBound(pos.x, pos.y); }
+    private void updateBounds(){
+        collider.updateBound(pos.x, pos.y);
+        swordCollider.updateBound(pos.x,pos.y);
+    }
     
     public void setVelocity( int velocity ){ this.velocity = velocity; }
     public void setSheet( int i, String path ){ sheet[i] = new SpriteSheet( ImageLoader.loadImage(path) ); }
@@ -180,6 +193,8 @@ public class Player extends Character {
     public Animator getAnimation(){ return animator; }
     public int getVelocity(){ return this.velocity; }
     public Rectangle getBounds(){ return collider.getBounds(); }
-
+    public Rectangle getSBounds(){ return swordCollider.getBounds(); }
+    public int getDamage(){ return damage; }
+    public int getDefense(){ return defense; }
 
 }

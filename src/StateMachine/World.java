@@ -37,6 +37,9 @@ public class World extends JComponent implements  GameState {
     private SpriteSheet barraVida,barraEnemigo;
 
     private Point iso, pos, origin, aux;
+
+    private int score = 0;
+    private final Font font = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 16);
     //--------------------------
     
 	World(GameStateManager newGameState){
@@ -50,7 +53,7 @@ public class World extends JComponent implements  GameState {
 	}
 	
 	private void loadPlayer(){
-            jugador = new Player(100, 352,192, 20, 20, 22,32,64) ;
+            jugador = new Player(300, 352,192, 20, 20, 22,32,64) ;
             anim = jugador.getAnimation();
             pos = jugador.getPos();
             jugador.setOrigin( 24, 48 );
@@ -68,7 +71,7 @@ public class World extends JComponent implements  GameState {
         deco = lvl.getLayer1();
         deco2 = lvl.getLayer2();
         enemigo = new Enemy[1];
-        enemigo[0] = new Enemy(100, 400,400);
+        enemigo[0] = new Enemy(300, 400,400,20,20,22,32);
         enemigo[0].setOrigin(24,48);
         setData();
         lKey = new ListenKeys();
@@ -162,16 +165,19 @@ public class World extends JComponent implements  GameState {
         g.fillRect(0,625,932,38);
     } //func
 
-    private int score = 0;
-    private final Font font = new java.awt.Font("Resources/fonts/fontana/fuente.ttf", Font.BOLD, 16);
     private void drawGui(){
         int aux = jugador.getLife();
         g.drawImage( barraVida.crop(0,33,100 ,31), 160,620,null );
-        g.drawImage(vida.crop(0, 0, 100, 32), 160, 620, null);
+        g.drawImage(vida.crop(0, 0, jugador.getLife(), 32), 160, 620, null);
         g.setColor(Color.white);
         g.setFont(font);
         g.drawString("HP",140,642);
         g.drawString("SCORE: " + score,640,642);
+
+        if( enemigo[0].getAgro() ){
+            g.drawImage(vida.crop(0, 10,enemigo[0].getLife(), 11 ), enemigo[0].getPos().x,
+                    enemigo[0].getPos().y, null);
+        }
     }
 
     private void debug(){
@@ -182,20 +188,32 @@ public class World extends JComponent implements  GameState {
         //System.out.println("jugador ( " + (row) + ", " + (col) + " )" +
         //		"[ " + (row/64) + ", " + (col/16) + " ]" + "iso x,y( " + (iso.x) + ", " + (iso.y) + " )");
 
+        ///PLAYER---------------------------------
         g.setColor( Color.red );
         g.fillRect( (int)jugador.getBounds().getX(), (int)jugador.getBounds().getY(), (int)jugador.getBounds().getWidth(),
                 (int)jugador.getBounds().getHeight() );
 
         g.drawRect( jugador.getPos().x , jugador.getPos().y , 64,64);
 
+        g.setColor(Color.MAGENTA);
+        g.fillRect( (int)jugador.getSBounds().getX(), (int)jugador.getSBounds().getY(), (int)jugador.getSBounds().getWidth(),
+                (int)jugador.getSBounds().getHeight());
+
+        ///PLAYER---------------------------------
+
+        //ENEMY------------------------------------
         g.setColor(Color.PINK);
         g.fillOval(origin.x, origin.y,15,15);
         g.drawRect(origin.x, origin.y, 64-48, 64-48);
 
         g.setColor(Color.cyan);
         g.drawRect( enemigo[0].getPos().x , enemigo[0].getPos().y , 64,64);
-        g.fillOval(enemigo[0].getPos().x, enemigo[0].getPos().y,15,15);
+        g.fillOval(enemigo[0].getOrigin().x, enemigo[0].getOrigin().y,15,15);
         g.drawRect(enemigo[0].getOrigin().x, enemigo[0].getOrigin().y, 64-48, 64-48);
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect( (int)enemigo[0].getBounds().getX(), (int)enemigo[0].getBounds().getY(), (int)enemigo[0].getBounds().getWidth(),
+                (int)enemigo[0].getBounds().getHeight());
+        //ENEMY------------------------------------
 
     }
 

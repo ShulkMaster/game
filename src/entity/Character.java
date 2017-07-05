@@ -3,8 +3,8 @@ package entity;
 import Data.GameObject;
 
 public abstract class Character extends GameObject {
-    private int life;
-    private String name;
+    private int life = 0;
+    public String name;
 
     public Character( String name, int life ){
         this.name = name;
@@ -17,6 +17,7 @@ public abstract class Character extends GameObject {
 
     Character( int life, int x, int y ){
         super( x, y);
+        this.life = life;
     }
 
     public int getLife() { return life; }
