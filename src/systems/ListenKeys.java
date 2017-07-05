@@ -137,19 +137,19 @@ public class ListenKeys implements KeyListener {
     private void inWorld(){
         if( left && !checkCollision("left") ){
             jugador.move("left");
-            anim.setCurrentSheet(1);
+            //anim.setCurrentSheet(1);
         }
         if( right  && !checkCollision("right") ){
             jugador.move("right");
-            anim.setCurrentSheet(1);
+            //anim.setCurrentSheet(1);
         }
         if( up && !checkCollision("up") ){
             jugador.move("up");
-            anim.setCurrentSheet(1);
+            //anim.setCurrentSheet(1);
         }
         if( down && !checkCollision("down") ){
             jugador.move("down");
-            anim.setCurrentSheet(1);
+            //anim.setCurrentSheet(1);
         }
         //if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ) {
         if( attack ) {
@@ -158,13 +158,13 @@ public class ListenKeys implements KeyListener {
 
             System.out.println("ATTACK");
             if (jugador.lastPos == Player.LastPos.UP)
-                jugador.attack("up");
+                jugador.attack("up" /*, state.getGraphics() */);
             else if (jugador.lastPos == Player.LastPos.LEFT)
-                jugador.attack("left");
+                jugador.attack("left" /*, state.getGraphics() */);
             else if (jugador.lastPos == Player.LastPos.RIGHT)
-                jugador.attack("right");
+                jugador.attack("right" /*, state.getGraphics() */);
             else if (jugador.lastPos == Player.LastPos.DOWN) {
-                jugador.attack("down");
+                jugador.attack("down" /*, state.getGraphics() */);
             }
         }
 
@@ -205,7 +205,7 @@ public class ListenKeys implements KeyListener {
     }
 
 	@Override public void keyReleased(KeyEvent e) {
-        anim.setCurrentSheet(0);
+        //anim.setCurrentSheet(0);
         /*if( left  ){
             jugador.lastPos = Player.LastPos.LEFT;
         }

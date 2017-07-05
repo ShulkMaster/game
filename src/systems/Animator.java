@@ -69,10 +69,12 @@ public class Animator {
         }
     }
 
-    public BufferedImage tempAnimation( int start, int height, int limit, int pixels ){
-
-        return null;
+    public void playAnimation( Graphics g , int height, int limit, int x, int y ){
+            for (int j = 0; j/Time.getFps()*5 < limit ; j++) {
+                g.drawImage( sprite[height][j/Time.getFps()*5], x-64, y-64, null);
+            }
     }
+
     //---------------------------------------------------
 
     private int animationCurrentState( int state ){

@@ -1,6 +1,6 @@
 package entity;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import Data.SpriteSheet;
@@ -16,7 +16,7 @@ public class Player extends Character {
     public enum LastPos{ UP,LEFT,RIGHT,DOWN }
     public LastPos lastPos = LastPos.DOWN;
     private boolean moving = false;
-    private boolean attack = false;
+    public boolean attack = false;
 
     //animation
     int start,height,limit;
@@ -77,24 +77,28 @@ public class Player extends Character {
         this.limit = limit;
     }
 
-    public void attack( String axis ){
+    public void attack(String axis /*, Graphics g */){
         attack = true;
         switch( axis ) {
             case "up":
                 System.out.println( "attack up");
                 setCurrentAnimation(0,21,6);
+                //animator.playAnimation(g,21,6,pos.x,pos.y);
                 break;
             case "left":
                 System.out.println( "attack left");
                 setCurrentAnimation(0,22,6);
+                //animator.playAnimation(g,22,6,pos.x,pos.y);
                 break;
             case "right":
                 System.out.println( "attack right");
                 setCurrentAnimation(0,24,6);
+                //animator.playAnimation(g,24,6,pos.x,pos.y);
                 break;
             case "down":
                 System.out.println( "attack down");
                 setCurrentAnimation(0,23,6);
+                //animator.playAnimation(g,23,6,pos.x,pos.y);
                 break;
             default:
                 break;
