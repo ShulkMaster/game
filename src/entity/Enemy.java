@@ -20,6 +20,7 @@ public class Enemy extends Character {
     private int limit;
     private boolean agro = false;
     private int defense = 2;
+    private boolean alive = true;
 
     int start,height,limit2;
 
@@ -63,7 +64,7 @@ public class Enemy extends Character {
     }
 
     public void move( ){
-        if( notTop ){
+        if( notTop  && alive ){
             getPos().y -= velocity;
             origin.y -= velocity;
             //System.out.println( getPos().y);
@@ -76,7 +77,7 @@ public class Enemy extends Character {
                 setCurrentAnimation(1,2,8);
             }
         }
-        if( notBot ){
+        if( notBot  && alive ){
             getPos().y += velocity;
             origin.y += velocity;
             if( getPos().y == limit ){
@@ -87,7 +88,6 @@ public class Enemy extends Character {
             }
         }
         updateBounds();
-        //if ( jugador.getIso().x == this.getIso().x && jugador.getIso().y == this.getIso().y) {
         if ( checkCollision( jugador.getBounds() )) {
             System.out.println( "player collision vs enemy: " + jugador.getLife() );
             int damage = ((jugador.getLife()) + jugador.getDefense() - jugador.getDamage() ) > 0 ?
@@ -116,6 +116,7 @@ public class Enemy extends Character {
     private void setSheet( String path ){ singleSheet = new SpriteSheet( ImageLoader.loadImage(path)); }
     public void setAgro( boolean agro ){ this.agro = agro; }
     public void setDefense(){ this.defense = defense; }
+    public void setAlive( boolean alive ){ this.alive = alive; }
 
     public Animator getAnimation(){ return animator; }
     public Rectangle getBounds(){ return collider.getBounds(); }

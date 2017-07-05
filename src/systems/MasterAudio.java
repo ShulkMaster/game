@@ -23,14 +23,14 @@ public class MasterAudio{
         machine = new Thread() {
             @Override
             public void run() {
-                while (playing) {
+                //while (playing) {
                     musicselect();
-                    try {
+                    /*try {
                         Thread.sleep(750);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(MasterAudio.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                    }*/
+                //}
             }
         };
         machine.start();

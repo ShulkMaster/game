@@ -52,9 +52,6 @@ public class World extends JComponent implements  GameState {
         this.addKeyListener( lKey ); */
 	}
 
-	public void reStartLevel(){
-    }
-	
 	private void loadPlayer(){
             jugador = new Player(100, 352,192, 20, 20, 22,32,64) ;
             anim = jugador.getAnimation();
@@ -175,7 +172,7 @@ public class World extends JComponent implements  GameState {
         g.setColor(Color.white);
         g.setFont(font);
         g.drawString("HP",140,642);
-        g.drawString("SCORE: " + score,640,642);
+        g.drawString("SCORE: " + jugador.getScore(),640,642);
 
         if( enemigo[0].getAgro() ){
             g.drawImage(vida.crop(0, 10,enemigo[0].getLife(), 11 ), enemigo[0].getPos().x,
@@ -292,6 +289,9 @@ public class World extends JComponent implements  GameState {
 	@Override public void world() {
 	    //ya que ocupamos reiniciar el nivel, ocupamos el mismo nombre del mismo state de la statemachine para reiniciar el nivel.
         loadPlayer();
+        CurrentData.initCanvas();
+        loadLevel();
+        initGUI();
 	}
 	
 	private void setData(){

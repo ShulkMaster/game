@@ -20,6 +20,7 @@ public class Player extends Character {
     public boolean attack = false;
     private int damage = 8;
     private int defense = 3;
+    private int score = 0;
 
     //animation
     int start,height,limit;
@@ -189,6 +190,7 @@ public class Player extends Character {
     
     public void setVelocity( int velocity ){ this.velocity = velocity; }
     public void setSheet( int i, String path ){ sheet[i] = new SpriteSheet( ImageLoader.loadImage(path) ); }
+    public void setScore( int score ){ this.score = score; }
 
     public Animator getAnimation(){ return animator; }
     public int getVelocity(){ return this.velocity; }
@@ -196,5 +198,7 @@ public class Player extends Character {
     public Rectangle getSBounds(){ return swordCollider.getBounds(); }
     public int getDamage(){ return damage; }
     public int getDefense(){ return defense; }
+    public int getScore(){ return score; }
+
 
 }

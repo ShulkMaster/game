@@ -37,20 +37,25 @@ public class ListenKeys implements KeyListener {
         aux =  new Point();
     }
 
+    //Enemy[] enem = CurrentData.enemigo;
     private void enemyCollision() {
-        //for (Enemy enem : CurrentData.enemigo) {
-        Enemy enem = CurrentData.enemigo[0];
+        for (Enemy enem : CurrentData.enemigo) {
+        //Enemy enem = CurrentData.enemigo[enem];
         System.out.println( "enemy life: " + enem.getLife() );
         if( jugador.attack && enem.checkCollision( jugador.getSBounds() ) ) {
             int damage = ((enem.getLife()) + enem.getDefense() - jugador.getDamage() ) > 0 ?
                     (enem.getLife()) + enem.getDefense() - jugador.getDamage() : 0 ;
-            if( enem.getLife() == 0 )
-                enem = null;
-            enem.setLife(damage);
-            enem.setAgro( true);
+            enem.setAgro( true );
             System.out.println( "hit! " +enem.getLife() );
+            if( damage == 0 ) {
+                enem.setAlive(false);
+                jugador.setScore(jugador.getScore() + 100);
+                enem.getPos().setLocation(2000, 200);
+                enem = null;
+            }else
+                enem.setLife(damage);
         }
-        //}
+        }
     }
 
     private void initEnemies(){
