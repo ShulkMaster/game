@@ -72,7 +72,7 @@ public class Menu implements GameState {
         menuPanel.add(fuego);
         CurrentData.layout.show( CurrentData.panel, CurrentData.menu);
         CurrentData.frame.revalidate();
-        menu();
+        CurrentData.state = state;
         
     }
     private void initJmenu() {
@@ -185,6 +185,7 @@ public class Menu implements GameState {
 	
 	
 	@Override public void menu() {
+            System.out.println("que pex");
 	}
 
 	@Override public void world() {
