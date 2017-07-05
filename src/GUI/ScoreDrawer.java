@@ -143,14 +143,20 @@ public class ScoreDrawer {
             this.leerDatos();
             
             while(resultados.next() == true) {
-                int id, obtenido;
+                
+                String aux = "";
+                for(int i = 1 ; i <= tabladejugadores.getRowCount()+1 ; i++){
+                    aux = Integer.toString(i);
+                    //rango++; 
+                }
+                int obtenido;
                 String nombre, fecha; 
-                id = resultados.getInt("idPlayer");
+                //id = resultados.getInt("idPlayer");
                 nombre = resultados.getString("nickPlayer");
                 obtenido = resultados.getInt("scorePlayer");
                 fecha = resultados.getString("fecha");
                 
-                model.addRow( new Object[] {id, nombre, obtenido, fecha} );                
+                model.addRow( new Object[] {aux, nombre, obtenido, fecha} );                
             }
             
             this.cerrar();
@@ -175,7 +181,7 @@ public class ScoreDrawer {
         private void leerDatos() throws ClassNotFoundException, SQLException {
         String usuario = "postgres";
         String passwd = "5ce3d2a5";
-        String instruccion = "SELECT * FROM RANKING ";
+        String instruccion = "SELECT * FROM RANKING ORDER BY scorePlayer DESC LIMIT 10 ";
 
         Class.forName("org.postgresql.Driver");
         conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Game" + "?" + "user=" + usuario + "&" + "password=" + passwd + "");
