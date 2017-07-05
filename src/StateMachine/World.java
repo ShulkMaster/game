@@ -290,7 +290,7 @@ public class World extends JComponent implements  GameState {
             jugador.toIso();
             jugador.recalculateOrigin();
         }
-        if( iso < 1 && nivel == 2 ){
+        if( iso.x < 1 && nivel == 2 ){
             nivel = 2;
             Level.generateLevel(1);
             world();
