@@ -14,6 +14,7 @@ import java.sql.Statement;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -137,20 +138,26 @@ public class ScoreDrawer {
                 /* BLOQUE DE CODIGO AQL AQUI
                             
                  */
-                
+                this.limpiarTabla(tabladejugadores);
                  try {
             // Obtener datos de la tabla
             this.leerDatos();
             
             while(resultados.next() == true) {
-                int id, obtenido;
+                
+                String aux = "";
+                for(int i = 1 ; i <= tabladejugadores.getRowCount()+1 ; i++){
+                    aux = Integer.toString(i);
+                    //rango++; 
+                }
+                int obtenido;
                 String nombre, fecha; 
-                id = resultados.getInt("idPlayer");
+                //id = resultados.getInt("idPlayer");
                 nombre = resultados.getString("nickPlayer");
                 obtenido = resultados.getInt("scorePlayer");
                 fecha = resultados.getString("fecha");
                 
-                model.addRow( new Object[] {id, nombre, obtenido, fecha} );                
+                model.addRow( new Object[] {aux, nombre, obtenido, fecha} );                
             }
             
             this.cerrar();
@@ -175,7 +182,7 @@ public class ScoreDrawer {
         private void leerDatos() throws ClassNotFoundException, SQLException {
         String usuario = "postgres";
         String passwd = "5ce3d2a5";
-        String instruccion = "SELECT * FROM RANKING ";
+        String instruccion = "SELECT * FROM RANKING ORDER BY scorePlayer DESC LIMIT 10 ";
 
         Class.forName("org.postgresql.Driver");
         conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Game" + "?" + "user=" + usuario + "&" + "password=" + passwd + "");
@@ -186,6 +193,18 @@ public class ScoreDrawer {
         private void cerrar() throws SQLException {
         conexion.close();        
         } 
+        
+        public void limpiarTabla(JTable tabla){
+        try {
+            DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
+            int filas=tabla.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }
     }
          
     
