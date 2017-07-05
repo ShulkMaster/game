@@ -6,6 +6,7 @@ import GUI.XBoton;
 import Data.CurrentData;
 import maps.Level;
 import GUI.ScoreDrawer;
+import GUI.WinDrawer;
 import systems.Fontloader;
 import systems.GUIFX.menuanimator;
 
@@ -26,7 +27,7 @@ public class Menu implements GameState {
     private XBoton botonscore;
     private XBoton botonsalir;
     private Thread blinklabel;
-    public ScoreDrawer PaneldePuntajes;
+    public WinDrawer PaneldePuntajes;
     //private final AudioManager music; esto es adudio kk ;v
     //private final AudioMaster music;
     
@@ -51,7 +52,7 @@ public class Menu implements GameState {
         escorepanel.setBackground(Color.BLACK);
         escorepanel.setLayout(null);
         escorepanel.add(fuego2); 
-        PaneldePuntajes = new ScoreDrawer(escorepanel);
+        PaneldePuntajes = new WinDrawer(escorepanel);
         
         //inicializar el Jpanel que contiene todo el main menu y el listener del mouse
         menuPanel = CurrentData.menuPanel;
