@@ -15,6 +15,7 @@ public class Player extends Character {
     private int velocity = 5;
     public enum LastPos{ UP,LEFT,RIGHT,DOWN }
     public LastPos lastPos = LastPos.DOWN;
+    private boolean moving = false;
 
     //animation
     int start,height,limit;
@@ -50,7 +51,19 @@ public class Player extends Character {
     }
 
     public BufferedImage getCurrentAnimation(){
-        return animator.currentAnimation(start, height,limit);
+        if( lastPos == LastPos.UP && !moving )
+            return animator.currentAnimation(0, 8,1);
+        if( lastPos == LastPos.LEFT  && !moving )
+            return animator.currentAnimation(0, 9,1);
+        if( lastPos == LastPos.RIGHT  && !moving )
+            return animator.currentAnimation(0, 11,1);
+        if( lastPos == LastPos.DOWN  && !moving )
+            return animator.currentAnimation(0, 10,1);
+        if( moving = true ) {
+            moving = false;
+            return animator.currentAnimation(start, height, limit);
+        }
+        return animator.currentAnimation(1, 10,1);
     }
 
     private void setCurrentAnimation( int start, int height, int limit ){
@@ -62,20 +75,20 @@ public class Player extends Character {
     public void attack( String axis ){
         switch( axis ) {
             case "up":
-                setCurrentAnimation(1,8,8);
-                lastPos = LastPos.UP;
+                System.out.println( "attack up");
+                setCurrentAnimation(0,20,6);
                 break;
             case "left":
-                setCurrentAnimation(1,8,8);
-                lastPos = LastPos.LEFT;
+                System.out.println( "attack left");
+                setCurrentAnimation(0,21,6);
                 break;
             case "right":
-                setCurrentAnimation(1,8,8);
-                lastPos = LastPos.RIGHT;
+                System.out.println( "attack right");
+                setCurrentAnimation(0,23,6);
                 break;
             case "down":
-                setCurrentAnimation(1,8,8);
-                lastPos = LastPos.DOWN;
+                System.out.println( "attack down");
+                setCurrentAnimation(0,22,6);
                 break;
             default:
                 break;
@@ -88,24 +101,32 @@ public class Player extends Character {
                 pos.y -= velocity;
                 origin.y -= velocity;
                 updateBounds();
+                moving = true;
+                lastPos = LastPos.UP;
                 setCurrentAnimation(1,8,8);
                 break;
             case "left":
                 pos.x -= velocity;
                 origin.x -= velocity;
                 updateBounds();
+                moving = true;
+                lastPos = LastPos.LEFT;
                 setCurrentAnimation(1,9,8);
                 break;
             case "right":
                 pos.x += velocity;
                 origin.x += velocity;
                 updateBounds();
+                moving = true;
+                lastPos = LastPos.RIGHT;
                 setCurrentAnimation(1,11,8);
                 break;
             case "down":
                 pos.y += velocity;
                 origin.y += velocity;
                 updateBounds();
+                moving = true;
+                lastPos = LastPos.DOWN;
                 setCurrentAnimation(1,10,8);
                 break;
             default:

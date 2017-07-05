@@ -149,12 +149,21 @@ public class ListenKeys implements KeyListener {
             jugador.move("down");
             anim.setCurrentSheet(1);
         }
-        if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ){
+        //if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ) {
+        if( attack ) {
             //anim.setPixels( 0 );
-            //System.out.println("ATTACK");
             //anim.setCurrentSheet(2);
-            jugador.attack("up");
-       }
+            System.out.println("ATTACK");
+            if (jugador.lastPos == Player.LastPos.UP)
+                jugador.attack("up");
+            else if (jugador.lastPos == Player.LastPos.LEFT)
+                jugador.attack("left");
+            else if (jugador.lastPos == Player.LastPos.RIGHT)
+                jugador.attack("right");
+            else if (jugador.lastPos == Player.LastPos.DOWN)
+                jugador.attack("down");
+        }
+
        if( pause ){
             if( firstPress )
                 CurrentData.layout.show( CurrentData.panel, CurrentData.pause );
@@ -194,7 +203,7 @@ public class ListenKeys implements KeyListener {
     }
 
 	@Override public void keyReleased(KeyEvent e) {
-        if( left  ){
+        /*if( left  ){
             jugador.lastPos = Player.LastPos.LEFT;
         }
         if( right ){
@@ -207,7 +216,7 @@ public class ListenKeys implements KeyListener {
             jugador.lastPos = Player.LastPos.DOWN;
         }
         if( attack && anim.getCurrentSheet() != 1 && anim.getCurrentSheet() != 2 ) {
-        }
+        }*/
     }
 
 	@Override public void keyTyped(KeyEvent e) { }

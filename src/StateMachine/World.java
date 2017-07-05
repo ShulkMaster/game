@@ -94,7 +94,8 @@ public class World extends JComponent implements  GameState {
         //aqui esta idle, idle en nuestro contexto
         //se usar para animacion default y walking
         //g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
-        g.drawImage( anim.currentAnimation(0,10,1), pos.x, pos.y , null);
+        //g.drawImage( anim.currentAnimation(0,10,1), pos.x, pos.y , null);
+        g.drawImage( jugador.getCurrentAnimation(), pos.x, pos.y , null);
     }
 
     private void move(){
