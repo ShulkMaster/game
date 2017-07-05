@@ -1,6 +1,8 @@
 package StateMachine;
 
 
+import Data.CurrentData;
+
 public class GameOver implements GameState {
 
 	private GameStateManager state;
@@ -11,7 +13,7 @@ public class GameOver implements GameState {
 
 	@Override
 	public void draw(){
-		
+		CurrentData.layout.show(CurrentData.panel, CurrentData.gameOver);
 	}
 	
 	@Override

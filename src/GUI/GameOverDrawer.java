@@ -66,11 +66,14 @@ public class GameOverDrawer {
         public void actionPerformed(ActionEvent evt) {
             if (evt.getSource() == reiniciar) {
                 System.out.println("reach botonreturn");
+                CurrentData.state.getWorld().world();
                 CurrentData.layout.show(CurrentData.panel, CurrentData.game);
+                CurrentData.state.setGameState( CurrentData.state.getWorld());
                 CurrentData.frame.revalidate();
             }
             if (evt.getSource() == salir) {
                 CurrentData.layout.show(CurrentData.panel, CurrentData.menu);
+                CurrentData.state.setGameState( CurrentData.state.getMenu());
                 CurrentData.frame.revalidate();
             }
         }

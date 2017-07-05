@@ -51,9 +51,12 @@ public class World extends JComponent implements  GameState {
         this.setFocusable(true);
         this.addKeyListener( lKey ); */
 	}
+
+	public void reStartLevel(){
+    }
 	
 	private void loadPlayer(){
-            jugador = new Player(300, 352,192, 20, 20, 22,32,64) ;
+            jugador = new Player(100, 352,192, 20, 20, 22,32,64) ;
             anim = jugador.getAnimation();
             pos = jugador.getPos();
             jugador.setOrigin( 24, 48 );
@@ -71,7 +74,7 @@ public class World extends JComponent implements  GameState {
         deco = lvl.getLayer1();
         deco2 = lvl.getLayer2();
         enemigo = new Enemy[1];
-        enemigo[0] = new Enemy(300, 400,400,20,20,22,32);
+        enemigo[0] = new Enemy(100, 400,400,20,20,22,32);
         enemigo[0].setOrigin(24,48);
         setData();
         lKey = new ListenKeys();
@@ -286,7 +289,10 @@ public class World extends JComponent implements  GameState {
 	}
 
 	@Override public void gameOver() { System.out.println( "Nadie se puede morir fuera de batalla!" ); }
-	@Override public void world() { System.out.println( "Ya estabas en WORLD state" ); }
+	@Override public void world() {
+	    //ya que ocupamos reiniciar el nivel, ocupamos el mismo nombre del mismo state de la statemachine para reiniciar el nivel.
+        loadPlayer();
+	}
 	
 	private void setData(){
         CurrentData.jugador = jugador;
