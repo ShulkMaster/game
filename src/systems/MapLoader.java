@@ -81,12 +81,17 @@ public class MapLoader {
        //System.out.println(tile);
 	}
 	
-    public static void loadMap( GameMap level ){
+    public static void loadMap( GameMap level, int index ){
     	JSONParser parser = new JSONParser();
     	MapLoader.level = level;
+    	Object data  = null;
     	try{
             //Cargamos el archivo json
-            Object data = parser.parse( new FileReader("src/Resources/Map/map.json") );
+            if( index == 0 )
+                data = parser.parse( new FileReader("src/Resources/Map/map.json") );
+            else
+                data = parser.parse( new FileReader("src/Resources/Map/map"+ index + ".json") );
+
             JSONObject map = (JSONObject) data;
             //-----------------------
 

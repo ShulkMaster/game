@@ -2,7 +2,6 @@ package Data;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
 import GUI.GameFrame;
@@ -11,7 +10,6 @@ import systems.Time;
 import StateMachine.GameStateManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import systems.MasterAudio;
 
 public class Game{
 	//ticker
@@ -22,34 +20,26 @@ public class Game{
 	private GameFrame window;
 	private BufferStrategy bs;
 	private Graphics g;
-        private MasterAudio sonido;
 	private boolean firstCall = true;
 
-    public Game(Dimension dimension){
-        try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                //System.out.println(info.getName());
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        window = new GameFrame();
-    	window.init( (int) dimension.getWidth(), (int) dimension.getHeight() );
-		gameStateMachine = new GameStateManager( dimension );
+    public Game(Dimension dimension) {
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				//System.out.println(info.getName());
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (Exception e) {
+		}
+		window = new GameFrame();
+		window.init((int) dimension.getWidth(), (int) dimension.getHeight());
+		gameStateMachine = new GameStateManager(dimension);
 		window.getCanvas().requestFocus();
 		window.getCanvas().createBufferStrategy(3);
-                sonido = new MasterAudio();
-    }
+	}
+
 
     private void update(){
         gameStateMachine.draw();
@@ -59,7 +49,7 @@ public class Game{
     	try{
 			bs = window.getCanvas().getBufferStrategy();
 			if(bs == null){
-				window.getCanvas().createBufferStrategy(2);
+				window.getCanvas().createBufferStrategy(3);
 				return;
 			}
 			System.out.println("Menu stopped");

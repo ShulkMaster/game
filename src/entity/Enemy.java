@@ -93,7 +93,7 @@ public class Enemy extends Character {
             int damage = ((jugador.getLife()) + jugador.getDefense() - jugador.getDamage() ) > 0 ?
                     (jugador.getLife()) + jugador.getDefense() - jugador.getDamage() : 0 ;
             if( jugador.getLife() == 0 )
-                CurrentData.state.setGameState(CurrentData.state.getGameOver());
+                //CurrentData.state.setGameState(CurrentData.state.getGameOver());
             jugador.setLife(damage);
             System.out.println( jugador.getLife() );
         }

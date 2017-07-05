@@ -7,6 +7,7 @@ public abstract class GameObject{
     protected Point pos;
     protected Point origin;
     protected Point iso;
+    private int width,height;
     
     public GameObject(){}
     public GameObject( int x, int y ){
@@ -24,9 +25,15 @@ public abstract class GameObject{
     public void setOrigin( int widht, int height ){
         //Esta funcion es para objetos tipo humanoides convierte el centro del sprite
         //en donde estan los pies, lo hace con autocalculos.
+        this.width = widht;
+        this.height = height;
         this.origin.setLocation( pos.getX() + widht , pos.getY() + height );
     }
-    
+
+    public void recalculateOrigin(){
+        //con este metodo cuando teletransportamos a un personajes recalculamos donde se encuentra su origin
+        this.origin.setLocation( pos.getX() + width , pos.getY() + height );
+    }
     public void toIso(){
         int x = (int) ( origin.getX()/64 )*64;
         int y = (int) ( origin.getY()/16 )*16;

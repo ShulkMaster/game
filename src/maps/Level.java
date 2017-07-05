@@ -23,6 +23,11 @@ public class Level {
             case 0:
                 level1("/Resources/Map/map.png");
                 break;
+            case 1:
+                level2("/Resources/Map/map.png");
+                break;
+            case 2:
+                level3( "/Resources/Sprites/caveset/cave1.png");
             default:
                 System.out.println( "Index of level out of bounce" );
                 break;
@@ -57,7 +62,7 @@ public class Level {
         //instanciamos variables de manera auxiliar con el index
         //del nivel que queremos inicializar
         sheet = new SpriteSheet( ImageLoader.loadImage( path ) );
-        level[index] = new GameMap( sheet, 896,616 );
+        level[index] = new GameMap( sheet, 1024,1920 );
         aux = level[index].getTiles();
         deco = level[index].getLayer1();
         deco2 = level[index].getLayer2();
@@ -113,9 +118,29 @@ public class Level {
         loadTileType32( index, 1, 1 );
         initTiles();
         initDeco(index);
-        systems.MapLoader.loadMap(level[0]);
+        systems.MapLoader.loadMap(level[0],0);
     }
-    
+
+    private static void level2( String path ){
+        //el index nunca va a cambiar
+        int index = 1;
+        initLevelComponents( index, path );
+        loadTileType32( index, 1, 1 );
+        initTiles();
+        initDeco(index);
+        systems.MapLoader.loadMap(level[1],1);
+    }
+
+    private static void level3( String path ){
+        //el index nunca va a cambiar
+        int index = 2;
+        initLevelComponents( index, path );
+        loadTileType32( index, 1, 1 );
+        initTiles();
+        initDeco(index);
+        systems.MapLoader.loadMap(level[2],2);
+    }
+
     public static GameMap getLevel( int index ){ return level[index];}
     public static Tile[][] getDeco( int index ){ return deco; }
 }

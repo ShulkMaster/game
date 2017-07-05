@@ -45,7 +45,7 @@ public class Animator {
        for( int i = 0; i < (height/pixels); i++){
            for( int j = 0; j < (width/pixels); j++){
                sprite[i][j] = singleSheet.crop(j*pixels,i*pixels,pixels,pixels);
-               System.out.printf("x: %d, y: %d, w: %d, h: %d \n",i*pixels,j*pixels,pixels,pixels);
+               //System.out.printf("x: %d, y: %d, w: %d, h: %d \n",i*pixels,j*pixels,pixels,pixels);
            }
        }//for
         System.out.println( sprite.length + "," + sprite[0].length );

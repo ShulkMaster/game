@@ -77,7 +77,7 @@ public class Player extends Character {
         return animator.currentAnimation(1, 10,1);
     }
 
-    private void setCurrentAnimation( int start, int height, int limit ){
+    public void setCurrentAnimation( int start, int height, int limit ){
         this.start = start;
         this.height = height;
         this.limit = limit;

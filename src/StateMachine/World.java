@@ -81,6 +81,28 @@ public class World extends JComponent implements  GameState {
         this.addKeyListener( lKey );
 	}
 
+	private void loadLevel2(){
+        lvl = Level.getLevel( 1 );
+        tiles = lvl.getTiles();
+        deco = lvl.getLayer1();
+        deco2 = lvl.getLayer2();
+        enemigo = new Enemy[1];
+        enemigo[0] = new Enemy(100, 500,220,20,20,22,32);
+        enemigo[0].setOrigin(24,48);
+        setData();
+    }
+
+    private void loadLevel3(){
+        lvl = Level.getLevel( 2 );
+        tiles = lvl.getTiles();
+        deco = lvl.getLayer1();
+        deco2 = lvl.getLayer2();
+        enemigo = new Enemy[1];
+        enemigo[0] = new Enemy(100, 400,400,20,20,22,32);
+        enemigo[0].setOrigin(24,48);
+        setData();
+    }
+
     private void initGUI(){
         BufferedImage image = ImageLoader.loadImage("/Resources/Sprites/vida.png");
         vida = new SpriteSheet(image);
@@ -88,34 +110,11 @@ public class World extends JComponent implements  GameState {
     }
 
 	private void drawEnemy(){
-        /*g.drawImage( enemigo[0].getAnimation().getSprites(
-                enemigo[0].getAnimation().getCurrentSheet()).crop(
-                        enemigo[0].getAnimation().state() , 0, 64, 64),
-                enemigo[0].getPos().x , enemigo[0].getPos().y,
-                null );*/
         g.drawImage( enemigo[0].getCurrentAnimation(), enemigo[0].getPos().x, enemigo[0].getPos().y , null);
-    }
-
-    private void idle(){
-        //aqui esta idle, idle en nuestro contexto
-        //se usar para animacion default y walking
-        //g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
-        //g.drawImage( anim.currentAnimation(0,10,1), pos.x, pos.y , null);
-        g.drawImage( jugador.getCurrentAnimation(), pos.x, pos.y , null);
-    }
-
-    private void move(){
-        //aqui esta idle, idle en nuestro contexto
-        //se usar para animacion default y walking
-		//g.drawImage( anim.getSprites( anim.getCurrentSheet() ).crop( anim.state() , 0, 64, 64), pos.x , pos.y, null );
-        g.drawImage( jugador.getCurrentAnimation(), pos.x, pos.y , null);
     }
 
     private int tick = 0 ;
     private void attack(){
-		/*g.drawImage( anim.getSprites(2).crop( anim.state(), 0, 96, 96), pos.x, pos.y-38, null );
-		if( anim.state() >= 800 ) // el limite de la sprite sheet es 800 asi que al llegar se acabo el ataque
-		    anim.setCurrentSheet(0);*/
 		int x = pos.x;
 		int y = pos.y;
         g.drawImage(jugador.getCurrentAnimation(), x - 64, y - 64, null);
@@ -168,13 +167,15 @@ public class World extends JComponent implements  GameState {
     private void drawGui(){
         int aux = jugador.getLife();
         g.drawImage( barraVida.crop(0,33,100 ,31), 160,620,null );
-        g.drawImage(vida.crop(0, 0, jugador.getLife(), 32), 160, 620, null);
+        if ( jugador.getLife() > 0 )
+            g.drawImage(vida.crop(0, 0, jugador.getLife(), 32), 160, 620, null);
+
         g.setColor(Color.white);
         g.setFont(font);
         g.drawString("HP",140,642);
         g.drawString("SCORE: " + jugador.getScore(),640,642);
 
-        if( enemigo[0].getAgro() ){
+        if( enemigo[0].getAgro() && enemigo[0].getLife() > 0 ){
             g.drawImage(vida.crop(0, 10,enemigo[0].getLife(), 11 ), enemigo[0].getPos().x,
                     enemigo[0].getPos().y, null);
         }
@@ -184,9 +185,9 @@ public class World extends JComponent implements  GameState {
         int row = (int) ( origin.getX() );
         int col = (int) ( origin.getY() );
         jugador.toIso();
-        //System.out.println("j:( " + pos.x + ", " + pos.y + " ) " );
-        //System.out.println("jugador ( " + (row) + ", " + (col) + " )" +
-        //		"[ " + (row/64) + ", " + (col/16) + " ]" + "iso x,y( " + (iso.x) + ", " + (iso.y) + " )");
+        System.out.println("j:( " + pos.x + ", " + pos.y + " ) " );
+        System.out.println("jugador ( " + (row) + ", " + (col) + " )" +
+        		"[ " + (row/64) + ", " + (col/16) + " ]" + "iso x,y( " + (iso.x) + ", " + (iso.y) + " )");
 
         ///PLAYER---------------------------------
         g.setColor( Color.red );
@@ -217,16 +218,23 @@ public class World extends JComponent implements  GameState {
 
     }
 
+    private boolean end = true;
     private void drawPlayer(){
-        if( /*anim.getCurrentSheet() == 1 &&*/ !jugador.attack )
-            move();
-       /* if ( /*anim.getCurrentSheet() == 0 && !jugador.attack )
-            idle(); */
-        if( /*anim.getCurrentSheet() == 2  */ jugador.attack )
-            //jugador.attack = true;
+        if( !jugador.attack  && jugador.getLife() > 0 )
+            g.drawImage( jugador.getCurrentAnimation(), pos.x, pos.y , null);
+        if(  jugador.attack  && jugador.getLife() > 0 )
             attack();
-        /*if( jugador.checkCollision( enemigo.getPos().x , enemigo.getPos().y ) )
-            battle();*/
+        if( jugador.getLife() <= 0 ){
+            if( end) {
+                tick = 0;
+                jugador.setCurrentAnimation(0, 19, 6);
+                end = false;
+            }
+            g.drawImage( jugador.getCurrentAnimation(), pos.x, pos.y , null);
+            tick++;
+            if( tick > 6 )
+                state.setGameState( state.getGameOver() );
+        }
     }
 
 
@@ -240,6 +248,10 @@ public class World extends JComponent implements  GameState {
             CurrentData.initCanvas();
             loadLevel();
             initGUI();
+
+            systems.AudioManager.stopMusic();
+            systems.AudioManager.loadSong("/Resources/Music/mundo1.wav");
+            systems.AudioManager.playMusic();
         }
         moveEnemy();
 
@@ -267,6 +279,16 @@ public class World extends JComponent implements  GameState {
 
         debug();
         drawGui();
+
+        jugador.toIso();
+        if( iso.x > 12 ) {
+            nivel = 2;
+            Level.generateLevel(1);
+            world();
+            jugador.getPos().setLocation(932/2,658/2);
+            jugador.toIso();
+            jugador.recalculateOrigin();
+        }
 	}
 	
 	@Override public void menu() {
@@ -286,11 +308,18 @@ public class World extends JComponent implements  GameState {
 	}
 
 	@Override public void gameOver() { System.out.println( "Nadie se puede morir fuera de batalla!" ); }
-	@Override public void world() {
+
+	private int nivel = 0;
+	@Override public void world( ) {
 	    //ya que ocupamos reiniciar el nivel, ocupamos el mismo nombre del mismo state de la statemachine para reiniciar el nivel.
-        loadPlayer();
+        System.out.println("reach world");
         CurrentData.initCanvas();
-        loadLevel();
+        if( nivel == 1 )
+            loadLevel();
+        if( nivel == 2)
+            loadLevel2();
+        if( nivel == 3)
+            loadLevel3();
         initGUI();
 	}
 	
