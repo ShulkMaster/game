@@ -3,7 +3,7 @@ package systems;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import GUI.PauseDrawer;
+import GUI.*;
 import Data.CurrentData;
 import StateMachine.GameStateManager;
 import entity.Player;
@@ -12,7 +12,6 @@ import maps.Tile;
 
 public class ListenKeys implements KeyListener {
     private boolean up, down, left, right, attack, pause;
-    private boolean firstPress = true;
     private enum Pos{ TOP, MID, BOT }
     private Pos currentPos = Pos.MID;
 
@@ -23,6 +22,7 @@ public class ListenKeys implements KeyListener {
     private Animator anim;
     private Enemy[] enem = new Enemy[3];
     private PauseDrawer pasado = new  PauseDrawer(CurrentData.pausepanel);
+    private GameOverDrawer perdi = new  GameOverDrawer(CurrentData.GameOverPanel);
     private Point iso;
     private Point aux;
     private Point pos = new Point();
@@ -128,7 +128,9 @@ public class ListenKeys implements KeyListener {
         if( e.getKeyCode() == KeyEvent.VK_E  && state.getCurrentState() != state.getBattle()) {
             jugador.toIso();
             jugador.getPos().setLocation( deco[iso.y][iso.x].getPos() );
-            state.setGameState(state.getBattle());
+            state.setGameState(state.getGameOver());
+            CurrentData.layout.show(CurrentData.panel, CurrentData.gameOver);
+            
         }
     }//func
 
@@ -166,10 +168,9 @@ public class ListenKeys implements KeyListener {
         }
 
         if (pause) {
-            if (firstPress) {
-                CurrentData.layout.show(CurrentData.panel, CurrentData.pause);
-            }
+            CurrentData.layout.show(CurrentData.panel, CurrentData.pause);
         }
+        
     }
 
     
