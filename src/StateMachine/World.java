@@ -232,10 +232,10 @@ public class World extends JComponent implements  GameState {
         // ------------------------------
 
         //debug();
-        g.drawImage( anim.getSheets()[24][0], 400, 400 , null);
-        g.drawImage( anim.getSheets()[24][1], 500, 400 , null);
-        g.drawImage( anim.getSheets()[24][2], 600, 400 , null);
-        g.drawImage( anim.getSheets()[24][3], 700, 400 , null);
+        g.drawImage( anim.getSheets()[22][0], 400, 400 , null);
+        g.drawImage( anim.getSheets()[22][1], 500, 400 , null);
+        g.drawImage( anim.getSheets()[22][2], 600, 400 , null);
+        g.drawImage( anim.getSheets()[22][3], 700, 400 , null);
         drawGui();
 	}
 	
