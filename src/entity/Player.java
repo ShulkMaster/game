@@ -16,6 +16,7 @@ public class Player extends Character {
     public enum LastPos{ UP,LEFT,RIGHT,DOWN }
     public LastPos lastPos = LastPos.DOWN;
     private boolean moving = false;
+    private boolean attack = false;
 
     //animation
     int start,height,limit;
@@ -25,7 +26,7 @@ public class Player extends Character {
         init();
         if( pixels != 0 ) {
             animator = new Animator(sheet[0], sheet[0].sheetWidht(), sheet[0].sheetHeight(), pixels);
-            animator.setAuxAnimation(20,80,4);
+            animator.setAuxAnimation(21,64,4);
         }
         else
             animator = new Animator( sheet );
@@ -51,6 +52,10 @@ public class Player extends Character {
     }
 
     public BufferedImage getCurrentAnimation(){
+        if( attack ) {
+            attack = false;
+            return animator.currentAnimation(start, height, limit);
+        }
         if( lastPos == LastPos.UP && !moving )
             return animator.currentAnimation(0, 8,1);
         if( lastPos == LastPos.LEFT  && !moving )
@@ -59,7 +64,7 @@ public class Player extends Character {
             return animator.currentAnimation(0, 11,1);
         if( lastPos == LastPos.DOWN  && !moving )
             return animator.currentAnimation(0, 10,1);
-        if( moving = true ) {
+        if( moving ) {
             moving = false;
             return animator.currentAnimation(start, height, limit);
         }
@@ -73,22 +78,23 @@ public class Player extends Character {
     }
 
     public void attack( String axis ){
+        attack = true;
         switch( axis ) {
             case "up":
                 System.out.println( "attack up");
-                setCurrentAnimation(0,20,6);
+                setCurrentAnimation(0,21,6);
                 break;
             case "left":
                 System.out.println( "attack left");
-                setCurrentAnimation(0,21,6);
+                setCurrentAnimation(0,22,6);
                 break;
             case "right":
                 System.out.println( "attack right");
-                setCurrentAnimation(0,23,6);
+                setCurrentAnimation(0,24,6);
                 break;
             case "down":
                 System.out.println( "attack down");
-                setCurrentAnimation(0,22,6);
+                setCurrentAnimation(0,23,6);
                 break;
             default:
                 break;

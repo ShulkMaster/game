@@ -183,7 +183,7 @@ public class World extends JComponent implements  GameState {
     }
 
     private void drawPlayer(){
-        if ( anim.getCurrentSheet() == 0 )
+        /*if ( anim.getCurrentSheet() == 0 )
             idle();
         if( anim.getCurrentSheet() == 1 )
             move();
@@ -191,6 +191,7 @@ public class World extends JComponent implements  GameState {
             attack();
         /*if( jugador.checkCollision( enemigo.getPos().x , enemigo.getPos().y ) )
             battle();*/
+        g.drawImage( jugador.getCurrentAnimation(), pos.x, pos.y , null);
     }
 
 
@@ -231,6 +232,10 @@ public class World extends JComponent implements  GameState {
         // ------------------------------
 
         //debug();
+        g.drawImage( anim.getSheets()[24][0], 400, 400 , null);
+        g.drawImage( anim.getSheets()[24][1], 500, 400 , null);
+        g.drawImage( anim.getSheets()[24][2], 600, 400 , null);
+        g.drawImage( anim.getSheets()[24][3], 700, 400 , null);
         drawGui();
 	}
 	

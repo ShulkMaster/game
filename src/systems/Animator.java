@@ -60,9 +60,10 @@ public class Animator {
 
     public void setAuxAnimation( int height, int pixels, int iterations ){
         for( int i = 0; i < iterations; i++) {
-            for (int j = 0; j < iterations; j++) {
-                sprite[height][j] = singleSheet.crop(j*pixels,height*pixels,pixels,pixels);
+            for (int j = 0; j < iterations+2; j++) {
+                sprite[height][j] = singleSheet.crop( (j*192),( height*pixels ),192,192);
             }
+            height++;
         }
     }
 
@@ -127,6 +128,7 @@ public class Animator {
     public int getCurrentSheet() { return currentSheet; }
     public SpriteSheet getSprites( int i ){ return this.sheet[i]; }
     public SpriteSheet getSheet(){ return this.singleSheet; }
+    public BufferedImage[][] getSheets(){ return this.sprite; }
 
     //---------------------------------
 }
