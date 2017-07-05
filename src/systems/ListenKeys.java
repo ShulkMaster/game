@@ -123,10 +123,10 @@ public class ListenKeys implements KeyListener {
         if( right  && !checkCollision("right")  && iso.x < 14){
             jugador.move("right");
         }
-        if( up && !checkCollision("up") && iso.y < 37){
+        if( up && !checkCollision("up") && iso.y < 38){
             jugador.move("up");
         }
-        if( down && !checkCollision("down") && iso.y > 1 ){
+        if( down && !checkCollision("down") && iso.y > 0 ){
             jugador.move("down");
         }
         if( attack ) {

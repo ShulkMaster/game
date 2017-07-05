@@ -347,6 +347,15 @@ public class World extends JComponent implements  GameState {
             jugador.toIso();
             jugador.recalculateOrigin();
         }
+        if( iso.y <=  3 && nivel == 2){
+            nivel = 3;
+            Level.generateLevel(2);
+            loadLevel3();
+            jugador.getPos().setLocation(jugador.getPos().x,jugador.getPos().y-600);
+            jugador.toIso();
+            jugador.recalculateOrigin();
+
+        }
 
     }
 
